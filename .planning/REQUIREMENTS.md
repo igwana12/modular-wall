@@ -9,13 +9,13 @@
 
 - [x] **INFRA-01**: SC pipeline audit completed — all gaps documented with severity
 - [x] **INFRA-02**: orb-backend FastAPI service running at :8300 with deity config system
-- [ ] **INFRA-03**: Reading pipeline connected: Smithers → LLM Router → Pinecone RAG → ElevenLabs TTS
+- [x] **INFRA-03**: Reading pipeline connected: Smithers → LLM Router → Pinecone RAG → ElevenLabs TTS
 - [x] **INFRA-04**: Content DB queryable by god name (6,252 SC images + 2,891 Midjourney)
-- [ ] **INFRA-05**: Streaming SSE endpoint for web readings (no buffered responses)
+- [x] **INFRA-05**: Streaming SSE endpoint for web readings (no buffered responses)
 
 ### Oracle Reading Experience
 
-- [ ] **READ-01**: QR scan to reading starts in under 3 seconds on mobile
+- [x] **READ-01**: QR scan to reading starts in under 3 seconds on mobile
 - [ ] **READ-02**: User selects intention/question before reading begins
 - [ ] **READ-03**: AI generates personalized reading using deity personality + mythology RAG
 - [ ] **READ-04**: Reading delivered with deity voice narration via ElevenLabs (minimum 5 gods at launch)
@@ -120,10 +120,10 @@
 |-------------|-------|--------|
 | INFRA-01 | Phase 1 | Complete |
 | INFRA-02 | Phase 1 | Complete |
-| INFRA-03 | Phase 1 | Pending |
+| INFRA-03 | Phase 1 | Complete |
 | INFRA-04 | Phase 1 | Complete |
-| INFRA-05 | Phase 1 | Pending |
-| READ-01 | Phase 2 | Pending |
+| INFRA-05 | Phase 1 | Complete |
+| READ-01 | Phase 2 | Complete |
 | READ-02 | Phase 2 | Pending |
 | READ-03 | Phase 2 | Pending |
 | READ-04 | Phase 2 | Pending |
