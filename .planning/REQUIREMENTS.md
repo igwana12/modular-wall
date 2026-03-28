@@ -7,10 +7,10 @@
 
 ### Infrastructure
 
-- [ ] **INFRA-01**: SC pipeline audit completed — all gaps documented with severity
-- [ ] **INFRA-02**: orb-backend FastAPI service running at :8300 with deity config system
+- [x] **INFRA-01**: SC pipeline audit completed — all gaps documented with severity
+- [x] **INFRA-02**: orb-backend FastAPI service running at :8300 with deity config system
 - [ ] **INFRA-03**: Reading pipeline connected: Smithers → LLM Router → Pinecone RAG → ElevenLabs TTS
-- [ ] **INFRA-04**: Content DB queryable by god name (6,252 SC images + 2,891 Midjourney)
+- [x] **INFRA-04**: Content DB queryable by god name (6,252 SC images + 2,891 Midjourney)
 - [ ] **INFRA-05**: Streaming SSE endpoint for web readings (no buffered responses)
 
 ### Oracle Reading Experience
@@ -118,10 +118,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFRA-01 | Phase 1 | Pending |
-| INFRA-02 | Phase 1 | Pending |
+| INFRA-01 | Phase 1 | Complete |
+| INFRA-02 | Phase 1 | Complete |
 | INFRA-03 | Phase 1 | Pending |
-| INFRA-04 | Phase 1 | Pending |
+| INFRA-04 | Phase 1 | Complete |
 | INFRA-05 | Phase 1 | Pending |
 | READ-01 | Phase 2 | Pending |
 | READ-02 | Phase 2 | Pending |
