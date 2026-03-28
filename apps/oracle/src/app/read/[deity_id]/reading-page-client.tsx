@@ -4,6 +4,8 @@ import { useState, useCallback } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { track } from "@vercel/analytics";
+import { useSession } from "next-auth/react";
 import { useAudioQueue } from "@/hooks/use-audio-queue";
 import { IntentInput } from "@/components/intent-input";
 import { DeityBackground } from "@/components/deity-background";
@@ -38,6 +40,7 @@ interface ReadingPageClientProps {
 export function ReadingPageClient({ deity, imageUrl }: ReadingPageClientProps) {
   const [phase, setPhase] = useState<Phase>("reveal");
   const [intent, setIntent] = useState("");
+  const { data: session } = useSession();
   const audioQueue = useAudioQueue();
 
   const handleRevealComplete = useCallback(() => {
@@ -56,8 +59,12 @@ export function ReadingPageClient({ deity, imageUrl }: ReadingPageClientProps) {
 
   const handleReadingComplete = useCallback(() => {
     recordReading(deity.id);
+    track("reading_completed", {
+      deity: deity.id,
+      tier: session?.user?.tier ?? "free",
+    });
     setPhase("complete");
-  }, [deity.id]);
+  }, [deity.id, session?.user?.tier]);
 
   return (
     <PaywallGate>
