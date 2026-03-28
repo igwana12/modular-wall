@@ -5,6 +5,11 @@
 !.planning/
 !.planning/**
 
+# Oracle Cards web app
+!apps/
+!apps/oracle/
+!apps/oracle/**
+
 # Orb backend service
 !services/
 !services/orb-backend/
