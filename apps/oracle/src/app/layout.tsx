@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { SessionProvider } from "@/components/session-provider";
 import { inter, crimsonPro } from "@/lib/fonts";
 import "./globals.css";
 
@@ -28,7 +29,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TooltipProvider>{children}</TooltipProvider>
+          <SessionProvider>
+            <TooltipProvider>{children}</TooltipProvider>
+          </SessionProvider>
         </ThemeProvider>
       </body>
     </html>
