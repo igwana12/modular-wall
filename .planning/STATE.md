@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-01-PLAN.md
+stopped_at: Completed 03-02-PLAN.md
 last_updated: "2026-03-28T17:13:36.161Z"
 last_activity: 2026-03-28
 progress:
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 03 (physical-cards-market-launch) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-03-28
 
@@ -59,6 +59,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02 P02 | 12min | 3 tasks | 11 files |
 | Phase 02 P04 | 6min | 2 tasks | 17 files |
 | Phase 03 P01 | 2min | 2 tasks | 26 files |
+| Phase 03 P02 | 4min | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -87,6 +88,8 @@ Recent decisions affecting current work:
 - [Phase 02]: SessionProvider wrapper in root layout enables useSession across all client components
 - [Phase 03]: Root package.json created for monorepo-level scripts (generate:qr, qrcode dep)
 - [Phase 03]: Webhook metadata routing: check session.metadata.type before subscription logic for deposit handling
+- [Phase 03]: Root URL is now public landing page; oracle app moved to /oracle route
+- [Phase 03]: reading_completed analytics event tracks deity and tier for LAUNCH-04 revenue validation
 
 ### Pending Todos
 
@@ -100,6 +103,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T17:13:36.158Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-03-28T17:18:43Z
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None

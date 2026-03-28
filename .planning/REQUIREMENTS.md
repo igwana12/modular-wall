@@ -35,10 +35,10 @@
 
 ### Oracle Cards Launch
 
-- [ ] **LAUNCH-01**: Landing page at oracleball.ai with email capture
+- [x] **LAUNCH-01**: Landing page at oracleball.ai with email capture
 - [ ] **LAUNCH-02**: Email list of 5,000+ signups before full launch
 - [x] **LAUNCH-03**: $1 reservation deposit system for early access
-- [ ] **LAUNCH-04**: Revenue validation: first 100 paid readings
+- [x] **LAUNCH-04**: Revenue validation: first 100 paid readings
 
 ### ESP32 Hardware Fundamentals
 
