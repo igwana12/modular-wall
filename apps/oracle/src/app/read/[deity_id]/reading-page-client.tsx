@@ -66,7 +66,7 @@ export function ReadingPageClient({ deity, imageUrl }: ReadingPageClientProps) {
         {/* Top bar */}
         <div className="flex items-center justify-between mb-8">
           <Link
-            href="/"
+            href="/oracle"
             className="min-w-[44px] min-h-[44px] flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Back to home"
           >

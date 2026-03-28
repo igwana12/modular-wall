@@ -169,7 +169,7 @@ export function ReadingStream({
 
           <div className="flex gap-3">
             <Link
-              href="/"
+              href="/oracle"
               className="flex flex-1 min-h-[48px] items-center justify-center rounded-lg border border-border bg-background text-sm font-medium hover:bg-muted hover:text-foreground transition-colors"
             >
               Pull Another Card
