@@ -20,9 +20,9 @@
 - [ ] **READ-03**: AI generates personalized reading using deity personality + mythology RAG
 - [ ] **READ-04**: Reading delivered with deity voice narration via ElevenLabs (minimum 5 gods at launch)
 - [ ] **READ-05**: PANTHEON artwork displayed during reading (god-specific visuals)
-- [ ] **READ-06**: McKee storytelling principles applied in reading prompt engineering
-- [ ] **READ-07**: Daily card / single pull reading mode (primary engagement loop)
-- [ ] **READ-08**: Free tier with limited readings per month
+- [x] **READ-06**: McKee storytelling principles applied in reading prompt engineering
+- [x] **READ-07**: Daily card / single pull reading mode (primary engagement loop)
+- [x] **READ-08**: Free tier with limited readings per month
 - [ ] **READ-09**: Paid tier via Stripe ($9.99/mo) with unlimited readings
 - [ ] **READ-10**: Digital guidebook per god (mythology, keywords, meanings)
 
@@ -128,9 +128,9 @@
 | READ-03 | Phase 2 | Pending |
 | READ-04 | Phase 2 | Pending |
 | READ-05 | Phase 2 | Pending |
-| READ-06 | Phase 2 | Pending |
-| READ-07 | Phase 2 | Pending |
-| READ-08 | Phase 2 | Pending |
+| READ-06 | Phase 2 | Complete |
+| READ-07 | Phase 2 | Complete |
+| READ-08 | Phase 2 | Complete |
 | READ-09 | Phase 2 | Pending |
 | READ-10 | Phase 2 | Pending |
 | CARD-01 | Phase 3 | Pending |
