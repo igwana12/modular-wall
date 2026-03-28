@@ -22,7 +22,7 @@ async function getDeity(deityId: string): Promise<DeityConfig | null> {
 
 async function getDeityImages(
   deityId: string,
-): Promise<{ url: string }[]> {
+): Promise<{ path: string; filename: string; tags: string[]; available: boolean }[]> {
   const res = await fetch(
     `${process.env.ORB_BACKEND_URL}/api/content/${deityId}`,
   );
@@ -71,7 +71,7 @@ export default async function DeityGuidebookPage({ params }: Props) {
   }
 
   const mythology = extractMythology(deity.system_prompt);
-  const heroImage = images[0]?.url;
+  const heroImage = images[0]?.path;
 
   return (
     <main className="min-h-screen pb-16">

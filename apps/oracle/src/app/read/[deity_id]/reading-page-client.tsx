@@ -9,6 +9,8 @@ import { IntentInput } from "@/components/intent-input";
 import { DeityBackground } from "@/components/deity-background";
 import { AudioPlayer } from "@/components/audio-player";
 import { ReadingStream } from "@/components/reading-stream";
+import { PaywallGate } from "@/components/paywall-gate";
+import { recordReading } from "@/lib/reading-tracker";
 import type { DeityConfig } from "@/types/deity";
 
 // Lazy-load CardReveal (motion-heavy) -- SSR shows card back placeholder
@@ -53,10 +55,12 @@ export function ReadingPageClient({ deity, imageUrl }: ReadingPageClientProps) {
   );
 
   const handleReadingComplete = useCallback(() => {
+    recordReading(deity.id);
     setPhase("complete");
-  }, []);
+  }, [deity.id]);
 
   return (
+    <PaywallGate>
     <DeityBackground colorPalette={deity.color_palette}>
       <div className="min-h-screen px-4 md:px-8 py-4">
         {/* Top bar */}
@@ -112,5 +116,6 @@ export function ReadingPageClient({ deity, imageUrl }: ReadingPageClientProps) {
         </div>
       </div>
     </DeityBackground>
+    </PaywallGate>
   );
 }
