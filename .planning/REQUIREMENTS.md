@@ -16,10 +16,10 @@
 ### Oracle Reading Experience
 
 - [x] **READ-01**: QR scan to reading starts in under 3 seconds on mobile
-- [ ] **READ-02**: User selects intention/question before reading begins
-- [ ] **READ-03**: AI generates personalized reading using deity personality + mythology RAG
-- [ ] **READ-04**: Reading delivered with deity voice narration via ElevenLabs (minimum 5 gods at launch)
-- [ ] **READ-05**: PANTHEON artwork displayed during reading (god-specific visuals)
+- [x] **READ-02**: User selects intention/question before reading begins
+- [x] **READ-03**: AI generates personalized reading using deity personality + mythology RAG
+- [x] **READ-04**: Reading delivered with deity voice narration via ElevenLabs (minimum 5 gods at launch)
+- [x] **READ-05**: PANTHEON artwork displayed during reading (god-specific visuals)
 - [x] **READ-06**: McKee storytelling principles applied in reading prompt engineering
 - [x] **READ-07**: Daily card / single pull reading mode (primary engagement loop)
 - [x] **READ-08**: Free tier with limited readings per month
@@ -124,10 +124,10 @@
 | INFRA-04 | Phase 1 | Complete |
 | INFRA-05 | Phase 1 | Complete |
 | READ-01 | Phase 2 | Complete |
-| READ-02 | Phase 2 | Pending |
-| READ-03 | Phase 2 | Pending |
-| READ-04 | Phase 2 | Pending |
-| READ-05 | Phase 2 | Pending |
+| READ-02 | Phase 2 | Complete |
+| READ-03 | Phase 2 | Complete |
+| READ-04 | Phase 2 | Complete |
+| READ-05 | Phase 2 | Complete |
 | READ-06 | Phase 2 | Complete |
 | READ-07 | Phase 2 | Complete |
 | READ-08 | Phase 2 | Complete |

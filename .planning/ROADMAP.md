@@ -48,12 +48,12 @@ Plans:
   3. User can pull a daily card and receive a unique reading each time (not canned responses)
   4. Free tier user hits a monthly limit; paid user ($9.99/mo via Stripe) gets unlimited readings
   5. Digital guidebook page exists for each god with mythology, keywords, and meanings
-**Plans:** 5 plans
+**Plans:** 4/5 plans executed
 **UI hint**: yes
 
 Plans:
 - [x] 02-01-PLAN.md -- Next.js 15 scaffold with design system, SSE types, BFF proxy, and streaming hooks (READ-01)
-- [ ] 02-02-PLAN.md -- Card reveal animation, intent input, SSE reading stream with deity voice + PANTHEON art (READ-01, READ-02, READ-03, READ-04, READ-05)
+- [x] 02-02-PLAN.md -- Card reveal animation, intent input, SSE reading stream with deity voice + PANTHEON art (READ-01, READ-02, READ-03, READ-04, READ-05)
 - [x] 02-03-PLAN.md -- Homepage with daily card pull, deity gallery, reading tracker, and McKee storytelling in deity prompts (READ-06, READ-07, READ-08)
 - [ ] 02-04-PLAN.md -- Payments and auth: paywall gate, Stripe Checkout subscription, Auth.js magic link, webhook handler (READ-08, READ-09)
 - [x] 02-05-PLAN.md -- Digital guidebook pages for all 21 gods and PWA with Serwist (READ-10)
@@ -143,7 +143,7 @@ Phases execute in numeric order. Phases 4 and 5 can run in parallel (independent
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Pipeline Audit + Oracle Backend | 2/2 | Complete | 2026-03-28 |
-| 2. Oracle Reading Experience | 0/5 | Not started | - |
+| 2. Oracle Reading Experience | 4/5 | In Progress|  |
 | 3. Physical Cards + Market Launch | 0/2 | Not started | - |
 | 4. ESP32 Hardware Fundamentals | 0/1 | Not started | - |
 | 5. POV Display Prototype | 0/1 | Not started | - |
