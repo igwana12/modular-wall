@@ -47,6 +47,16 @@ export async function POST(req: Request) {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;
         const email = session.customer_email;
+
+        // Handle $1 reservation deposits separately from subscriptions
+        if (session.metadata?.type === "reservation_deposit") {
+          console.log(
+            `[Stripe] Reservation deposit received from ${email ?? "anonymous"}`
+          );
+          break;
+        }
+
+        // Existing subscription checkout handling
         const customerId =
           typeof session.customer === "string"
             ? session.customer
