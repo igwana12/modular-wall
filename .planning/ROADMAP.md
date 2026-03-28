@@ -67,12 +67,14 @@ Plans:
   2. Every card's QR code resolves to its god's permanent reading URL (no link rot)
   3. Landing page at oracleball.ai captures email signups with $1 reservation deposits
   4. First 100 paid readings completed (revenue validation)
-**Plans**: TBD
+**Plans:** 4 plans
 **UI hint**: yes
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
+- [ ] 03-01-PLAN.md -- QR code generation for 21 deities + $1 deposit API route + webhook extension (CARD-02, LAUNCH-03)
+- [ ] 03-02-PLAN.md -- Landing page with deposit CTA, route restructuring, confirmation page, Vercel Analytics (LAUNCH-01, LAUNCH-04)
+- [ ] 03-03-PLAN.md -- Domain purchase (oracleball.ai) + Kit email marketing integration (LAUNCH-01, LAUNCH-02)
+- [ ] 03-04-PLAN.md -- Figma card design for all 21 cards + proof deck order from MakePlayingCards (CARD-01, CARD-03, CARD-04)
 
 ### Phase 4: ESP32 Hardware Fundamentals
 **Goal**: Builder can speak to an ESP32-S3 and hear an AI response back -- voice round-trip proven on real hardware
@@ -144,7 +146,7 @@ Phases execute in numeric order. Phases 4 and 5 can run in parallel (independent
 |-------|----------------|--------|-----------|
 | 1. Pipeline Audit + Oracle Backend | 2/2 | Complete | 2026-03-28 |
 | 2. Oracle Reading Experience | 4/5 | In Progress|  |
-| 3. Physical Cards + Market Launch | 0/2 | Not started | - |
+| 3. Physical Cards + Market Launch | 0/4 | Not started | - |
 | 4. ESP32 Hardware Fundamentals | 0/1 | Not started | - |
 | 5. POV Display Prototype | 0/1 | Not started | - |
 | 6. Spirit Sphere Integration | 0/2 | Not started | - |
