@@ -151,3 +151,24 @@ Phases execute in numeric order. Phases 4 and 5 can run in parallel (independent
 | 5. POV Display Prototype | 0/1 | Not started | - |
 | 6. Spirit Sphere Integration | 0/2 | Not started | - |
 | 7. Kickstarter Campaign | 0/2 | Not started | - |
+| 8. System Consolidation & Security Hardening | 0/5 | Not started | - |
+
+### Phase 8: System Consolidation & Security Hardening
+**Goal**: All credentials centralized and encrypted, skills deduplicated into single source of truth, bloat removed, critical services version-controlled, system verified working
+**Depends on**: Nothing (infrastructure phase, can run anytime)
+**Requirements**: SEC-01 (credential consolidation), SEC-02 (skill deduplication), SEC-03 (bloat removal), SEC-04 (git init critical services), SEC-05 (worktree cleanup), SEC-06 (post-consolidation verification)
+**Success Criteria** (what must be TRUE):
+  1. All API keys consolidated into encrypted vault; no plain-text .env files on external drives
+  2. Skills exist in one canonical location with symlinks; no duplicate skill sources
+  3. Irrelevant skills (bioinformatics, quantum, pharma) removed; dormant projects archived
+  4. Smithers, LLM Router, and Sacred Circuits pipeline have git repos with initial commits
+  5. Stale agent worktrees cleaned from services/smithers/
+  6. All services still running, all cron jobs intact, all MCP servers responding after changes
+**Plans:** 5 plans
+
+Plans:
+- [ ] 08-01-PLAN.md -- Credential audit, sync-keys.sh hardening, canonical load-keys.sh (SEC-01)
+- [ ] 08-02-PLAN.md -- Skill deduplication, irrelevant skill archival, tradermonty evaluation (SEC-02, SEC-03)
+- [ ] 08-03-PLAN.md -- Git init Extreme Pro services, stale worktree cleanup (SEC-04, SEC-05)
+- [ ] 08-04-PLAN.md -- Custom skill creation and Smithers manifest routing integration (SEC-02)
+- [ ] 08-05-PLAN.md -- Post-consolidation verification of all services, skills, and credentials (SEC-06)
