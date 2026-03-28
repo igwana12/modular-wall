@@ -10,15 +10,17 @@ from dotenv import load_dotenv
 
 # Load env before anything else (matches Smithers pattern)
 _env_path = Path(__file__).parent / ".env"
-load_dotenv(_env_path, override=True)
+load_dotenv(_env_path, override=False)  # Shell env takes precedence over .env
 
 import httpx
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from sse_starlette.sse import EventSourceResponse
 
 from deity_config import load_deity, list_deities, reload as reload_deities
 from content_db import get_deity_images, get_random_deity_image, reload as reload_content, is_drive_mounted
+from streaming import stream_reading
 from models import HealthResponse, DeityInfo, ContentImage
 
 # -- Logging --
@@ -147,18 +149,44 @@ async def get_random_content(deity_id: str) -> dict:
     return image.model_dump()
 
 
-# -- Placeholder Endpoints (Plan 02) --
+# -- Oracle Reading SSE Endpoint --
 
 @app.get("/api/oracle/read/{deity_id}")
-async def oracle_reading_placeholder(deity_id: str):
-    """Placeholder for oracle reading endpoint -- implemented in Plan 01-02."""
-    return JSONResponse(
-        status_code=501,
-        content={"detail": "Not implemented yet -- see Plan 01-02 for streaming oracle readings"},
-    )
+async def oracle_reading(deity_id: str, intent: str = "", request: Request = None):
+    """Stream an oracle reading via SSE.
 
+    Per D-09: progressive delivery with interleaved text + audio.
+    Per D-05: REST+SSE protocol for web (Oracle Cards).
+    """
+    deity_config = load_deity(deity_id.lower())
+    if not deity_config:
+        raise HTTPException(status_code=404, detail=f"Unknown deity: {deity_id}")
+
+    if not intent or len(intent.strip()) < 3:
+        raise HTTPException(status_code=400, detail="Intent must be at least 3 characters")
+
+    async def event_generator():
+        async for event in stream_reading(deity_config, intent):
+            if request and await request.is_disconnected():
+                logger.info(f"Client disconnected during reading for {deity_id}")
+                break
+            yield event
+
+    return EventSourceResponse(event_generator(), ping=15)  # 15s ping = keepalive
+
+
+# -- Spirit Sphere WebSocket (placeholder) --
 
 @app.websocket("/ws/sphere")
-async def sphere_websocket_placeholder():
-    """Placeholder for Spirit Sphere WebSocket -- implemented in future phase."""
-    pass
+async def sphere_websocket(websocket: WebSocket):
+    """WebSocket endpoint for Spirit Sphere hardware.
+
+    Per D-05: shares same reading pipeline as SSE, different protocol.
+    Implementation deferred to Phase 4.
+    """
+    await websocket.accept()
+    await websocket.send_json({
+        "status": "not_implemented",
+        "message": "Spirit Sphere WebSocket endpoint -- Phase 4",
+    })
+    await websocket.close()

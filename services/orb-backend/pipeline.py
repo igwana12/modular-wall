@@ -93,7 +93,7 @@ async def execute_reading_full(
     try:
         async with httpx.AsyncClient(timeout=60.0) as client:
             response = await client.post(
-                f"{LLM_ROUTER_URL}/route",
+                f"{LLM_ROUTER_URL}/ask",
                 json={
                     "message": user_message,
                     "system": full_system,
