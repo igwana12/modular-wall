@@ -2,7 +2,7 @@
 
 ## Overview
 
-Two products, one backend, seven phases. Oracle Cards (Phases 1-3) ship first by leveraging the 80%-built Sacred Circuits pipeline -- audit the gaps, build the reading experience, print and launch. Revenue and audience from cards de-risk the Spirit Sphere (Phases 4-7), which progresses from ESP32 learning through POV display prototyping, hardware integration, and Kickstarter campaign. Phases 4 and 5 run in parallel since audio I/O and POV display are independent workstreams.
+Three products, one backend, nine phases. Oracle Cards (Phases 1-3) ship first — digital experience + physical deck. Revenue and audience from cards de-risk hardware. The hardware splits into two independent product tracks: **Track A: Oracle Engine** (Phases 4-5) — a form-factor-agnostic voice AI device (ESP32 + mic + speaker + local LLM + RAG) that ships inside any enclosure (stuffed animal, lamp, crystal, toy). **Track B: POV Globe** (Phase 6) — the LED hologram sphere display. **Spirit Sphere** (Phase 7) = Oracle Engine + POV Globe combined in one premium product. Phase 8 is the Kickstarter campaign for both products. Tracks A and B run in parallel.
 
 ## Phases
 
@@ -15,10 +15,11 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: Pipeline Audit + Oracle Backend** - Verify SC pipeline gaps and stand up orb-backend :8300 with deity config, Content DB, and reading pipeline
 - [ ] **Phase 2: Oracle Reading Experience** - Build the end-to-end AI oracle reading flow with deity voice, PANTHEON visuals, and payment tiers
 - [ ] **Phase 3: Physical Cards + Market Launch** - Design and print 21-card deck, build landing page, capture email list, validate revenue
-- [ ] **Phase 4: ESP32 Hardware Fundamentals** - Learn ESP32-S3 basics and achieve full voice round-trip on real hardware
-- [ ] **Phase 5: POV Display Prototype** - Build working POV display from flat 2D through single-arm spherical with position sync
-- [ ] **Phase 6: Spirit Sphere Integration** - Combine voice AI + POV display on one ESP32-S3 with enclosure, battery, and demo capability
-- [ ] **Phase 7: Kickstarter Campaign** - Produce campaign video, validate PCB manufacturing path, launch campaign
+- [ ] **Phase 4: Oracle Engine — Hardware Fundamentals** [Track A] - ESP32-S3-BOX-3 voice round-trip, WebSocket to orb-backend, prove the voice AI works on hardware
+- [ ] **Phase 5: Oracle Engine — Product Shell** [Track A] - Local LLM option, swappable personality protocols, form-factor-agnostic enclosure (stuffed animal, lamp, crystal)
+- [ ] **Phase 6: POV Globe Prototype** [Track B] - LED POV display from flat 2D through spherical, position sync, ambient light visibility
+- [ ] **Phase 7: Spirit Sphere Integration** - Combine Oracle Engine + POV Globe in one premium enclosure with battery and demo capability
+- [ ] **Phase 8: Kickstarter Campaign** - Campaign for Oracle Engine ($79) + Spirit Sphere ($179), video, community, manufacturing validation
 
 ## Phase Details
 
@@ -76,23 +77,40 @@ Plans:
 - [ ] 03-03-PLAN.md -- Domain purchase (oracleball.ai) + Kit email marketing integration (LAUNCH-01, LAUNCH-02)
 - [ ] 03-04-PLAN.md -- Figma card design for all 21 cards + proof deck order from MakePlayingCards (CARD-01, CARD-03, CARD-04)
 
-### Phase 4: ESP32 Hardware Fundamentals
-**Goal**: Builder can speak to an ESP32-S3 and hear an AI response back -- voice round-trip proven on real hardware
+### Phase 4: Oracle Engine — Hardware Fundamentals [Track A]
+**Goal**: Voice AI round-trip proven on real hardware — speak to an ESP32-S3 and hear a deity respond
 **Depends on**: Phase 1 (orb-backend WebSocket endpoint)
 **Requirements**: HW-01, HW-02, HW-03, HW-04, HW-05
 **Success Criteria** (what must be TRUE):
-  1. ESP32-S3 dev board connects to WiFi and maintains a WebSocket connection to orb-backend
-  2. Builder speaks into INMP441 mic and hears AI response through MAX98357A speaker
-  3. Full voice round-trip latency is measured and documented (target under 5 seconds)
-  4. Audio capture and playback use I2S (digital path, no analog ADC)
+  1. ESP32-S3-BOX-3 connects to WiFi and maintains a WebSocket connection to orb-backend
+  2. Speak into built-in mic and hear AI deity response through built-in speaker
+  3. Full voice round-trip latency measured and documented (target under 5 seconds)
+  4. Same firmware runs on ESP32-S3-BOX-3 and bare ESP32-S3-DevKitC-1 + INMP441 + MAX98357A (pin config swap only)
 **Plans**: TBD
 
 Plans:
 - [ ] 04-01: TBD
 
-### Phase 5: POV Display Prototype
-**Goal**: A spinning LED arm renders a visible image in normal room lighting -- the core visual magic of the Spirit Sphere proven
-**Depends on**: Nothing (runs parallel to Phase 4)
+### Phase 5: Oracle Engine — Product Shell [Track A]
+**Goal**: The Oracle Engine is a standalone product — a voice AI device with local LLM fallback, swappable personality protocols, and a form factor ready for market testing
+**Depends on**: Phase 4
+**Requirements**: ENGINE-01, ENGINE-02, ENGINE-03, ENGINE-04, ENGINE-05, ENGINE-06
+**Success Criteria** (what must be TRUE):
+  1. Device runs with local LLM (quantized model on home server via Ollama) when cloud is unavailable
+  2. Personality protocols are swappable config files — switch deity voice/knowledge without reflashing
+  3. RAG knowledge system queries mythology corpus from onboard or networked storage
+  4. Device fits inside at least 2 different form factors (e.g., desk crystal + stuffed animal) with same electronics
+  5. OTA firmware updates work over WiFi
+  6. Setup takes under 10 minutes via BLE/captive portal WiFi provisioning
+**Plans**: TBD
+
+Plans:
+- [ ] 05-01: TBD
+- [ ] 05-02: TBD
+
+### Phase 6: POV Globe Prototype [Track B]
+**Goal**: A spinning LED arm renders a visible image in normal room lighting — the core visual magic proven independently
+**Depends on**: Nothing (runs parallel to Track A)
 **Requirements**: POV-01, POV-02, POV-03, POV-04, POV-05
 **Success Criteria** (what must be TRUE):
   1. Flat 2D POV propeller works with APA102/SK9822 LEDs (learning gate passed)
@@ -103,11 +121,11 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 05-01: TBD
+- [ ] 06-01: TBD
 
-### Phase 6: Spirit Sphere Integration
-**Goal**: Voice AI and POV display run simultaneously in a portable, battery-powered enclosure that demos reliably
-**Depends on**: Phase 4, Phase 5
+### Phase 7: Spirit Sphere Integration
+**Goal**: Oracle Engine + POV Globe combined in one premium enclosure that demos reliably — the flagship product
+**Depends on**: Phase 5 (Oracle Engine), Phase 6 (POV Globe)
 **Requirements**: SPHERE-01, SPHERE-02, SPHERE-03, SPHERE-04, SPHERE-05, SPHERE-06, SPHERE-07, SPHERE-08, SPHERE-09
 **Success Criteria** (what must be TRUE):
   1. Voice conversation and POV animation run simultaneously on one ESP32-S3 without conflicts
@@ -118,42 +136,44 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 06-01: TBD
-- [ ] 06-02: TBD
+- [ ] 07-01: TBD
+- [ ] 07-02: TBD
 
-### Phase 7: Kickstarter Campaign
-**Goal**: Campaign launches with a compelling video, validated manufacturing path, and active community ready to back
-**Depends on**: Phase 6
+### Phase 8: Kickstarter Campaign
+**Goal**: Campaign launches with two tiers — Oracle Engine (accessible) and Spirit Sphere (premium) — compelling video, validated manufacturing, active community
+**Depends on**: Phase 5 (Oracle Engine ready), Phase 7 (Spirit Sphere ready)
 **Requirements**: KS-01, KS-02, KS-03, KS-04, KS-05, KS-06, KS-07, KS-08
 **Success Criteria** (what must be TRUE):
-  1. Campaign video (30s demo + 2-3min full) shows a real working prototype, not renders
-  2. PCB design validated with small-batch JLCPCB order (manufacturing path proven)
-  3. Shipping costs verified with real dimensional quotes via BackerKit
-  4. Discord community has active members before campaign goes live
-  5. Open-source firmware skeleton published on GitHub before campaign launch
+  1. Campaign video (30s demo + 2-3min full) shows BOTH real working prototypes, not renders
+  2. Two tiers: Oracle Engine ~$79 early bird, Spirit Sphere ~$179 early bird
+  3. PCB design validated with small-batch JLCPCB order (manufacturing path proven)
+  4. Shipping costs verified with real dimensional quotes via BackerKit
+  5. Discord community has active members before campaign goes live
+  6. Open-source firmware skeleton published on GitHub before campaign launch
 **Plans**: TBD
 
 Plans:
-- [ ] 07-01: TBD
-- [ ] 07-02: TBD
+- [ ] 08-01: TBD
+- [ ] 08-02: TBD
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order. Phases 4 and 5 can run in parallel (independent workstreams).
+Phases 1-3 sequential (Oracle Cards). Then two parallel tracks: Track A (Phases 4-5: Oracle Engine) and Track B (Phase 6: POV Globe). Phase 7 merges both tracks. Phase 8 is Kickstarter. Phase 9 is infrastructure (can run anytime).
 
-| Phase | Plans Complete | Status | Completed |
-|-------|----------------|--------|-----------|
-| 1. Pipeline Audit + Oracle Backend | 2/2 | Complete | 2026-03-28 |
-| 2. Oracle Reading Experience | 4/5 | In Progress|  |
-| 3. Physical Cards + Market Launch | 2/4 | In Progress | - |
-| 4. ESP32 Hardware Fundamentals | 0/1 | Not started | - |
-| 5. POV Display Prototype | 0/1 | Not started | - |
-| 6. Spirit Sphere Integration | 0/2 | Not started | - |
-| 7. Kickstarter Campaign | 0/2 | Not started | - |
-| 8. System Consolidation & Security Hardening | 0/5 | Not started | - |
+| Phase | Track | Plans Complete | Status | Completed |
+|-------|-------|----------------|--------|-----------|
+| 1. Pipeline Audit + Oracle Backend | — | 2/2 | Complete | 2026-03-28 |
+| 2. Oracle Reading Experience | — | 5/5 | Complete | 2026-03-28 |
+| 3. Physical Cards + Market Launch | — | 2/4 | In Progress | - |
+| 4. Oracle Engine — Hardware | A | 0/1 | Not started | - |
+| 5. Oracle Engine — Product Shell | A | 0/2 | Not started | - |
+| 6. POV Globe Prototype | B | 0/1 | Not started | - |
+| 7. Spirit Sphere Integration | A+B | 0/2 | Not started | - |
+| 8. Kickstarter Campaign | — | 0/2 | Not started | - |
+| 9. System Consolidation & Security | — | 0/5 | Not started | - |
 
-### Phase 8: System Consolidation & Security Hardening
+### Phase 9: System Consolidation & Security Hardening
 **Goal**: All credentials centralized and encrypted, skills deduplicated into single source of truth, bloat removed, critical services version-controlled, system verified working
 **Depends on**: Nothing (infrastructure phase, can run anytime)
 **Requirements**: SEC-01 (credential consolidation), SEC-02 (skill deduplication), SEC-03 (bloat removal), SEC-04 (git init critical services), SEC-05 (worktree cleanup), SEC-06 (post-consolidation verification)

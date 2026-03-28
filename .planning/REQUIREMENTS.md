@@ -56,6 +56,15 @@
 - [ ] **POV-04**: Image visible at 3-5 RPM in ambient room lighting (not just darkness)
 - [ ] **POV-05**: Motor noise level under 45dB measured at 30cm
 
+### Oracle Engine Product Shell
+
+- [ ] **ENGINE-01**: Local LLM fallback via Ollama on home server when cloud unavailable
+- [ ] **ENGINE-02**: Swappable personality protocols — config file swap changes deity voice/knowledge without reflash
+- [ ] **ENGINE-03**: RAG knowledge system queries mythology corpus from networked storage
+- [ ] **ENGINE-04**: Same electronics fit inside 2+ form factors (desk crystal, stuffed animal, lamp)
+- [ ] **ENGINE-05**: OTA firmware updates over WiFi
+- [ ] **ENGINE-06**: WiFi provisioning via BLE or captive portal (setup <10 min)
+
 ### Spirit Sphere Integration
 
 - [ ] **SPHERE-01**: Voice AI + POV display running simultaneously on one ESP32-S3
@@ -146,32 +155,38 @@
 | HW-03 | Phase 4 | Pending |
 | HW-04 | Phase 4 | Pending |
 | HW-05 | Phase 4 | Pending |
-| POV-01 | Phase 5 | Pending |
-| POV-02 | Phase 5 | Pending |
-| POV-03 | Phase 5 | Pending |
-| POV-04 | Phase 5 | Pending |
-| POV-05 | Phase 5 | Pending |
-| SPHERE-01 | Phase 6 | Pending |
-| SPHERE-02 | Phase 6 | Pending |
-| SPHERE-03 | Phase 6 | Pending |
-| SPHERE-04 | Phase 6 | Pending |
-| SPHERE-05 | Phase 6 | Pending |
-| SPHERE-06 | Phase 6 | Pending |
-| SPHERE-07 | Phase 6 | Pending |
-| SPHERE-08 | Phase 6 | Pending |
-| SPHERE-09 | Phase 6 | Pending |
-| KS-01 | Phase 7 | Pending |
-| KS-02 | Phase 7 | Pending |
-| KS-03 | Phase 7 | Pending |
-| KS-04 | Phase 7 | Pending |
-| KS-05 | Phase 7 | Pending |
-| KS-06 | Phase 7 | Pending |
-| KS-07 | Phase 7 | Pending |
-| KS-08 | Phase 7 | Pending |
+| ENGINE-01 | Phase 5 | Pending |
+| ENGINE-02 | Phase 5 | Pending |
+| ENGINE-03 | Phase 5 | Pending |
+| ENGINE-04 | Phase 5 | Pending |
+| ENGINE-05 | Phase 5 | Pending |
+| ENGINE-06 | Phase 5 | Pending |
+| POV-01 | Phase 6 | Pending |
+| POV-02 | Phase 6 | Pending |
+| POV-03 | Phase 6 | Pending |
+| POV-04 | Phase 6 | Pending |
+| POV-05 | Phase 6 | Pending |
+| SPHERE-01 | Phase 7 | Pending |
+| SPHERE-02 | Phase 7 | Pending |
+| SPHERE-03 | Phase 7 | Pending |
+| SPHERE-04 | Phase 7 | Pending |
+| SPHERE-05 | Phase 7 | Pending |
+| SPHERE-06 | Phase 7 | Pending |
+| SPHERE-07 | Phase 7 | Pending |
+| SPHERE-08 | Phase 7 | Pending |
+| SPHERE-09 | Phase 7 | Pending |
+| KS-01 | Phase 8 | Pending |
+| KS-02 | Phase 8 | Pending |
+| KS-03 | Phase 8 | Pending |
+| KS-04 | Phase 8 | Pending |
+| KS-05 | Phase 8 | Pending |
+| KS-06 | Phase 8 | Pending |
+| KS-07 | Phase 8 | Pending |
+| KS-08 | Phase 8 | Pending |
 
 **Coverage:**
-- v1 requirements: 47 total
-- Mapped to phases: 47
+- v1 requirements: 53 total (47 original + 6 ENGINE)
+- Mapped to phases: 53
 - Unmapped: 0
 
 ---
