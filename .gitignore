@@ -1,0 +1,15 @@
+# Only track project files
+*
+!.planning/
+!.planning/**
+!services/orb-backend/
+!services/orb-backend/**
+!Library/LaunchAgents/com.claw.orb-backend.plist
+!.gitignore
+
+# Exclude venvs and caches from tracked dirs
+**/.venv/
+**/__pycache__/
+**/*.pyc
+**/node_modules/
+**/.env
