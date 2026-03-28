@@ -23,7 +23,7 @@
 - [x] **READ-06**: McKee storytelling principles applied in reading prompt engineering
 - [x] **READ-07**: Daily card / single pull reading mode (primary engagement loop)
 - [x] **READ-08**: Free tier with limited readings per month
-- [ ] **READ-09**: Paid tier via Stripe ($9.99/mo) with unlimited readings
+- [x] **READ-09**: Paid tier via Stripe ($9.99/mo) with unlimited readings
 - [x] **READ-10**: Digital guidebook per god (mythology, keywords, meanings)
 
 ### Oracle Cards Physical Product
@@ -131,7 +131,7 @@
 | READ-06 | Phase 2 | Complete |
 | READ-07 | Phase 2 | Complete |
 | READ-08 | Phase 2 | Complete |
-| READ-09 | Phase 2 | Pending |
+| READ-09 | Phase 2 | Complete |
 | READ-10 | Phase 2 | Complete |
 | CARD-01 | Phase 3 | Pending |
 | CARD-02 | Phase 3 | Pending |
