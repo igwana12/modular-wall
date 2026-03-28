@@ -20,6 +20,16 @@
 !Library/LaunchAgents/
 !Library/LaunchAgents/com.claw.orb-backend.plist
 
+!package.json
+
+# QR code generation scripts
+!scripts/
+!scripts/**
+
+# Generated assets (QR codes, print files)
+!assets/
+!assets/**
+
 !.gitignore
 
 # Exclude venvs and caches from tracked dirs

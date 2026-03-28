@@ -1,0 +1,19 @@
+{
+  "name": "claw2501",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate:qr": "npx tsx scripts/generate-qr-codes.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@types/qrcode": "^1.5.6",
+    "qrcode": "^1.5.4",
+    "tsx": "^4.21.0"
+  }
+}
