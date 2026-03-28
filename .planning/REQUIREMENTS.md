@@ -24,7 +24,7 @@
 - [x] **READ-07**: Daily card / single pull reading mode (primary engagement loop)
 - [x] **READ-08**: Free tier with limited readings per month
 - [ ] **READ-09**: Paid tier via Stripe ($9.99/mo) with unlimited readings
-- [ ] **READ-10**: Digital guidebook per god (mythology, keywords, meanings)
+- [x] **READ-10**: Digital guidebook per god (mythology, keywords, meanings)
 
 ### Oracle Cards Physical Product
 
@@ -132,7 +132,7 @@
 | READ-07 | Phase 2 | Complete |
 | READ-08 | Phase 2 | Complete |
 | READ-09 | Phase 2 | Pending |
-| READ-10 | Phase 2 | Pending |
+| READ-10 | Phase 2 | Complete |
 | CARD-01 | Phase 3 | Pending |
 | CARD-02 | Phase 3 | Pending |
 | CARD-03 | Phase 3 | Pending |
