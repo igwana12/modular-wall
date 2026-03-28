@@ -1,10 +1,20 @@
 # Only track project files
 *
+
+# Planning directory
 !.planning/
 !.planning/**
+
+# Orb backend service
+!services/
 !services/orb-backend/
 !services/orb-backend/**
+
+# Launchd plist
+!Library/
+!Library/LaunchAgents/
 !Library/LaunchAgents/com.claw.orb-backend.plist
+
 !.gitignore
 
 # Exclude venvs and caches from tracked dirs
