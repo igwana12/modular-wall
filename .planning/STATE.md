@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-02-PLAN.md
-last_updated: "2026-03-28T17:13:36.161Z"
+stopped_at: Completed 08-03-PLAN.md
+last_updated: "2026-03-28T23:13:19.627Z"
 last_activity: 2026-03-28
 progress:
-  total_phases: 7
+  total_phases: 9
   completed_phases: 2
-  total_plans: 11
-  completed_plans: 8
+  total_plans: 16
+  completed_plans: 11
   percent: 0
 ---
 
@@ -21,12 +21,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** Each card activates a personalized AI oracle experience -- mythology meets technology, delivered through the Sacred Circuits pipeline.
-**Current focus:** Phase 03 — physical-cards-market-launch
+**Current focus:** Phase 08 — system-consolidation-security-hardening
 
 ## Current Position
 
-Phase: 03 (physical-cards-market-launch) — EXECUTING
-Plan: 3 of 4
+Phase: 08 (system-consolidation-security-hardening) — EXECUTING
+Plan: 2 of 5
 Status: Ready to execute
 Last activity: 2026-03-28
 
@@ -60,6 +60,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02 P04 | 6min | 2 tasks | 17 files |
 | Phase 03 P01 | 2min | 2 tasks | 26 files |
 | Phase 03 P02 | 4min | 2 tasks | 10 files |
+| Phase 08 P03 | 2min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -90,10 +91,15 @@ Recent decisions affecting current work:
 - [Phase 03]: Webhook metadata routing: check session.metadata.type before subscription logic for deposit handling
 - [Phase 03]: Root URL is now public landing page; oracle app moved to /oracle route
 - [Phase 03]: reading_completed analytics event tracks deity and tier for LAUNCH-04 revenue validation
+- [Phase 08]: Removed .env from git tracking in Smithers and LLM Router (were committed in history, now untracked)
 
 ### Pending Todos
 
 None yet.
+
+### Roadmap Evolution
+
+- Phase 8 added: System Consolidation & Security Hardening — consolidate API keys, deduplicate skills, remove bloat, git-init critical services, clean worktrees
 
 ### Blockers/Concerns
 
@@ -103,6 +109,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T17:18:43Z
-Stopped at: Completed 03-02-PLAN.md
+Last session: 2026-03-28T23:13:19.624Z
+Stopped at: Completed 08-03-PLAN.md
 Resume file: None
