@@ -8,7 +8,7 @@ status: captured
 builds_on: oracle-cards-platform-vision.md, oracle-cards-concept.md
 ---
 
-# Oracle Cards: Philosophy-to-Product Synthesis
+# The Orb — Oracle Cards: Philosophy-to-Product Synthesis
 
 Niko's philosophical framework -- developed across two decades of voice transcripts, essays, and Sacred Circuits publications -- is not merely the intellectual backstory for the Oracle Cards platform. It IS the product. Every mechanic, every interaction, every reward loop should be a living expression of these ideas. This document maps the philosophy to concrete product features.
 

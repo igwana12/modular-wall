@@ -7,7 +7,7 @@ source: Niko (spontaneous insight during Phase 3 execution)
 status: needs-research
 ---
 
-# Oracle Cards: Myth-Specific Stories + AR Reenactments + Combo Mechanics
+# The Orb — Oracle Cards: Myth-Specific Stories + AR Reenactments + Combo Mechanics
 
 ## Core Concept
 

@@ -8,7 +8,7 @@ status: captured
 builds_on: oracle-cards-combo-ar-mythology.md
 ---
 
-# Oracle Cards: The Platform Vision
+# The Orb — Oracle Cards: The Platform Vision
 
 The cards are not the product. The cards are the *key* to an expanding mythology world.
 

@@ -1,4 +1,4 @@
-# Roadmap: The Orb (Oracle Cards + Spirit Sphere)
+# The Orb — Roadmap (Oracle Cards + Spirit Sphere)
 
 ## Overview
 

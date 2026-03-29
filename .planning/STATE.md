@@ -14,7 +14,7 @@ progress:
   percent: 0
 ---
 
-# Project State
+# The Orb — Project State
 
 ## Project Reference
 

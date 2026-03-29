@@ -7,7 +7,7 @@ status: complete
 parent: oracle-cards-combo-ar-mythology.md
 ---
 
-# Oracle Cards: Combo AR Mythology — Comprehensive Research
+# The Orb — Oracle Cards: Combo AR Mythology Research
 
 ## 1. Greek Myth Combo Mapping
 

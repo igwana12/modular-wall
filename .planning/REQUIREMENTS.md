@@ -1,4 +1,4 @@
-# Requirements: The Orb (Oracle Cards + Spirit Sphere)
+# The Orb — Requirements (Oracle Cards + Spirit Sphere)
 
 **Defined:** 2026-03-28
 **Core Value:** Each card activates a personalized AI oracle experience — mythology meets technology, delivered through the Sacred Circuits pipeline.
