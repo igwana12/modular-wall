@@ -44,8 +44,8 @@
 
 - [ ] **HW-01**: ESP32-S3 dev board running with LED blink + WiFi connection
 - [ ] **HW-02**: I2S audio capture (INMP441 mic) and playback (MAX98357A amp)
-- [ ] **HW-03**: WebSocket connection to orb-backend maintained over WiFi
-- [ ] **HW-04**: Full voice round-trip: speak → STT → LLM → TTS → hear response on hardware
+- [x] **HW-03**: WebSocket connection to orb-backend maintained over WiFi
+- [x] **HW-04**: Full voice round-trip: speak → STT → LLM → TTS → hear response on hardware
 - [ ] **HW-05**: Voice round-trip latency measured and documented (<5s target)
 
 ### POV Display Prototype
@@ -152,8 +152,8 @@
 | LAUNCH-04 | Phase 3 | Pending |
 | HW-01 | Phase 4 | Pending |
 | HW-02 | Phase 4 | Pending |
-| HW-03 | Phase 4 | Pending |
-| HW-04 | Phase 4 | Pending |
+| HW-03 | Phase 4 | Complete |
+| HW-04 | Phase 4 | Complete |
 | HW-05 | Phase 4 | Pending |
 | ENGINE-01 | Phase 5 | Pending |
 | ENGINE-02 | Phase 5 | Pending |

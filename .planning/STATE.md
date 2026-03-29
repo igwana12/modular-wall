@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-04-PLAN.md
-last_updated: "2026-03-29T02:13:36.448Z"
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-03-29T02:47:44.919Z"
 last_activity: 2026-03-29
 progress:
   total_phases: 9
   completed_phases: 4
-  total_plans: 16
-  completed_plans: 16
+  total_plans: 19
+  completed_plans: 17
   percent: 0
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-28)
 
 **Core value:** Each card activates a personalized AI oracle experience -- mythology meets technology, delivered through the Sacred Circuits pipeline.
-**Current focus:** Phase 08 — system-consolidation-security-hardening
+**Current focus:** Phase 04 — oracle-engine-hardware-fundamentals-track-a
 
 ## Current Position
 
-Phase: 9
-Plan: Not started
-Status: Ready to execute Wave 4
+Phase: 04 (oracle-engine-hardware-fundamentals-track-a) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
 Last activity: 2026-03-29
 
 Progress: [░░░░░░░░░░] 0%
@@ -65,6 +65,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 08 P04 | 4min | 2 tasks | 9 files |
 | Phase 03 P03 | 3min | 2 tasks | 4 files |
 | Phase 03 P04 | 8min | 2 tasks | 8 files |
+| Phase 04 P01 | 3min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -104,6 +105,9 @@ Recent decisions affecting current work:
 - [Phase 03]: React server components as print templates — fully programmable, no Figma, rerunnable card generation
 - [Phase 03]: Card PNGs gitignored (100MB+) — MANIFEST.txt tracks, script regenerates in seconds
 - [Phase 03]: 5 deities (persephone, hestia, eros, nike, tyche) need PANTHEON art generation — placeholders used
+- [Phase 04]: AssemblyAI REST API (not WebSocket streaming) for v1 -- simpler, hardware sends complete utterance
+- [Phase 04]: PCM 16-bit 16kHz mono as bidirectional audio format -- native ESP32 I2S format
+- [Phase 04]: JSON-typed WebSocket protocol with config/audio/end_audio client messages and status/transcript/text/audio/done/error server messages
 
 ### Pending Todos
 
@@ -121,6 +125,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-29T02:13:36.445Z
-Stopped at: Completed 03-04-PLAN.md
+Last session: 2026-03-29T02:47:44.916Z
+Stopped at: Completed 04-01-PLAN.md
 Resume file: None
