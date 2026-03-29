@@ -187,8 +187,8 @@ Phases 1-3 sequential (Oracle Cards). Then two parallel tracks: Track A (Phases 
 **Plans:** 5 plans
 
 Plans:
-- [ ] 08-01-PLAN.md -- Credential audit, sync-keys.sh hardening, canonical load-keys.sh (SEC-01)
+- [x] 08-01-PLAN.md -- Credential audit, sync-keys.sh hardening, canonical load-keys.sh (SEC-01)
 - [x] 08-02-PLAN.md -- Skill deduplication, irrelevant skill archival, tradermonty evaluation (SEC-02, SEC-03)
 - [x] 08-03-PLAN.md -- Git init Extreme Pro services, stale worktree cleanup (SEC-04, SEC-05)
-- [ ] 08-04-PLAN.md -- Custom skill creation and Smithers manifest routing integration (SEC-02)
+- [x] 08-04-PLAN.md -- Custom skill creation and Smithers manifest routing integration (SEC-02)
 - [ ] 08-05-PLAN.md -- Post-consolidation verification of all services, skills, and credentials (SEC-06)

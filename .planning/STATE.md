@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 08-01-PLAN.md
-last_updated: "2026-03-28T23:19:23.097Z"
-last_activity: 2026-03-28
+stopped_at: Completed 08-04-PLAN.md
+last_updated: "2026-03-29T00:35:07.274Z"
+last_activity: 2026-03-29
 progress:
   total_phases: 9
-  completed_phases: 2
-  total_plans: 16
-  completed_plans: 12
+  completed_phases: 0
+  total_plans: 11
+  completed_plans: 11
   percent: 0
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Current Position
 
 Phase: 08 (system-consolidation-security-hardening) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
-Last activity: 2026-03-28
+Last activity: 2026-03-29
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -62,6 +62,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 03 P02 | 4min | 2 tasks | 10 files |
 | Phase 08 P03 | 2min | 2 tasks | 3 files |
 | Phase 08 P01 | 8min | 2 tasks | 4 files |
+| Phase 08 P04 | 4min | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -95,6 +96,7 @@ Recent decisions affecting current work:
 - [Phase 08]: Removed .env from git tracking in Smithers and LLM Router (were committed in history, now untracked)
 - [Phase 08]: Canonical load-keys.sh pattern: services source one file instead of maintaining per-service .env duplicates
 - [Phase 08]: Wallet freshness guard in sync-keys.sh prevents propagating stale keys after rotation
+- [Phase 08]: Skills live outside worktree at ~/.claude/skills/ (gitignored) -- activation_triggers enable Smithers auto-routing
 
 ### Pending Todos
 
@@ -112,6 +114,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T23:19:23.095Z
-Stopped at: Completed 08-01-PLAN.md
+Last session: 2026-03-29T00:35:07.271Z
+Stopped at: Completed 08-04-PLAN.md
 Resume file: None
