@@ -86,10 +86,12 @@ Plans:
   2. Speak into built-in mic and hear AI deity response through built-in speaker
   3. Full voice round-trip latency measured and documented (target under 5 seconds)
   4. Same firmware runs on ESP32-S3-BOX-3 and bare ESP32-S3-DevKitC-1 + INMP441 + MAX98357A (pin config swap only)
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] 04-01: TBD
+- [ ] 04-01-PLAN.md -- Backend WebSocket /ws/sphere: STT->LLM->TTS pipeline + Python test client (HW-03, HW-04)
+- [ ] 04-02-PLAN.md -- Firmware scaffold: WiFi + I2S audio capture/playback + loopback test (HW-01, HW-02)
+- [ ] 04-03-PLAN.md -- End-to-end voice round-trip: WebSocket client + push-to-talk + latency measurement (HW-03, HW-04, HW-05)
 
 ### Phase 5: Oracle Engine — Product Shell [Track A]
 **Goal**: The Oracle Engine is a standalone product — a voice AI device with local LLM fallback, swappable personality protocols, and a form factor ready for market testing
@@ -166,7 +168,7 @@ Phases 1-3 sequential (Oracle Cards). Then two parallel tracks: Track A (Phases 
 | 1. Pipeline Audit + Oracle Backend | — | 2/2 | Complete | 2026-03-28 |
 | 2. Oracle Reading Experience | — | 5/5 | Complete | 2026-03-28 |
 | 3. Physical Cards + Market Launch | — | 4/4 | Complete | 2026-03-29 |
-| 4. Oracle Engine — Hardware | A | 0/1 | Not started | - |
+| 4. Oracle Engine — Hardware | A | 0/3 | Not started | - |
 | 5. Oracle Engine — Product Shell | A | 0/2 | Not started | - |
 | 6. POV Globe Prototype | B | 0/1 | Not started | - |
 | 7. Spirit Sphere Integration | A+B | 0/2 | Not started | - |
