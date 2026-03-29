@@ -26,6 +26,10 @@
 !scripts/
 !scripts/**
 
+# POV Globe firmware
+!firmware/
+!firmware/**
+
 # Generated assets (QR codes, print files)
 !assets/
 !assets/**
