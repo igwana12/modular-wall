@@ -58,9 +58,9 @@
 
 ### Oracle Engine Product Shell
 
-- [ ] **ENGINE-01**: Local LLM fallback via Ollama on home server when cloud unavailable
-- [ ] **ENGINE-02**: Swappable personality protocols — config file swap changes deity voice/knowledge without reflash
-- [ ] **ENGINE-03**: RAG knowledge system queries mythology corpus from networked storage
+- [x] **ENGINE-01**: Local LLM fallback via Ollama on home server when cloud unavailable
+- [x] **ENGINE-02**: Swappable personality protocols — config file swap changes deity voice/knowledge without reflash
+- [x] **ENGINE-03**: RAG knowledge system queries mythology corpus from networked storage
 - [ ] **ENGINE-04**: Same electronics fit inside 2+ form factors (desk crystal, stuffed animal, lamp)
 - [x] **ENGINE-05**: OTA firmware updates over WiFi
 - [ ] **ENGINE-06**: WiFi provisioning via BLE or captive portal (setup <10 min)
@@ -155,9 +155,9 @@
 | HW-03 | Phase 4 | Complete |
 | HW-04 | Phase 4 | Complete |
 | HW-05 | Phase 4 | Pending |
-| ENGINE-01 | Phase 5 | Pending |
-| ENGINE-02 | Phase 5 | Pending |
-| ENGINE-03 | Phase 5 | Pending |
+| ENGINE-01 | Phase 5 | Complete |
+| ENGINE-02 | Phase 5 | Complete |
+| ENGINE-03 | Phase 5 | Complete |
 | ENGINE-04 | Phase 5 | Pending |
 | ENGINE-05 | Phase 5 | Complete |
 | ENGINE-06 | Phase 5 | Pending |
