@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 
 Phase: 08 (system-consolidation-security-hardening) — EXECUTING
 Plan: 4 of 5
-Status: Ready to execute
+Status: Ready to execute Wave 4
 Last activity: 2026-03-29
 
 Progress: [░░░░░░░░░░] 0%

@@ -18,8 +18,6 @@ logger = logging.getLogger("orb-backend.streaming")
 # optionally followed by closing quotes/brackets, then whitespace or end
 SENTENCE_END = re.compile(r'[.!?]["\')\]]?\s+|[.!?]["\')\]]?$')
 
-# Heartbeat interval in seconds (per Pitfall 5 from research)
-HEARTBEAT_INTERVAL = 15
 
 
 async def stream_reading(deity_config: dict, intent: str) -> AsyncGenerator[dict, None]:
