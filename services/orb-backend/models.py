@@ -73,3 +73,20 @@ class RagQueryResponse(BaseModel):
 class RagStatusResponse(BaseModel):
     available: bool
     source: str  # "chromadb" | "keywords"
+
+
+# -- Protocol Models --
+
+class ProtocolInfo(BaseModel):
+    id: str
+    name: str
+    title: str
+    voice_id: str
+    reading_style: str
+    color_palette: list[str]
+    has_voice: bool  # True if voice_id is non-empty
+
+
+class ProtocolListResponse(BaseModel):
+    protocols: list[ProtocolInfo]
+    count: int

@@ -99,6 +99,29 @@ async def sphere_websocket(websocket: WebSocket) -> None:
                 audio_buffer = bytearray()
                 await _send(websocket, {"type": "status", "state": "listening"})
 
+            elif msg_type == "swap_protocol":
+                # Hot-swap deity protocol mid-session without reconnecting
+                new_protocol_id = msg.get("protocol_id", "").lower()
+                if not new_protocol_id:
+                    await _send(websocket, {"type": "error", "message": "Missing protocol_id"})
+                    continue
+
+                new_config = load_deity(new_protocol_id)
+                if new_config:
+                    old_deity_id = deity_id
+                    deity_id = new_protocol_id
+                    logger.info(f"Protocol swapped: {old_deity_id} -> {deity_id}")
+                    await _send(websocket, {
+                        "type": "status",
+                        "state": "protocol_swapped",
+                        "protocol_id": deity_id,
+                    })
+                else:
+                    await _send(websocket, {
+                        "type": "error",
+                        "message": f"Unknown protocol: {new_protocol_id}",
+                    })
+
             else:
                 await _send(websocket, {"type": "error", "message": f"Unknown message type: {msg_type}"})
 

@@ -63,3 +63,13 @@ def list_deities() -> list[DeityInfo]:
 def reload() -> None:
     """Force reload all deity configs (e.g., after adding a new god JSON)."""
     _load_all()
+
+
+def get_protocol_ids() -> list[str]:
+    """Return sorted list of all cached deity IDs.
+
+    Useful for firmware to know which protocol configs are available.
+    """
+    if not _cache:
+        _load_all()
+    return sorted(_cache.keys())

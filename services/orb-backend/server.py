@@ -25,6 +25,7 @@ from sphere_ws import sphere_websocket as _sphere_ws_handler
 from models import (
     HealthResponse, DeityInfo, ContentImage, OtaCheckResponse,
     RagQueryRequest, RagQueryResponse, RagStatusResponse,
+    ProtocolInfo, ProtocolListResponse,
 )
 from ota import load_manifest, check_update, get_firmware_path, FIRMWARE_DIR
 from pipeline import check_ollama
@@ -137,6 +138,54 @@ async def get_deity(deity_id: str) -> dict:
     if config is None:
         raise HTTPException(status_code=404, detail=f"Unknown deity: {deity_id}")
     return config
+
+
+# -- Protocol Endpoints (swappable deity personality configs) --
+
+@app.get("/api/protocols")
+async def get_protocols() -> ProtocolListResponse:
+    """List all available deity personality protocols.
+
+    Firmware uses this to know which protocols can be downloaded and hot-swapped.
+    """
+    deities = list_deities()
+    protocols = [
+        ProtocolInfo(
+            id=d.id,
+            name=d.name,
+            title=d.title,
+            voice_id=d.voice_id,
+            reading_style=d.reading_style,
+            color_palette=d.color_palette,
+            has_voice=bool(d.voice_id),
+        )
+        for d in deities
+    ]
+    return ProtocolListResponse(protocols=protocols, count=len(protocols))
+
+
+@app.get("/api/protocols/{protocol_id}")
+async def get_protocol(protocol_id: str) -> dict:
+    """Download full deity protocol config for firmware.
+
+    Returns the complete JSON config that firmware uses to configure a deity personality.
+    """
+    config = load_deity(protocol_id.lower())
+    if config is None:
+        raise HTTPException(status_code=404, detail=f"Unknown protocol: {protocol_id}")
+    return config
+
+
+@app.post("/api/protocols/reload")
+async def reload_protocols() -> dict:
+    """Reload deity protocol configs from disk.
+
+    Picks up new JSON files added to gods/ directory without restarting the service.
+    """
+    reload_deities()
+    deities = list_deities()
+    logger.info(f"Protocols reloaded: {len(deities)} available")
+    return {"reloaded": True, "count": len(deities)}
 
 
 # -- Content DB Endpoints --
