@@ -12,6 +12,7 @@ import {
   getUserByEmail,
   updateUserTier,
 } from "@/lib/db";
+import { addSubscriber } from "@/lib/kit";
 import type Stripe from "stripe";
 
 export async function POST(req: Request) {
@@ -53,6 +54,9 @@ export async function POST(req: Request) {
           console.log(
             `[Stripe] Reservation deposit received from ${email ?? "anonymous"}`
           );
+          if (email) {
+            await addSubscriber(email, "vip-deposit");
+          }
           break;
         }
 

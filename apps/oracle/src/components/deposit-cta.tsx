@@ -5,6 +5,8 @@ import { useState, type FormEvent } from "react";
 export function DepositCta() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [subscribing, setSubscribing] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function handleDeposit(e: FormEvent) {
@@ -34,6 +36,36 @@ export function DepositCta() {
       );
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleSubscribe() {
+    if (!email) {
+      setError("Enter your email first.");
+      return;
+    }
+    setSubscribing(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Something went wrong. Please try again.");
+      }
+
+      setSubscribed(true);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
+      );
+    } finally {
+      setSubscribing(false);
     }
   }
 
@@ -76,12 +108,20 @@ export function DepositCta() {
           </p>
         )}
 
-        <a
-          href="#updates"
-          className="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
-        >
-          Just sign up for updates instead
-        </a>
+        {subscribed ? (
+          <p className="text-xs text-green-400">
+            You&apos;re on the list! We&apos;ll keep you posted.
+          </p>
+        ) : (
+          <button
+            type="button"
+            onClick={handleSubscribe}
+            disabled={subscribing}
+            className="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground disabled:opacity-50"
+          >
+            {subscribing ? "Signing up..." : "Just sign up for updates instead"}
+          </button>
+        )}
       </div>
     </section>
   );
