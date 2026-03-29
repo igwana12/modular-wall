@@ -104,11 +104,12 @@ Plans:
   4. Device fits inside at least 2 different form factors (e.g., desk crystal + stuffed animal) with same electronics
   5. OTA firmware updates work over WiFi
   6. Setup takes under 10 minutes via BLE/captive portal WiFi provisioning
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] 05-01: TBD
-- [ ] 05-02: TBD
+- [ ] 05-01-PLAN.md -- Ollama LLM fallback, swappable protocol API, RAG query endpoint (ENGINE-01, ENGINE-02, ENGINE-03)
+- [ ] 05-02-PLAN.md -- OTA firmware update server + ESP32 OTA client module (ENGINE-05)
+- [ ] 05-03-PLAN.md -- WiFi provisioning captive portal, multi-board config, form factor checkpoint (ENGINE-06, ENGINE-04)
 
 ### Phase 6: POV Globe Prototype [Track B]
 **Goal**: A spinning LED arm renders a visible image in normal room lighting — the core visual magic proven independently
@@ -168,8 +169,8 @@ Phases 1-3 sequential (Oracle Cards). Then two parallel tracks: Track A (Phases 
 | 1. Pipeline Audit + Oracle Backend | — | 2/2 | Complete | 2026-03-28 |
 | 2. Oracle Reading Experience | — | 5/5 | Complete | 2026-03-28 |
 | 3. Physical Cards + Market Launch | — | 4/4 | Complete | 2026-03-29 |
-| 4. Oracle Engine — Hardware | A | 0/3 | Not started | - |
-| 5. Oracle Engine — Product Shell | A | 0/2 | Not started | - |
+| 4. Oracle Engine — Hardware | A | 1/3 | In progress | - |
+| 5. Oracle Engine — Product Shell | A | 0/3 | Not started | - |
 | 6. POV Globe Prototype | B | 0/1 | Not started | - |
 | 7. Spirit Sphere Integration | A+B | 0/2 | Not started | - |
 | 8. Kickstarter Campaign | — | 0/2 | Not started | - |
