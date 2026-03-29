@@ -121,10 +121,12 @@ Plans:
   3. Single-arm spherical POV renders an image using FastLED DMA at 3-5 RPM
   4. Image is visible in ambient room lighting (not just darkness)
   5. Motor noise measures under 45dB at 30cm distance
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] 06-01: TBD
+- [x] 06-01-PLAN.md -- Firmware scaffold: FastLED DMA, Hall ISR, motor PWM, frame buffer + image-to-POV converter (POV-01, POV-02, POV-03)
+- [ ] 06-02-PLAN.md -- Flat 2D POV propeller assembly, Hall sensor sync, hardware checkpoint (POV-01, POV-02)
+- [ ] 06-03-PLAN.md -- Spherical POV upgrade, ambient visibility tuning, motor noise measurement (POV-03, POV-04, POV-05)
 
 ### Phase 7: Spirit Sphere Integration
 **Goal**: Oracle Engine + POV Globe combined in one premium enclosure that demos reliably — the flagship product
@@ -171,7 +173,7 @@ Phases 1-3 sequential (Oracle Cards). Then two parallel tracks: Track A (Phases 
 | 3. Physical Cards + Market Launch | — | 4/4 | Complete | 2026-03-29 |
 | 4. Oracle Engine — Hardware | A | 1/3 | In progress | - |
 | 5. Oracle Engine — Product Shell | A | 0/3 | Not started | - |
-| 6. POV Globe Prototype | B | 0/1 | Not started | - |
+| 6. POV Globe Prototype | B | 0/3 | Not started | - |
 | 7. Spirit Sphere Integration | A+B | 0/2 | Not started | - |
 | 8. Kickstarter Campaign | — | 0/2 | Not started | - |
 | 9. System Consolidation & Security | — | 5/5 | Complete | 2026-03-29 |

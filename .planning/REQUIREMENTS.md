@@ -50,9 +50,9 @@
 
 ### POV Display Prototype
 
-- [ ] **POV-01**: 2D flat POV propeller working with APA102/SK9822 LEDs (learning gate)
-- [ ] **POV-02**: Hall effect sensor position synchronization verified
-- [ ] **POV-03**: Single arm spherical POV with FastLED DMA rendering
+- [x] **POV-01**: 2D flat POV propeller working with APA102/SK9822 LEDs (learning gate)
+- [x] **POV-02**: Hall effect sensor position synchronization verified
+- [x] **POV-03**: Single arm spherical POV with FastLED DMA rendering
 - [ ] **POV-04**: Image visible at 3-5 RPM in ambient room lighting (not just darkness)
 - [ ] **POV-05**: Motor noise level under 45dB measured at 30cm
 
@@ -161,9 +161,9 @@
 | ENGINE-04 | Phase 5 | Pending |
 | ENGINE-05 | Phase 5 | Pending |
 | ENGINE-06 | Phase 5 | Pending |
-| POV-01 | Phase 6 | Pending |
-| POV-02 | Phase 6 | Pending |
-| POV-03 | Phase 6 | Pending |
+| POV-01 | Phase 6 | Complete |
+| POV-02 | Phase 6 | Complete |
+| POV-03 | Phase 6 | Complete |
 | POV-04 | Phase 6 | Pending |
 | POV-05 | Phase 6 | Pending |
 | SPHERE-01 | Phase 7 | Pending |
