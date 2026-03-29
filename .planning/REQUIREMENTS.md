@@ -62,7 +62,7 @@
 - [ ] **ENGINE-02**: Swappable personality protocols — config file swap changes deity voice/knowledge without reflash
 - [ ] **ENGINE-03**: RAG knowledge system queries mythology corpus from networked storage
 - [ ] **ENGINE-04**: Same electronics fit inside 2+ form factors (desk crystal, stuffed animal, lamp)
-- [ ] **ENGINE-05**: OTA firmware updates over WiFi
+- [x] **ENGINE-05**: OTA firmware updates over WiFi
 - [ ] **ENGINE-06**: WiFi provisioning via BLE or captive portal (setup <10 min)
 
 ### Spirit Sphere Integration
@@ -159,7 +159,7 @@
 | ENGINE-02 | Phase 5 | Pending |
 | ENGINE-03 | Phase 5 | Pending |
 | ENGINE-04 | Phase 5 | Pending |
-| ENGINE-05 | Phase 5 | Pending |
+| ENGINE-05 | Phase 5 | Complete |
 | ENGINE-06 | Phase 5 | Pending |
 | POV-01 | Phase 6 | Complete |
 | POV-02 | Phase 6 | Complete |
