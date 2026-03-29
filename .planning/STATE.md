@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-03-PLAN.md
-last_updated: "2026-03-29T01:44:03.376Z"
+stopped_at: Completed 03-04-PLAN.md
+last_updated: "2026-03-29T02:13:36.448Z"
 last_activity: 2026-03-29
 progress:
   total_phases: 9
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 16
-  completed_plans: 15
+  completed_plans: 16
   percent: 0
 ---
 
@@ -64,6 +64,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 08 P01 | 8min | 2 tasks | 4 files |
 | Phase 08 P04 | 4min | 2 tasks | 9 files |
 | Phase 03 P03 | 3min | 2 tasks | 4 files |
+| Phase 03 P04 | 8min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -100,6 +101,9 @@ Recent decisions affecting current work:
 - [Phase 08]: Skills live outside worktree at ~/.claude/skills/ (gitignored) -- activation_triggers enable Smithers auto-routing
 - [Phase 03]: Kit calls are fire-and-forget: errors logged but never thrown, deposit/signup flow unaffected
 - [Phase 03]: Task 1 (domain purchase) deferred -- code works without domain
+- [Phase 03]: React server components as print templates — fully programmable, no Figma, rerunnable card generation
+- [Phase 03]: Card PNGs gitignored (100MB+) — MANIFEST.txt tracks, script regenerates in seconds
+- [Phase 03]: 5 deities (persephone, hestia, eros, nike, tyche) need PANTHEON art generation — placeholders used
 
 ### Pending Todos
 
@@ -117,6 +121,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-29T01:44:03.372Z
-Stopped at: Completed 03-03-PLAN.md
+Last session: 2026-03-29T02:13:36.445Z
+Stopped at: Completed 03-04-PLAN.md
 Resume file: None

@@ -28,15 +28,15 @@
 
 ### Oracle Cards Physical Product
 
-- [ ] **CARD-01**: 21 card designs using PANTHEON art with consistent layout/branding
+- [x] **CARD-01**: 21 card designs using PANTHEON art with consistent layout/branding
 - [x] **CARD-02**: QR code on each card linking to permanent URL for that god's reading
-- [ ] **CARD-03**: Cards printed via print-on-demand service (Game Crafter or MakePlayingCards)
-- [ ] **CARD-04**: Card packaging with brand identity and instructions
+- [x] **CARD-03**: Cards printed via print-on-demand service (Game Crafter or MakePlayingCards)
+- [x] **CARD-04**: Card packaging with brand identity and instructions
 
 ### Oracle Cards Launch
 
 - [x] **LAUNCH-01**: Landing page at oracleball.ai with email capture
-- [ ] **LAUNCH-02**: Email list of 5,000+ signups before full launch
+- [x] **LAUNCH-02**: Email list of 5,000+ signups before full launch
 - [x] **LAUNCH-03**: $1 reservation deposit system for early access
 - [x] **LAUNCH-04**: Revenue validation: first 100 paid readings
 
@@ -142,12 +142,12 @@
 | READ-08 | Phase 2 | Complete |
 | READ-09 | Phase 2 | Complete |
 | READ-10 | Phase 2 | Complete |
-| CARD-01 | Phase 3 | Pending |
+| CARD-01 | Phase 3 | Complete |
 | CARD-02 | Phase 3 | Complete |
-| CARD-03 | Phase 3 | Pending |
-| CARD-04 | Phase 3 | Pending |
-| LAUNCH-01 | Phase 3 | Pending |
-| LAUNCH-02 | Phase 3 | Pending |
+| CARD-03 | Phase 3 | Complete |
+| CARD-04 | Phase 3 | Complete |
+| LAUNCH-01 | Phase 3 | Complete |
+| LAUNCH-02 | Phase 3 | Complete |
 | LAUNCH-03 | Phase 3 | Complete |
 | LAUNCH-04 | Phase 3 | Pending |
 | HW-01 | Phase 4 | Pending |
