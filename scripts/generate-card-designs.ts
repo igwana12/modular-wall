@@ -293,14 +293,25 @@ async function main() {
     console.log(`  ${missingImages.join(", ")}\n`);
   }
 
-  // Step 2: Start dev server
-  const server = startDevServer();
+  // Step 2: Connect to dev server (or start one)
   const BASE_URL = "http://localhost:3099";
+  let server: ChildProcess | null = null;
+
+  // Check if server already running
+  let serverReady = false;
+  try {
+    const res = await fetch(BASE_URL);
+    if (res.ok || res.status === 404) serverReady = true;
+  } catch {}
+
+  if (!serverReady) {
+    server = startDevServer();
+    console.log("Waiting for dev server...");
+    await waitForServer(BASE_URL, 120000);
+  }
+  console.log("Server ready!\n");
 
   try {
-    console.log("Waiting for dev server...");
-    await waitForServer(BASE_URL);
-    console.log("Server ready!\n");
 
     // Step 3: Launch browser and screenshot
     console.log("Step 2: Generating card designs...\n");
@@ -370,15 +381,16 @@ async function main() {
 
     console.log(`\nOutput directory: ${OUTPUT_DIR}`);
   } finally {
-    // Kill dev server
-    server.kill("SIGTERM");
-    // Also kill any orphaned next dev processes on port 3099
-    try {
-      execSync("lsof -ti:3099 | xargs kill -9 2>/dev/null", {
-        stdio: "ignore",
-      });
-    } catch {
-      // Port may already be free
+    // Kill dev server if we started one
+    if (server) {
+      server.kill("SIGTERM");
+      try {
+        execSync("lsof -ti:3099 | xargs kill -9 2>/dev/null", {
+          stdio: "ignore",
+        });
+      } catch {
+        // Port may already be free
+      }
     }
   }
 }

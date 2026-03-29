@@ -30,6 +30,12 @@
 !assets/
 !assets/**
 
+# Exclude large generated card PNGs (regenerate with scripts/generate-card-designs.ts)
+assets/card-designs/*.png
+
+# Exclude print-assets staging images
+apps/oracle/public/print-assets/
+
 !.gitignore
 
 # Exclude venvs and caches from tracked dirs
