@@ -21,6 +21,7 @@ from sse_starlette.sse import EventSourceResponse
 from deity_config import load_deity, list_deities, reload as reload_deities
 from content_db import get_deity_images, get_random_deity_image, reload as reload_content, is_drive_mounted
 from streaming import stream_reading
+from sphere_ws import sphere_websocket as _sphere_ws_handler
 from models import HealthResponse, DeityInfo, ContentImage
 
 # -- Logging --
@@ -178,15 +179,10 @@ async def oracle_reading(deity_id: str, intent: str = "", request: Request = Non
 # -- Spirit Sphere WebSocket (placeholder) --
 
 @app.websocket("/ws/sphere")
-async def sphere_websocket(websocket: WebSocket):
+async def ws_sphere(websocket: WebSocket):
     """WebSocket endpoint for Spirit Sphere hardware.
 
     Per D-05: shares same reading pipeline as SSE, different protocol.
-    Implementation deferred to Phase 4.
+    Full pipeline: PCM audio -> AssemblyAI STT -> Claude -> ElevenLabs TTS -> PCM audio.
     """
-    await websocket.accept()
-    await websocket.send_json({
-        "status": "not_implemented",
-        "message": "Spirit Sphere WebSocket endpoint -- Phase 4",
-    })
-    await websocket.close()
+    await _sphere_ws_handler(websocket)

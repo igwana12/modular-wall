@@ -81,6 +81,60 @@ async def tts_stream(voice_id: str, text: str) -> AsyncGenerator[str, None]:
         logger.error(f"TTS streaming error for voice {voice_id}: {e}")
 
 
+async def tts_stream_pcm(voice_id: str, text: str) -> AsyncGenerator[str, None]:
+    """Stream TTS audio as raw PCM 16-bit 16kHz mono via ElevenLabs WebSocket.
+
+    Same as tts_stream but uses pcm_16000 output format for ESP32 hardware.
+    Yields base64-encoded raw PCM chunks (16-bit signed LE, 16kHz, mono).
+
+    Args:
+        voice_id: ElevenLabs voice ID for the deity
+        text: Sentence text to synthesize
+
+    Yields:
+        Base64-encoded raw PCM audio chunk strings
+    """
+    if not ELEVENLABS_API_KEY:
+        logger.error("ELEVENLABS_API_KEY not set -- skipping TTS")
+        return
+
+    if not text or not text.strip():
+        return
+
+    uri = (
+        f"wss://api.elevenlabs.io/v1/text-to-speech/{voice_id}/stream-input"
+        f"?model_id={TTS_MODEL}&output_format=pcm_16000"
+    )
+
+    try:
+        async with websockets.connect(uri) as ws:
+            # Initialize connection with API key and voice settings
+            await ws.send(json.dumps({
+                "text": " ",
+                "xi_api_key": ELEVENLABS_API_KEY,
+                "voice_settings": DEFAULT_VOICE_SETTINGS,
+            }))
+
+            # Send the text to synthesize
+            await ws.send(json.dumps({"text": text}))
+
+            # Signal end of input
+            await ws.send(json.dumps({"text": ""}))
+
+            # Receive audio chunks
+            async for message in ws:
+                data = json.loads(message)
+                if data.get("audio"):
+                    yield data["audio"]  # Already base64 from ElevenLabs
+                if data.get("isFinal"):
+                    break
+
+    except websockets.exceptions.ConnectionClosed as e:
+        logger.warning(f"ElevenLabs WebSocket closed (PCM): {e}")
+    except Exception as e:
+        logger.error(f"TTS PCM streaming error for voice {voice_id}: {e}")
+
+
 def tts_available() -> bool:
     """Check if TTS is configured and likely to work."""
     if not ELEVENLABS_API_KEY:
