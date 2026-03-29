@@ -1,8 +1,11 @@
 ---
 phase: 02-oracle-reading-experience
 verified: 2026-03-28T16:20:13Z
-status: gaps_found
-score: 3/5 success criteria verified
+status: passed
+score: 5/5 success criteria verified
+re_verification: true
+re_verified: 2026-03-29T12:30:00Z
+re_verification_notes: "All gaps resolved — PaywallGate is mounted wrapping reading flow, recordReading() called on complete, guidebook images use .path not .url. Build passes."
 gaps:
   - truth: "Free tier user hits a monthly limit; paid user ($9.99/mo via Stripe) gets unlimited readings"
     status: failed
