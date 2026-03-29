@@ -39,7 +39,37 @@ class ContentImage(BaseModel):
     available: bool  # False if external drive not mounted
 
 
+class OtaCheckResponse(BaseModel):
+    update_available: bool
+    current_version: str
+    latest_version: str
+    filename: str
+    size: int
+    sha256: str
+    changelog: str
+
+
 class HealthResponse(BaseModel):
     status: str  # "ok" | "degraded"
     version: str
     services: dict[str, str]  # service_name -> "ok" | "unreachable"
+
+
+# -- RAG Models --
+
+class RagQueryRequest(BaseModel):
+    deity_id: str
+    query: str
+    max_chunks: int = Field(default=5, ge=1, le=20)
+
+
+class RagQueryResponse(BaseModel):
+    deity_id: str
+    query: str
+    context: str
+    source: str  # "chromadb" | "keywords"
+
+
+class RagStatusResponse(BaseModel):
+    available: bool
+    source: str  # "chromadb" | "keywords"
