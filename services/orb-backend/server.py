@@ -186,6 +186,38 @@ async def oracle_reading(deity_id: str, intent: str = "", request: Request = Non
     return EventSourceResponse(event_generator(), ping=15)  # 15s ping = keepalive
 
 
+# -- RAG Endpoints --
+
+@app.post("/api/rag/query")
+async def rag_query(req: RagQueryRequest) -> RagQueryResponse:
+    """Query mythology RAG for a deity + topic.
+
+    Returns relevant context chunks from ChromaDB or keyword fallback.
+    """
+    deity_config = load_deity(req.deity_id.lower())
+    if not deity_config:
+        raise HTTPException(status_code=404, detail=f"Unknown deity: {req.deity_id}")
+
+    context = await get_reading_context(req.deity_id.lower(), req.query, req.max_chunks)
+    source = rag_source()
+
+    return RagQueryResponse(
+        deity_id=req.deity_id,
+        query=req.query,
+        context=context,
+        source=source,
+    )
+
+
+@app.get("/api/rag/status")
+async def rag_status() -> RagStatusResponse:
+    """Check RAG availability and which backend is active."""
+    return RagStatusResponse(
+        available=rag_available(),
+        source=rag_source(),
+    )
+
+
 # -- OTA Firmware Update Endpoints --
 
 @app.get("/api/ota/check")

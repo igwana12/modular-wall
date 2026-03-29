@@ -135,3 +135,16 @@ def rag_available() -> bool:
     if _chroma_client is not None:
         return True
     return _init_chroma()
+
+
+def rag_source() -> str:
+    """Return which RAG backend is currently active.
+
+    Returns 'chromadb' if ChromaDB is initialized and available,
+    otherwise 'keywords' (deity config fallback).
+    """
+    if _chroma_client is not None:
+        return "chromadb"
+    if _init_chroma():
+        return "chromadb"
+    return "keywords"
