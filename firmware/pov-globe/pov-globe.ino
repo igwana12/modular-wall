@@ -238,7 +238,6 @@ void handle_serial() {
             break;
         }
 
-<<<<<<< HEAD
         case 'i': {
             // Reload image data
             if (frame_load(FRAME_DATA, FRAME_DATA_LEN)) {
@@ -274,7 +273,9 @@ void handle_serial() {
             }
             led_show_column(0, white_col);
             Serial.println("All LEDs lit white. Press 'l' again or any key to continue.");
-=======
+            break;
+        }
+
         case '+': {
             // Increase brightness by 25
             if (current_brightness <= 230) {
@@ -377,7 +378,6 @@ void handle_serial() {
             } else {
                 Serial.println("Display RESUMED");
             }
->>>>>>> worktree-agent-aa9ccb94
             break;
         }
 

@@ -58,10 +58,6 @@
 #define MOTOR_MAX_DUTY      180     // CALIBRATE: conservative max duty, adjust with real motor
 #define MOTOR_MAX_RPM       5.0f    // Max RPM for duty mapping
 
-// ---------------------------------------------------------------------------
-// POV Mode — flat (2D propeller) vs spherical (3D globe)
-// ---------------------------------------------------------------------------
-#define POV_MODE_FLAT       true    // true = flat propeller, false = spherical
 // Tunable timing offset for column alignment (microseconds).
 // CALIBRATE WITH REAL HARDWARE: adjust until image stays aligned.
 #define COLUMN_DELAY_OFFSET_US  0   // Positive = shift image clockwise
