@@ -35,3 +35,13 @@ void led_clear();
  * @param b  Brightness value 0-255
  */
 void led_set_brightness(uint8_t b);
+
+/**
+ * Set APA102 global brightness (5-bit, 0-31).
+ * APA102 has two brightness controls: global (current limiting) and
+ * per-LED PWM (8-bit per channel). For maximum photon output, use
+ * global=31 (max) and rely on per-LED PWM for color accuracy.
+ *
+ * @param gb  Global brightness 0-31
+ */
+void led_set_global_brightness(uint8_t gb);

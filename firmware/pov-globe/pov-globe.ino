@@ -21,6 +21,12 @@
  *   'b' — Cycle brightness (Low/Med/High/Max)
  *   'm' — Toggle motor on/off
  *   't' — Reload test pattern
+ *   '+' — Increase brightness by 25
+ *   '-' — Decrease brightness by 25
+ *   'f' — Faster motor (duty +5)
+ *   's' — Slower motor (duty -5)
+ *   'c' — Print current config (brightness, duty, RPM, timing)
+ *   'p' — Pause/resume LED display (motor keeps spinning, for noise measurement)
  */
 
 #include "config.h"
@@ -34,8 +40,11 @@
 // State
 // ---------------------------------------------------------------------------
 static bool motor_running = false;
-static uint8_t brightness_level = 2;  // 0=Low, 1=Med, 2=High, 3=Max
+static uint8_t brightness_level = 3;  // 0=Low, 1=Med, 2=High, 3=Max (start at max for POV-04)
 static const uint8_t brightness_levels[] = { 50, 100, 200, 255 };
+static uint8_t current_brightness = 255;  // Live-tunable brightness
+static uint8_t motor_duty_adjust = 0;     // Manual duty offset for live tuning
+static bool display_paused = false;       // Pause LEDs for noise measurement (POV-05)
 static uint16_t last_column = 0;
 static uint32_t loop_count = 0;
 static uint32_t loop_start_us = 0;
@@ -49,7 +58,11 @@ void setup() {
     // Wait briefly for serial monitor connection (optional)
     delay(500);
 
-    Serial.println("=== POV Globe ===");
+#if POV_MODE_SPHERE
+    Serial.println("=== POV Globe (SPHERE mode) ===");
+#else
+    Serial.println("=== POV Globe (FLAT mode) ===");
+#endif
     Serial.println("Initializing...");
 
     // Initialize subsystems
@@ -75,6 +88,7 @@ void setup() {
     Serial.println("");
     Serial.println("POV Globe ready.");
     Serial.println("Commands: r=RPM, b=brightness, m=motor, t=test pattern, h=hall debug, l=LED test");
+    Serial.println("          +/-=brightness adjust, f/s=motor speed, c=config, p=pause LEDs");
     Serial.println("---");
 }
 
@@ -111,28 +125,48 @@ void loop() {
         return;
     }
 
+    // Display paused — LEDs off but motor keeps spinning (for noise measurement)
+    if (display_paused) {
+        led_clear();
+        return;
+    }
+
     // Reset column counter on new revolution
     if (hall_new_revolution()) {
         last_column = 0;
     }
 
     // Compute current column from angular position
+    // In sphere mode: columns still map to angular position (longitude).
+    // LED positions along the arm represent latitude (pole-to-pole).
+    // The equirectangular mapping in image-to-pov.py handles the
+    // spherical projection, so firmware just needs correct column timing.
     float position = hall_get_position();
-    uint16_t col = (uint16_t)(position * NUM_COLUMNS);
+    uint16_t effective_cols = COLUMNS_EFFECTIVE;
+    uint16_t col = (uint16_t)(position * effective_cols);
 
     // Clamp to valid range
-    if (col >= NUM_COLUMNS) col = NUM_COLUMNS - 1;
+    if (col >= effective_cols) col = effective_cols - 1;
+
+#if BOOST_MODE
+    // Boost mode: map effective column back to frame column
+    // Each effective column shows 2 frame columns worth of time,
+    // doubling perceived brightness at the cost of angular resolution
+    uint16_t frame_col = col * 2;
+    if (frame_col >= NUM_COLUMNS) frame_col = NUM_COLUMNS - 1;
+#else
+    uint16_t frame_col = col;
+#endif
 
     // Only update LEDs when we've moved to a new column
     // (avoids redundant SPI transactions on same column)
     if (col != last_column) {
-        led_show_column(col, frame_get_column(col));
+        led_show_column(frame_col, frame_get_column(frame_col));
         last_column = col;
     }
 
     // Compute delay until next column boundary
-    // column_delay = period / NUM_COLUMNS
-    uint32_t column_delay = period / NUM_COLUMNS;
+    uint32_t column_delay = period / effective_cols;
 
     // Subtract time already spent in this loop iteration (approximate)
     // Use a shorter delay to avoid missing columns at higher RPMs
@@ -180,16 +214,19 @@ void handle_serial() {
         }
 
         case 'm': {
-            // Toggle motor
+            // Toggle motor with soft ramp for noise reduction (POV-05)
             motor_running = !motor_running;
             if (motor_running) {
-                motor_set_rpm(TARGET_RPM);
-                Serial.print("Motor ON at ");
+                // Use motor_ramp for soft start instead of immediate set
+                motor_ramp(TARGET_RPM, MOTOR_RAMP_MS);
+                Serial.print("Motor ON (ramping ");
+                Serial.print(MOTOR_RAMP_MS);
+                Serial.print("ms to ");
                 Serial.print(TARGET_RPM);
-                Serial.println(" RPM");
+                Serial.println(" RPM)");
             } else {
-                motor_set_rpm(0);
-                Serial.println("Motor OFF");
+                motor_ramp(0.0f, MOTOR_RAMP_MS);
+                Serial.println("Motor OFF (ramping down)");
             }
             break;
         }
@@ -201,6 +238,7 @@ void handle_serial() {
             break;
         }
 
+<<<<<<< HEAD
         case 'i': {
             // Reload image data
             if (frame_load(FRAME_DATA, FRAME_DATA_LEN)) {
@@ -236,6 +274,110 @@ void handle_serial() {
             }
             led_show_column(0, white_col);
             Serial.println("All LEDs lit white. Press 'l' again or any key to continue.");
+=======
+        case '+': {
+            // Increase brightness by 25
+            if (current_brightness <= 230) {
+                current_brightness += 25;
+            } else {
+                current_brightness = 255;
+            }
+            led_set_brightness(current_brightness);
+            Serial.print("Brightness: ");
+            Serial.print(current_brightness);
+            Serial.println("/255");
+            break;
+        }
+
+        case '-': {
+            // Decrease brightness by 25
+            if (current_brightness >= 25) {
+                current_brightness -= 25;
+            } else {
+                current_brightness = 0;
+            }
+            led_set_brightness(current_brightness);
+            Serial.print("Brightness: ");
+            Serial.print(current_brightness);
+            Serial.println("/255");
+            break;
+        }
+
+        case 'f': {
+            // Faster motor (duty +5)
+            motor_duty_adjust += 5;
+            uint8_t new_duty = motor_get_duty() + 5;
+            if (new_duty > MOTOR_MAX_DUTY) new_duty = MOTOR_MAX_DUTY;
+            ledcWrite(MOTOR_PIN, new_duty);
+            Serial.print("Motor duty: ");
+            Serial.print(new_duty);
+            Serial.print("/");
+            Serial.println(MOTOR_MAX_DUTY);
+            break;
+        }
+
+        case 's': {
+            // Slower motor (duty -5)
+            uint8_t current = motor_get_duty();
+            uint8_t new_duty = (current >= 5) ? current - 5 : 0;
+            ledcWrite(MOTOR_PIN, new_duty);
+            Serial.print("Motor duty: ");
+            Serial.print(new_duty);
+            Serial.print("/");
+            Serial.println(MOTOR_MAX_DUTY);
+            break;
+        }
+
+        case 'c': {
+            // Print current config
+            uint32_t period = hall_get_period_us();
+            float rpm = (period > 0) ? 60000000.0f / (float)period : 0.0f;
+            Serial.println("--- Current Config ---");
+            Serial.print("  Mode: ");
+#if POV_MODE_SPHERE
+            Serial.println("SPHERE");
+#else
+            Serial.println("FLAT");
+#endif
+            Serial.print("  Brightness: ");
+            Serial.print(current_brightness);
+            Serial.println("/255");
+            Serial.print("  Boost mode: ");
+            Serial.println(BOOST_MODE ? "ON" : "OFF");
+            Serial.print("  Columns: ");
+            Serial.print(COLUMNS_EFFECTIVE);
+            Serial.print(" effective / ");
+            Serial.print(NUM_COLUMNS);
+            Serial.println(" total");
+            Serial.print("  Motor duty: ");
+            Serial.print(motor_get_duty());
+            Serial.print("/");
+            Serial.println(MOTOR_MAX_DUTY);
+            Serial.print("  RPM: ");
+            Serial.println(rpm, 2);
+            Serial.print("  Column delay: ");
+            if (period > 0) {
+                Serial.print(period / COLUMNS_EFFECTIVE);
+                Serial.println(" us");
+            } else {
+                Serial.println("N/A (no signal)");
+            }
+            Serial.print("  Display: ");
+            Serial.println(display_paused ? "PAUSED" : "ACTIVE");
+            Serial.println("---");
+            break;
+        }
+
+        case 'p': {
+            // Pause/resume LED display (motor keeps spinning — for noise measurement)
+            display_paused = !display_paused;
+            if (display_paused) {
+                led_clear();
+                Serial.println("Display PAUSED (motor running — measure noise now)");
+            } else {
+                Serial.println("Display RESUMED");
+            }
+>>>>>>> worktree-agent-aa9ccb94
             break;
         }
 
