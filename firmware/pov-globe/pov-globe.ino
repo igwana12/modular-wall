@@ -28,6 +28,7 @@
 #include "hall_sensor.h"
 #include "frame_buffer.h"
 #include "motor_control.h"
+#include "image_data.h"
 
 // ---------------------------------------------------------------------------
 // State
@@ -36,6 +37,8 @@ static bool motor_running = false;
 static uint8_t brightness_level = 2;  // 0=Low, 1=Med, 2=High, 3=Max
 static const uint8_t brightness_levels[] = { 50, 100, 200, 255 };
 static uint16_t last_column = 0;
+static uint32_t loop_count = 0;
+static uint32_t loop_start_us = 0;
 
 // ---------------------------------------------------------------------------
 // Setup
@@ -57,15 +60,21 @@ void setup() {
     Serial.println("  Hall sensor: OK (GPIO" + String(HALL_PIN) + ", FALLING)");
 
     frame_init();
-    frame_load_test_pattern();
-    Serial.println("  Frame buffer: OK (test pattern loaded)");
+    // Load generated image data (THE ORB test image from image-to-pov.py)
+    if (frame_load(FRAME_DATA, FRAME_DATA_LEN)) {
+        Serial.println("  Frame buffer: OK (image data loaded)");
+    } else {
+        // Fallback to built-in test pattern
+        frame_load_test_pattern();
+        Serial.println("  Frame buffer: WARN (image data failed, using test pattern)");
+    }
 
     motor_init();
     Serial.println("  Motor control: OK (GPIO" + String(MOTOR_PIN) + ", PWM)");
 
     Serial.println("");
     Serial.println("POV Globe ready.");
-    Serial.println("Commands: r=RPM, b=brightness, m=motor, t=test pattern");
+    Serial.println("Commands: r=RPM, b=brightness, m=motor, t=test pattern, h=hall debug, l=LED test");
     Serial.println("---");
 }
 
@@ -73,8 +82,25 @@ void setup() {
 // Main Loop — POV rendering
 // ---------------------------------------------------------------------------
 void loop() {
+    loop_start_us = micros();
+
     // --- Handle serial commands ---
     handle_serial();
+
+    // --- Periodic diagnostics (every 1000 loops) ---
+    loop_count++;
+    if (loop_count % 1000 == 0) {
+        uint32_t diag_period = hall_get_period_us();
+        if (diag_period > 0 && diag_period <= HALL_TIMEOUT_US) {
+            float diag_rpm = 60000000.0f / (float)diag_period;
+            Serial.print("[diag] RPM: ");
+            Serial.print(diag_rpm, 1);
+            Serial.print("  col: ");
+            Serial.print(last_column);
+            Serial.print("  loop_us: ");
+            Serial.println(micros() - loop_start_us);
+        }
+    }
 
     // --- POV Column Rendering ---
     uint32_t period = hall_get_period_us();
@@ -172,6 +198,44 @@ void handle_serial() {
             // Reload test pattern
             frame_load_test_pattern();
             Serial.println("Test pattern reloaded");
+            break;
+        }
+
+        case 'i': {
+            // Reload image data
+            if (frame_load(FRAME_DATA, FRAME_DATA_LEN)) {
+                Serial.println("Image data reloaded");
+            } else {
+                Serial.println("Image data reload FAILED");
+            }
+            break;
+        }
+
+        case 'h': {
+            // Hall sensor debug: print raw state and timing
+            uint32_t period = hall_get_period_us();
+            float pos = hall_get_position();
+            Serial.print("Hall: pin=");
+            Serial.print(digitalRead(HALL_PIN));
+            Serial.print("  period_us=");
+            Serial.print(period);
+            Serial.print("  position=");
+            Serial.print(pos, 3);
+            Serial.print("  new_rev=");
+            Serial.println(hall_new_revolution() ? "YES" : "no");
+            break;
+        }
+
+        case 'l': {
+            // Light all LEDs white (static wiring test, no rotation needed)
+            Serial.println("LED test: all white...");
+            // Create a white column and display it
+            CRGB white_col[NUM_LEDS];
+            for (int i = 0; i < NUM_LEDS; i++) {
+                white_col[i] = CRGB::White;
+            }
+            led_show_column(0, white_col);
+            Serial.println("All LEDs lit white. Press 'l' again or any key to continue.");
             break;
         }
 

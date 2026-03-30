@@ -48,3 +48,4 @@ apps/oracle/public/print-assets/
 **/*.pyc
 **/node_modules/
 **/.env
+firmware/pov-globe/image_data_preview.png
