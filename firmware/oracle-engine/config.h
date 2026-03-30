@@ -8,23 +8,61 @@
 // Required libraries (install via Arduino Library Manager):
 // - WebSockets by Markus Sattler (ArduinoWebSockets)
 // - ArduinoJson by Benoit Blanchon (v7.x)
+//
+// Built-in libraries (included with Arduino ESP32 Core 3.x):
+// - WiFi, WebServer, DNSServer, Preferences, HTTPClient, HTTPUpdate
 // ============================================================
 
-#define FIRMWARE_VERSION "0.2.0"
+#define FIRMWARE_VERSION "0.3.0"
+#define DEVICE_NAME "OracleEngine"
 
 // ============================================================
-// Build target: uncomment ONE of these, or pass as compiler flag
+// Board type system (compile-time multi-target support)
 // ============================================================
-#define TARGET_BOX3        // ESP32-S3-BOX-3 (built-in mic + speaker)
-// #define TARGET_DEVKIT   // Bare ESP32-S3-DevKitC-1 + INMP441 + MAX98357A
+// Use -DBOARD_TYPE=BOARD_BOX3 or -DBOARD_TYPE=BOARD_DEVKITC1
+// to select target at compile time.
+#define BOARD_BOX3      1
+#define BOARD_DEVKITC1  2
+
+#ifndef BOARD_TYPE
+  #define BOARD_TYPE BOARD_DEVKITC1
+#endif
+
+// Map BOARD_TYPE to legacy TARGET_* defines used by existing modules
+#if BOARD_TYPE == BOARD_BOX3
+  #ifndef TARGET_BOX3
+    #define TARGET_BOX3
+  #endif
+#elif BOARD_TYPE == BOARD_DEVKITC1
+  #ifndef TARGET_DEVKIT
+    #define TARGET_DEVKIT
+  #endif
+#endif
 
 // ============================================================
-// WiFi credentials (change these before flashing)
+// WiFi credentials (legacy hardcoded — prefer wifi_provision module)
 // ============================================================
+// These are used by wifi_manager.h for backward compatibility.
+// For consumer devices, use wifiProvisionInit() + wifiProvisionConnect()
+// instead, which reads credentials from NVS flash.
 #define WIFI_SSID "YOUR_WIFI_SSID"
 #define WIFI_PASS "YOUR_WIFI_PASS"
 
-// Backend WebSocket server
+// ============================================================
+// WiFi Provisioning (captive portal) settings
+// ============================================================
+#define AP_SSID_PREFIX    "OracleEngine-"  // AP name = prefix + last 4 hex of MAC
+#define AP_PASSWORD       ""               // Open AP (no password for easy setup)
+#define AP_CHANNEL        1
+#define NVS_NAMESPACE     "oracle-eng"     // Preferences namespace for credential storage
+
+// ============================================================
+// Server connection defaults (overridable via provisioning portal)
+// ============================================================
+#define DEFAULT_SERVER_URL  "http://192.168.1.100:8300"
+#define DEFAULT_DEITY_ID    "apollo"
+
+// Backend WebSocket server (legacy — prefer provisioned server URL)
 #define WS_HOST "192.168.1.XXX"  // Smithers IP on local network
 #define WS_PORT 8300
 #define WS_PATH "/ws/sphere"
@@ -78,14 +116,15 @@
 // ============================================================
 #ifdef TARGET_DEVKIT
   // INMP441 I2S MEMS Microphone
-  #define I2S_MIC_SCK   14   // BCK
-  #define I2S_MIC_WS    15   // LRCK / WS
-  #define I2S_MIC_SD    32   // SD / DOUT
+  // Pins chosen to avoid strapping pins on ESP32-S3
+  #define I2S_MIC_SCK   5    // BCK
+  #define I2S_MIC_WS    6    // LRCK / WS
+  #define I2S_MIC_SD    7    // SD / DOUT
 
   // MAX98357A I2S Amplifier
-  #define I2S_SPK_SCK   26   // BCK
-  #define I2S_SPK_WS    25   // LRCK
-  #define I2S_SPK_SD    22   // DIN
+  #define I2S_SPK_SCK   12   // BCK
+  #define I2S_SPK_WS    13   // LRCK
+  #define I2S_SPK_SD    14   // DIN
 
   // Onboard LED
   #define LED_PIN       2    // Built-in LED on most DevKit boards
