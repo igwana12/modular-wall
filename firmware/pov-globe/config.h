@@ -39,8 +39,16 @@
 #define MOTOR_PWM_FREQ      1000    // 1 kHz PWM for quiet operation
 #define MOTOR_PWM_RESOLUTION 8      // 8-bit duty cycle (0-255)
 #define TARGET_RPM          4.0f    // Target RPM (middle of 3-5 range)
-#define MOTOR_MAX_DUTY      180     // Conservative max duty (calibrate with real motor)
+#define MOTOR_MAX_DUTY      180     // CALIBRATE: conservative max duty, adjust with real motor
 #define MOTOR_MAX_RPM       5.0f    // Max RPM for duty mapping
+
+// ---------------------------------------------------------------------------
+// POV Mode — flat (2D propeller) vs spherical (3D globe)
+// ---------------------------------------------------------------------------
+#define POV_MODE_FLAT       true    // true = flat propeller, false = spherical
+// Tunable timing offset for column alignment (microseconds).
+// CALIBRATE WITH REAL HARDWARE: adjust until image stays aligned.
+#define COLUMN_DELAY_OFFSET_US  0   // Positive = shift image clockwise
 
 // ---------------------------------------------------------------------------
 // Timing / Safety
