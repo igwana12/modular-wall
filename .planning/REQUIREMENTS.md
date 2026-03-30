@@ -46,7 +46,7 @@
 - [x] **HW-02**: I2S audio capture (INMP441 mic) and playback (MAX98357A amp)
 - [x] **HW-03**: WebSocket connection to orb-backend maintained over WiFi
 - [x] **HW-04**: Full voice round-trip: speak → STT → LLM → TTS → hear response on hardware
-- [ ] **HW-05**: Voice round-trip latency measured and documented (<5s target)
+- [x] **HW-05**: Voice round-trip latency measured and documented (<5s target)
 
 ### POV Display Prototype
 
@@ -154,7 +154,7 @@
 | HW-02 | Phase 4 | Complete |
 | HW-03 | Phase 4 | Complete |
 | HW-04 | Phase 4 | Complete |
-| HW-05 | Phase 4 | Pending |
+| HW-05 | Phase 4 | Complete |
 | ENGINE-01 | Phase 5 | Complete |
 | ENGINE-02 | Phase 5 | Complete |
 | ENGINE-03 | Phase 5 | Complete |
