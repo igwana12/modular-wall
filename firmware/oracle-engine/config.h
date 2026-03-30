@@ -4,8 +4,13 @@
 // ============================================================
 // Oracle Engine Firmware Configuration
 // ============================================================
+//
+// Required libraries (install via Arduino Library Manager):
+// - WebSockets by Markus Sattler (ArduinoWebSockets)
+// - ArduinoJson by Benoit Blanchon (v7.x)
+// ============================================================
 
-#define FIRMWARE_VERSION "0.1.0"
+#define FIRMWARE_VERSION "0.2.0"
 
 // ============================================================
 // Build target: uncomment ONE of these, or pass as compiler flag
@@ -25,9 +30,21 @@
 #define WS_PATH "/ws/sphere"
 
 // ============================================================
-// Loopback test mode (comment out to disable)
+// Operation mode: WS_MODE for WebSocket voice AI, LOOPBACK_TEST for audio echo
+// Only one should be enabled at a time.
 // ============================================================
-#define LOOPBACK_TEST
+#define WS_MODE            // WebSocket voice AI mode (connects to orb-backend)
+// #define LOOPBACK_TEST   // Audio loopback test mode (mic -> speaker echo)
+
+// Default deity and intent for WebSocket mode
+#define WS_DEFAULT_DEITY   "apollo"
+#define WS_DEFAULT_INTENT  "oracle guidance"
+
+// PTT debounce
+#define PTT_DEBOUNCE_MS    50
+
+// Playback ring buffer size (bytes) for TTS audio chunks
+#define PLAYBACK_RING_SIZE 8192
 
 // ============================================================
 // ESP32-S3-BOX-3 Pin Definitions
