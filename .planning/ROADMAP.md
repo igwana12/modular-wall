@@ -125,7 +125,7 @@ Plans:
 
 Plans:
 - [x] 06-01-PLAN.md -- Firmware scaffold: FastLED DMA, Hall ISR, motor PWM, frame buffer + image-to-POV converter (POV-01, POV-02, POV-03)
-- [ ] 06-02-PLAN.md -- Flat 2D POV propeller assembly, Hall sensor sync, hardware checkpoint (POV-01, POV-02)
+- [x] 06-02-PLAN.md -- Flat 2D POV propeller assembly, Hall sensor sync, hardware checkpoint (POV-01, POV-02)
 - [ ] 06-03-PLAN.md -- Spherical POV upgrade, ambient visibility tuning, motor noise measurement (POV-03, POV-04, POV-05)
 
 ### Phase 7: Spirit Sphere Integration
