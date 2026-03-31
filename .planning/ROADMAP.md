@@ -173,9 +173,9 @@ Phases 1-3 sequential (Oracle Cards). Then two parallel tracks: Track A (Phases 
 | 1. Pipeline Audit + Oracle Backend | — | 2/2 | Complete | 2026-03-28 |
 | 2. Oracle Reading Experience | — | 5/5 | Complete | 2026-03-28 |
 | 3. Physical Cards + Market Launch | — | 4/4 | Complete | 2026-03-29 |
-| 4. Oracle Engine — Hardware | A | 1/3 | In progress | - |
-| 5. Oracle Engine — Product Shell | A | 0/3 | Not started | - |
-| 6. POV Globe Prototype | B | 0/3 | Not started | - |
+| 4. Oracle Engine — Hardware | A | 3/3 | Complete | 2026-03-30 |
+| 5. Oracle Engine — Product Shell | A | 3/3 | Complete | 2026-03-30 |
+| 6. POV Globe Prototype | B | 3/3 | Complete | 2026-03-30 |
 | 7. Spirit Sphere Integration | A+B | 0/4 | Not started | - |
 | 8. Kickstarter Campaign | — | 0/2 | Not started | - |
 | 9. System Consolidation & Security | — | 5/5 | Complete | 2026-03-29 |
