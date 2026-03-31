@@ -80,8 +80,8 @@
 ### Kickstarter Campaign
 
 - [ ] **KS-01**: Campaign video: 30s demo + 2-3min full (production budget $2-5K)
-- [ ] **KS-02**: "Maker Edition" positioning (not consumer appliance)
-- [ ] **KS-03**: $179 early bird tier (first 500 units)
+- [x] **KS-02**: "Maker Edition" positioning (not consumer appliance)
+- [x] **KS-03**: $179 early bird tier (first 500 units)
 - [ ] **KS-04**: Accurate shipping costs via BackerKit with real dimensional quotes
 - [ ] **KS-05**: PCB design validated with small-batch JLCPCB order
 - [x] **KS-06**: Discord community active before campaign launch
@@ -176,8 +176,8 @@
 | SPHERE-08 | Phase 7 | Pending |
 | SPHERE-09 | Phase 7 | Pending |
 | KS-01 | Phase 8 | Pending |
-| KS-02 | Phase 8 | Pending |
-| KS-03 | Phase 8 | Pending |
+| KS-02 | Phase 8 | Complete |
+| KS-03 | Phase 8 | Complete |
 | KS-04 | Phase 8 | Pending |
 | KS-05 | Phase 8 | Pending |
 | KS-06 | Phase 8 | Complete |

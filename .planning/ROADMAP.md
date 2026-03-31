@@ -160,8 +160,8 @@ Plans:
 **Plans:** 4 plans
 
 Plans:
-- [ ] 08-01-PLAN.md -- Campaign page copy, reward tiers, FAQ, risks, and stretch goals (KS-02, KS-03)
-- [ ] 08-02-PLAN.md -- Manufacturing BOMs, JLCPCB validation, shipping analysis, production timeline (KS-04, KS-05)
+- [x] 08-01-PLAN.md -- Campaign page copy, reward tiers, FAQ, risks, and stretch goals (KS-02, KS-03)
+- [x] 08-02-PLAN.md -- Manufacturing BOMs, JLCPCB validation, shipping analysis, production timeline (KS-04, KS-05)
 - [x] 08-03-PLAN.md -- Discord setup, email sequences, build-in-public calendar, open-source repo prep (KS-06, KS-07)
 - [ ] 08-04-PLAN.md -- Video scripts, storyboards, shot lists, gear plan, influencer outreach (KS-01, KS-08)
 
