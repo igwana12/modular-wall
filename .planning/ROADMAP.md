@@ -159,13 +159,30 @@ Plans:
   5. Oracle reading produces full visual sequence: hexagram → archetypes → deity gradient → agent cards
   6. Media presenter images processed through real-time ditherpunk shader
   7. All frontend visual states map to backend pipeline states via WebSocket events
-**Plans:** 4 plans
+**Plans:** 2/4 plans executed
 
 Plans:
-- [ ] 07.1-01-PLAN.md -- GPU shaders + filmic tone re-enable + multi-band voice-to-blob deformation (VIZ-03, VIZ-04, VIZ-05)
-- [ ] 07.1-02-PLAN.md -- SVG deity animator + nebula particle cloud (VIZ-01, VIZ-02)
+- [x] 07.1-01-PLAN.md -- GPU shaders + filmic tone re-enable + multi-band voice-to-blob deformation (VIZ-03, VIZ-04, VIZ-05)
+- [x] 07.1-02-PLAN.md -- SVG deity animator + nebula particle cloud (VIZ-01, VIZ-02)
 - [ ] 07.1-03-PLAN.md -- Oracle reading visual sequence director + backend health fix (VIZ-06, VIZ-09)
 - [ ] 07.1-04-PLAN.md -- Ditherpunk WebGL halftone shader + S9 Logos terminal accent (VIZ-07, VIZ-08)
+
+### Phase 07.2: JARVIS V2 Data Integration Layer (INSERTED)
+
+**Goal:** Expand JARVIS data sources and contextual presentation — widgets, RSS feeds, Grok/X integration, Paperclip task dashboard, and pluggable data adapters that feed the visual toolkit from Phase 07.1.
+**Requirements**: DATA-01, DATA-02, DATA-03, DATA-04, DATA-05, DATA-06
+**Depends on:** Phase 07.1 (visual layer must be ready to display data)
+**Success Criteria** (what must be TRUE):
+  1. Widget framework renders embeddable mini-apps (weather, stocks, calendar, tasks) in VisualStageController
+  2. RSS feed ingestion polls configurable feed list on schedule, surfaces new items via voice or panel
+  3. Grok pulls live Twitter/X trends, threads, and sentiment for any topic JARVIS is discussing
+  4. Perplexity research results render as structured cards (not just spoken text)
+  5. Paperclip at :3100 running, login working, task data flows into JARVIS briefings
+  6. All data sources pluggable — new adapters follow the same DataPayload + parser pattern
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 07.2 to break down)
 
 ### Phase 8: Kickstarter Campaign
 **Goal**: Campaign launches with two tiers — Oracle Engine (accessible) and Spirit Sphere (premium) — compelling video, validated manufacturing, active community
