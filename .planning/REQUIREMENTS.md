@@ -71,7 +71,7 @@
 - [ ] **SPHERE-02**: Core 0 handles audio, Core 1 handles LEDs (no conflicts)
 - [ ] **SPHERE-03**: 3D printed enclosure (base + sphere mount) with 4-6 iteration budget
 - [ ] **SPHERE-04**: Battery powered (3x 18650 Li-ion) with USB-C charging pass-through
-- [ ] **SPHERE-05**: At least 1 deity avatar animation displayed on POV
+- [x] **SPHERE-05**: At least 1 deity avatar animation displayed on POV
 - [ ] **SPHERE-06**: Physical mic mute button with LED indicator
 - [ ] **SPHERE-07**: Reliable 10-minute demo capability
 - [ ] **SPHERE-08**: OTA firmware update mechanism
@@ -170,7 +170,7 @@
 | SPHERE-02 | Phase 7 | Pending |
 | SPHERE-03 | Phase 7 | Pending |
 | SPHERE-04 | Phase 7 | Pending |
-| SPHERE-05 | Phase 7 | Pending |
+| SPHERE-05 | Phase 7 | Complete |
 | SPHERE-06 | Phase 7 | Pending |
 | SPHERE-07 | Phase 7 | Pending |
 | SPHERE-08 | Phase 7 | Pending |
