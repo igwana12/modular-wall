@@ -67,15 +67,15 @@
 
 ### Spirit Sphere Integration
 
-- [ ] **SPHERE-01**: Voice AI + POV display running simultaneously on one ESP32-S3
-- [ ] **SPHERE-02**: Core 0 handles audio, Core 1 handles LEDs (no conflicts)
+- [x] **SPHERE-01**: Voice AI + POV display running simultaneously on one ESP32-S3
+- [x] **SPHERE-02**: Core 0 handles audio, Core 1 handles LEDs (no conflicts)
 - [ ] **SPHERE-03**: 3D printed enclosure (base + sphere mount) with 4-6 iteration budget
 - [ ] **SPHERE-04**: Battery powered (3x 18650 Li-ion) with USB-C charging pass-through
 - [ ] **SPHERE-05**: At least 1 deity avatar animation displayed on POV
-- [ ] **SPHERE-06**: Physical mic mute button with LED indicator
+- [x] **SPHERE-06**: Physical mic mute button with LED indicator
 - [ ] **SPHERE-07**: Reliable 10-minute demo capability
-- [ ] **SPHERE-08**: OTA firmware update mechanism
-- [ ] **SPHERE-09**: WiFi provisioning via BLE or captive portal (setup <10 min)
+- [x] **SPHERE-08**: OTA firmware update mechanism
+- [x] **SPHERE-09**: WiFi provisioning via BLE or captive portal (setup <10 min)
 
 ### Kickstarter Campaign
 
@@ -166,15 +166,15 @@
 | POV-03 | Phase 6 | Complete |
 | POV-04 | Phase 6 | Pending |
 | POV-05 | Phase 6 | Pending |
-| SPHERE-01 | Phase 7 | Pending |
-| SPHERE-02 | Phase 7 | Pending |
+| SPHERE-01 | Phase 7 | Complete |
+| SPHERE-02 | Phase 7 | Complete |
 | SPHERE-03 | Phase 7 | Pending |
 | SPHERE-04 | Phase 7 | Pending |
 | SPHERE-05 | Phase 7 | Pending |
-| SPHERE-06 | Phase 7 | Pending |
+| SPHERE-06 | Phase 7 | Complete |
 | SPHERE-07 | Phase 7 | Pending |
-| SPHERE-08 | Phase 7 | Pending |
-| SPHERE-09 | Phase 7 | Pending |
+| SPHERE-08 | Phase 7 | Complete |
+| SPHERE-09 | Phase 7 | Complete |
 | KS-01 | Phase 8 | Pending |
 | KS-02 | Phase 8 | Pending |
 | KS-03 | Phase 8 | Pending |
