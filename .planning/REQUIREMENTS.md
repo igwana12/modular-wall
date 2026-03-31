@@ -73,7 +73,7 @@
 - [ ] **SPHERE-04**: Battery powered (3x 18650 Li-ion) with USB-C charging pass-through
 - [x] **SPHERE-05**: At least 1 deity avatar animation displayed on POV
 - [ ] **SPHERE-06**: Physical mic mute button with LED indicator
-- [ ] **SPHERE-07**: Reliable 10-minute demo capability
+- [x] **SPHERE-07**: Reliable 10-minute demo capability
 - [ ] **SPHERE-08**: OTA firmware update mechanism
 - [ ] **SPHERE-09**: WiFi provisioning via BLE or captive portal (setup <10 min)
 
@@ -172,7 +172,7 @@
 | SPHERE-04 | Phase 7 | Pending |
 | SPHERE-05 | Phase 7 | Complete |
 | SPHERE-06 | Phase 7 | Pending |
-| SPHERE-07 | Phase 7 | Pending |
+| SPHERE-07 | Phase 7 | Complete |
 | SPHERE-08 | Phase 7 | Pending |
 | SPHERE-09 | Phase 7 | Pending |
 | KS-01 | Phase 8 | Pending |

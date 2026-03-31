@@ -18,6 +18,7 @@
 #include "state_machine.h"
 #include "mute_button.h"
 #include "status_display.h"
+#include "esp_task_wdt.h"
 
 // ============================================================
 // Task handle
@@ -208,7 +209,14 @@ void audioTask(void* param) {
     // -- Step 4: Initialize OTA --
     otaInit(serverUrl.c_str(), FIRMWARE_VERSION);
 
-    // -- Step 5: Main loop --
+    // -- Step 5: Subscribe to watchdog timer --
+    esp_task_wdt_add(NULL);  // Subscribe this task to watchdog
+    Serial.println("[AUDIO] Watchdog subscribed");
+
+    // WiFi reconnect timing
+    static unsigned long lastWiFiReconnect = 0;
+
+    // -- Step 6: Main loop --
     Serial.println("[AUDIO] Entering main loop");
 
     while (true) {
@@ -339,6 +347,18 @@ void audioTask(void* param) {
                           sphereStateNames[localState],
                           mute_is_muted() ? "YES" : "NO");
         }
+
+        // -- WiFi reconnect check --
+        if ((now - lastWiFiReconnect) >= WIFI_RECONNECT_INTERVAL_MS) {
+            lastWiFiReconnect = now;
+            if (!WiFi.isConnected()) {
+                Serial.println("[AUDIO] WiFi disconnected, attempting reconnect...");
+                WiFi.reconnect();
+            }
+        }
+
+        // -- Feed the watchdog --
+        esp_task_wdt_reset();
 
         // -- Yield to WiFi stack --
         vTaskDelay(pdMS_TO_TICKS(1));

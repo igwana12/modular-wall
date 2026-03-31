@@ -26,6 +26,8 @@
 #include "status_display.h"
 #include "audio_task.h"
 #include "led_task.h"
+#include "esp_task_wdt.h"
+#include <WiFi.h>
 
 // ============================================================
 // Serial command buffer
@@ -96,6 +98,16 @@ void setup() {
     Serial.println("Tasks created. Core 0: Audio, Core 1: LEDs");
     Serial.println("Serial commands: deity:<name> | intent:<text> | status | mute");
     Serial.println();
+
+    // -- Initialize Task Watchdog Timer --
+    // If either task hangs for WDT_TIMEOUT_MS, ESP32 reboots automatically
+    esp_task_wdt_config_t wdt_config = {
+        .timeout_ms = WDT_TIMEOUT_MS,
+        .idle_core_mask = 0,        // Don't watch idle tasks
+        .trigger_panic = true       // Reboot on timeout
+    };
+    esp_task_wdt_init(&wdt_config);
+    Serial.println("Watchdog timer initialized (30s timeout)");
 }
 
 // ============================================================
@@ -117,14 +129,27 @@ void loop() {
         }
     }
 
-    // -- Heartbeat: free heap, WiFi status, sphere state, mute state --
+    // -- Heartbeat: enhanced stability metrics --
     if ((now - lastHeartbeat) >= HEARTBEAT_INTERVAL_MS) {
         lastHeartbeat = now;
-        Serial.printf("[HEARTBEAT] uptime=%lus heap=%u state=%s muted=%s\n",
+        uint32_t freeHeap = ESP.getFreeHeap();
+        uint32_t minFreeHeap = ESP.getMinFreeHeap();
+
+        Serial.printf("[HEARTBEAT] uptime=%lus heap=%u minfree=%u wifi=%s state=%s muted=%s\n",
                        now / 1000,
-                       ESP.getFreeHeap(),
+                       freeHeap,
+                       minFreeHeap,
+                       WiFi.isConnected() ? "yes" : "no",
                        sphereStateNames[currentSphereState],
                        mute_is_muted() ? "YES" : "NO");
+
+        // Heap warning thresholds
+        if (freeHeap < (HEAP_WARNING_KB * 1024)) {
+            Serial.println("[WARNING] Free heap below 40KB!");
+        }
+        if (minFreeHeap < (HEAP_CRITICAL_KB * 1024)) {
+            Serial.println("[CRITICAL] Min free heap below 30KB -- possible memory leak");
+        }
     }
 
     // -- Yield: loop is low-priority monitoring only --
