@@ -142,7 +142,7 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260330-viw | Batch all remaining logos through 3D pipeline, wire JARVIS MediaDirector deity overlays | 2026-03-31 | 821d032 | [260330-viw-batch-all-remaining-logos-through-3d-pip](./quick/260330-viw-batch-all-remaining-logos-through-3d-pip/) |
-| 260331-622 | Wire ARTEF4KT visualizer voice ripple + 3D deity overlay into JARVIS V2 | 2026-03-31 | pending | [260331-622-wire-artef4kt-visualizer-voice-ripple-3d](./quick/260331-622-wire-artef4kt-visualizer-voice-ripple-3d/) |
+| 260331-622 | Wire ARTEF4KT visualizer voice ripple + 3D deity overlay into JARVIS V2 | 2026-03-31 | 19cf11c | [260331-622-wire-artef4kt-visualizer-voice-ripple-3d](./quick/260331-622-wire-artef4kt-visualizer-voice-ripple-3d/) |
 
 ### Blockers/Concerns
 
