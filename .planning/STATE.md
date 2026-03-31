@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 08-03-PLAN.md
-last_updated: "2026-03-31T13:33:38.466Z"
+stopped_at: Completed 08-01-PLAN.md
+last_updated: "2026-03-31T13:51:01.481Z"
 last_activity: 2026-03-31
 progress:
   total_phases: 9
   completed_phases: 8
   total_plans: 33
-  completed_plans: 30
+  completed_plans: 32
   percent: 0
 ---
 
@@ -77,6 +77,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 07 P02 | 4min | 2 tasks | 5 files |
 | Phase 07 P04 | 3min | 2 tasks | 2 files |
 | Phase 08 P03 | 5min | 2 tasks | 6 files |
+| Phase 08 P01 | 9 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -138,6 +139,8 @@ Recent decisions affecting current work:
 - [Phase 07]: 5V-only USB-C charger for v1 BMS -- PD 12V charging deferred to v1.1
 - [Phase 08]: Multi-license approach: MIT (firmware), CERN-OHL-S-2.0 (hardware), CC BY-SA 4.0 (enclosure)
 - [Phase 08]: Phased GitHub releases: v0.1.0 oracle-engine only, v0.2.0 adds pov-globe, v0.3.0 spirit-sphere, v1.0.0 at launch
+- [Phase 08]: Maker Edition positioning throughout campaign copy: assembled but hackable, not sealed appliance
+- [Phase 08]: All stretch goals software-only (no hardware additions) to avoid scope creep and BOM explosion
 
 ### Pending Todos
 
@@ -162,6 +165,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T13:33:38.462Z
-Stopped at: Completed 08-03-PLAN.md
+Last session: 2026-03-31T13:51:01.471Z
+Stopped at: Completed 08-01-PLAN.md
 Resume file: None
