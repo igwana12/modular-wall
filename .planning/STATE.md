@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 07-04-PLAN.md
-last_updated: "2026-03-31T08:59:17.966Z"
+stopped_at: Completed 08-02-PLAN.md
+last_updated: "2026-03-31T13:36:51.201Z"
 last_activity: 2026-03-31
 progress:
   total_phases: 9
   completed_phases: 8
-  total_plans: 29
-  completed_plans: 29
+  total_plans: 33
+  completed_plans: 30
   percent: 0
 ---
 
@@ -76,6 +76,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 06 P03 | 1min | 2 tasks | 5 files |
 | Phase 07 P02 | 4min | 2 tasks | 5 files |
 | Phase 07 P04 | 3min | 2 tasks | 2 files |
+| Phase 08 P02 | 6min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -135,6 +136,9 @@ Recent decisions affecting current work:
 - [Phase 07]: 130mm cylindrical base with 80mm height accommodates all components with clearance
 - [Phase 07]: Single straight arm (Option A) for v1 -- simplest to print and balance; curved arc deferred to v1.2+
 - [Phase 07]: 5V-only USB-C charger for v1 BMS -- PD 12V charging deferred to v1.1
+- [Phase 08]: Oracle Engine BOM $22 (qty 100) / $16 (qty 500) validates $79 early bird pricing
+- [Phase 08]: CNY gap Feb 2027 -- component orders must be placed by mid-January
+- [Phase 08]: BackerKit post-campaign shipping collection avoids 5% KS fee on shipping
 
 ### Pending Todos
 
@@ -159,6 +163,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T08:52:50.829Z
-Stopped at: Completed 07-04-PLAN.md
+Last session: 2026-03-31T13:36:51.197Z
+Stopped at: Completed 08-02-PLAN.md
 Resume file: None
