@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 07-03-PLAN.md
-last_updated: "2026-03-31T08:53:14.192Z"
+stopped_at: Completed 07-04-PLAN.md
+last_updated: "2026-03-31T08:52:50.832Z"
 last_activity: "2026-03-31 - Completed quick task 260331-622: Wire ARTEF4KT visualizer voice ripple + 3D object overlay into JARVIS V2 frontend"
 progress:
   total_phases: 9
@@ -75,7 +75,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 06 P02 | 3min | 2 tasks | 3 files |
 | Phase 06 P03 | 1min | 2 tasks | 5 files |
 | Phase 07 P02 | 4min | 2 tasks | 5 files |
-| Phase 07 P03 | 4min | 2 tasks | 6 files |
+| Phase 07 P04 | 3min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -132,8 +132,9 @@ Recent decisions affecting current work:
 - [Phase 06]: Hardware verification deferred -- POV components not yet available; firmware code-complete and flash-ready
 - [Phase 07]: sizeof(FRAME_DATA) for FRAME_DATA_LEN -- type-safe compile-time resolved
 - [Phase 07]: SPI_SPEED 6MHz recommended for slip ring reliability (derated from 12MHz)
-- [Phase 07]: Watchdog feeds in both normal render path AND idle-wait path to prevent false resets
-- [Phase 07]: Motor safety shutoff after 5s with no Hall pulses prevents runaway motor
+- [Phase 07]: 130mm cylindrical base with 80mm height accommodates all components with clearance
+- [Phase 07]: Single straight arm (Option A) for v1 -- simplest to print and balance; curved arc deferred to v1.2+
+- [Phase 07]: 5V-only USB-C charger for v1 BMS -- PD 12V charging deferred to v1.1
 
 ### Pending Todos
 
@@ -158,6 +159,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T08:53:14.189Z
-Stopped at: Completed 07-03-PLAN.md
+Last session: 2026-03-31T08:52:50.829Z
+Stopped at: Completed 07-04-PLAN.md
 Resume file: None

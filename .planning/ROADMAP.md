@@ -143,8 +143,8 @@ Plans:
 Plans:
 - [x] 07-01-PLAN.md -- Unified firmware scaffold: FreeRTOS dual-core, state machine, mute button, carried-forward modules (SPHERE-01, SPHERE-02, SPHERE-06, SPHERE-08, SPHERE-09)
 - [x] 07-02-PLAN.md -- Zeus deity POV animation + hardware BOM + wiring diagram (SPHERE-05)
-- [x] 07-03-PLAN.md -- Integration test plan, bench test log, watchdog timer + stability monitoring (SPHERE-07)
-- [ ] 07-04-PLAN.md -- 3D-printed enclosure design + 3S battery system documentation (SPHERE-03, SPHERE-04)
+- [ ] 07-03-PLAN.md -- Integration test plan, bench test log, watchdog timer + stability monitoring (SPHERE-07)
+- [x] 07-04-PLAN.md -- 3D-printed enclosure design + 3S battery system documentation (SPHERE-03, SPHERE-04)
 
 ### Phase 8: Kickstarter Campaign
 **Goal**: Campaign launches with two tiers — Oracle Engine (accessible) and Spirit Sphere (premium) — compelling video, validated manufacturing, active community
