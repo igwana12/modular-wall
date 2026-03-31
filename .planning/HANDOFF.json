@@ -1,48 +1,26 @@
 {
   "version": "1.0",
-  "timestamp": "2026-03-29T02:21:03Z",
-  "phase": "03",
-  "phase_name": "physical-cards-market-launch",
-  "phase_dir": ".planning/phases/03-physical-cards-market-launch",
-  "plan": 4,
-  "task": 2,
-  "total_tasks": 2,
+  "timestamp": "2026-03-31T02:32:39.276Z",
+  "phase": "ad-hoc/3d-logo-pipeline",
   "status": "paused",
   "completed_tasks": [
-    {"id": "01-01", "name": "SC pipeline audit + orb-backend scaffold", "status": "done", "phase": 1},
-    {"id": "01-02", "name": "Reading pipeline wiring", "status": "done", "phase": 1},
-    {"id": "02-01", "name": "Next.js scaffold + design system", "status": "done", "phase": 2},
-    {"id": "02-02", "name": "Card reveal + reading flow", "status": "done", "phase": 2},
-    {"id": "02-03", "name": "Homepage + daily card + McKee", "status": "done", "phase": 2},
-    {"id": "02-04", "name": "Stripe payments + Auth.js", "status": "done", "phase": 2},
-    {"id": "02-05", "name": "Guidebook + PWA", "status": "done", "phase": 2},
-    {"id": "03-01", "name": "QR codes + deposit API", "status": "done", "phase": 3},
-    {"id": "03-02", "name": "Landing page + analytics", "status": "done", "phase": 3},
-    {"id": "03-03", "name": "Kit email integration + deposit tagging", "status": "done", "phase": 3},
-    {"id": "03-04", "name": "Programmatic card generation (23 PNGs)", "status": "done", "phase": 3}
+    {"id": 1, "name": "Vectorize 3 hero logos to SVG", "status": "done"},
+    {"id": 2, "name": "Build Blender extrude+render pipeline", "status": "done"},
+    {"id": 3, "name": "Fix animation bug (baked keyframes)", "status": "done"},
+    {"id": 4, "name": "orient_upright + globe_spin functions", "status": "done"},
+    {"id": 5, "name": "Render 3 hero logos as MP4 turntables", "status": "done"}
   ],
-  "remaining_tasks": [],
-  "blockers": [
-    {"description": "Stripe API keys not configured", "type": "human_action", "workaround": "Code complete, needs real keys in apps/oracle/.env.local"},
-    {"description": "Resend API key not configured", "type": "human_action", "workaround": "Auth.js magic link won't work until key added"},
-    {"description": "oracleball.ai domain not purchased", "type": "human_action", "workaround": "App works on localhost/Vercel default domain"},
-    {"description": "ESP32-S3-BOX-3 not ordered", "type": "human_action", "workaround": "Phase 4 can't start without hardware"}
+  "remaining_tasks": [
+    {"id": 6, "name": "Batch-process remaining ~66 logos", "status": "not_started"},
+    {"id": 7, "name": "Wire into JARVIS MediaDirector as deity overlays", "status": "not_started"}
   ],
-  "human_actions_pending": [
-    {"action": "Set up Stripe test mode product + keys", "context": "Payment flow code is complete", "blocking": false},
-    {"action": "Set up Resend account + API key", "context": "Magic link auth code is complete", "blocking": false},
-    {"action": "Purchase oracleball.ai domain at Cloudflare", "context": "~$140/2yr, DNS config documented", "blocking": false},
-    {"action": "Order ESP32-S3-BOX-3 from Amazon/AliExpress", "context": "~$45, needed for Phase 4", "blocking": true}
-  ],
-  "decisions": [
-    {"decision": "Two product tracks: Oracle Engine (Track A) + POV Globe (Track B)", "rationale": "Each is independently viable, de-risks hardware", "phase": "roadmap"},
-    {"decision": "Programmatic card generation, not Figma", "rationale": "Automated 23 card PNGs via Playwright + templates", "phase": "03"},
-    {"decision": "Luma/LoRA pipeline for character art, not Nano Banana", "rationale": "Locked sacredcircuits_style LoRA maintains visual consistency", "phase": "03"},
-    {"decision": "222 character sheets generated (74 chars x 3 types)", "rationale": "Full production-ready character reference package", "phase": "03"},
-    {"decision": "Auth delayed until paywall", "rationale": "Zero friction QR→reading flow", "phase": "02"},
-    {"decision": "3 free readings/month, voice gated to paid tier", "rationale": "Research-backed conversion model", "phase": "02"}
-  ],
-  "uncommitted_files": [".planning/backlog/", ".planning/todos/", "apps/oracle/AGENTS.md"],
-  "next_action": "Start Phase 4: Oracle Engine Hardware Fundamentals — order ESP32-S3-BOX-3, then plan and execute voice round-trip firmware",
-  "context_notes": "Massive session: Phases 1-3 complete, Phase 9 (consolidation) complete. Roadmap restructured into two product tracks. Platform vision captured (combo AR cards, geo-fencing, philosophy synthesis). 222 character images generated via LoRA. Backlog has rich product vision docs ready for future phases."
+  "blockers": [],
+  "key_files": {
+    "blender_script": "/Volumes/AI_WORKSPACE/jarvis-visuals/3d-logos/blender_extrude_render.py",
+    "vectorize_script": "/Volumes/AI_WORKSPACE/jarvis-visuals/3d-logos/vectorize_v2.py",
+    "repo_copy": "/Users/claw2501/tools/3d-logo-pipeline/",
+    "svgs": "/Volumes/AI_WORKSPACE/jarvis-visuals/3d-logos/svg/",
+    "renders": "/Volumes/AI_WORKSPACE/jarvis-visuals/3d-logos/renders/"
+  },
+  "next_action": "Batch remaining ~66 logos then plan JARVIS MediaDirector integration"
 }
