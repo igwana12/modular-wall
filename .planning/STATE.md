@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 260330-viw (batch 3D logo pipeline + JARVIS deity overlay)
-last_updated: "2026-03-31T08:36:51.278Z"
-last_activity: 2026-03-31 -- Phase 07 execution started
+stopped_at: Completed 07-01-PLAN.md (unified firmware scaffold)
+last_updated: "2026-03-31T08:43:18Z"
+last_activity: 2026-03-31
 progress:
   total_phases: 9
   completed_phases: 7
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 
 ## Current Position
 
-Phase: 07 (spirit-sphere-integration) — EXECUTING
-Plan: 1 of 4
-Status: Executing Phase 07
-Last activity: 2026-03-31 -- Phase 07 execution started
+Phase: 07
+Plan: 01 of 4 complete
+Status: Executing
+Last activity: 2026-03-31 - Completed 07-01 unified firmware scaffold
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [##........] 25%
 
 ## Performance Metrics
 
@@ -74,6 +74,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 05 P03 | 4min | 2 tasks | 4 files |
 | Phase 06 P02 | 3min | 2 tasks | 3 files |
 | Phase 06 P03 | 1min | 2 tasks | 5 files |
+| Phase 07 P01 | 6min | 2 tasks | 31 files |
 
 ## Accumulated Context
 
@@ -128,6 +129,10 @@ Recent decisions affecting current work:
 - [Phase 05]: Form factor assessment approved: desk crystal + stuffed animal first, physical work after Phase 04 hardware verification
 - [Phase 06]: Hardware assembly deferred -- ESP32-S3, APA102, Hall sensor, N20 motor not yet available; firmware code-complete and flash-ready
 - [Phase 06]: Hardware verification deferred -- POV components not yet available; firmware code-complete and flash-ready
+- [Phase 07]: SPI_SPEED reduced to 6MHz (from 12MHz) for slip ring signal integrity
+- [Phase 07]: Removed FASTLED_ESP32_I2S defines -- APA102 uses hardware SPI, I2S reserved for audio
+- [Phase 07]: Audio task priority 2 (above WiFi), LED task priority 3 (highest for POV timing)
+- [Phase 07]: motor_ramp() called repeatedly in LED task loop for non-blocking ramp behavior
 
 ### Pending Todos
 
@@ -152,6 +157,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T02:54:46.053Z
-Stopped at: Completed 260330-viw (batch 3D logo pipeline + JARVIS deity overlay)
+Last session: 2026-03-31T08:43:18Z
+Stopped at: Completed 07-01-PLAN.md (unified firmware scaffold)
 Resume file: None
