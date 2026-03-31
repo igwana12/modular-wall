@@ -146,6 +146,27 @@ Plans:
 - [ ] 07-03-PLAN.md -- Integration test plan, bench test log, watchdog timer + stability monitoring (SPHERE-07)
 - [x] 07-04-PLAN.md -- 3D-printed enclosure design + 3S battery system documentation (SPHERE-03, SPHERE-04)
 
+### Phase 07.1: JARVIS V2 Visual Unification (INSERTED)
+
+**Goal:** Complete the JARVIS V2 frontend visual layer and wire it seamlessly to the Oracle Engine backend — SVG deity animations, nebula particle system, voice-to-blob mapping, GPU shaders, filmic tone, oracle reading visual flow, ditherpunk shader, and S9 logos aesthetic.
+**Requirements**: VIZ-01, VIZ-02, VIZ-03, VIZ-04, VIZ-05, VIZ-06, VIZ-07, VIZ-08, VIZ-09
+**Depends on:** Phase 7 (Oracle Engine backend complete)
+**Success Criteria** (what must be TRUE):
+  1. Speaking triggers deity SVG animation floating above chat messages with smooth lerp transitions
+  2. Nebula particle cloud visible around blob, shifts color/intensity during oracle readings
+  3. TTS audio frequency bands (bass/mid/high) drive distinct blob deformation parameters beyond simple scale
+  4. GPU particle shaders and filmic tone active without rendering crashes
+  5. Oracle reading produces full visual sequence: hexagram → archetypes → deity gradient → agent cards
+  6. Media presenter images processed through real-time ditherpunk shader
+  7. All frontend visual states map to backend pipeline states via WebSocket events
+**Plans:** 4 plans
+
+Plans:
+- [ ] 07.1-01-PLAN.md -- GPU shaders + filmic tone re-enable + multi-band voice-to-blob deformation (VIZ-03, VIZ-04, VIZ-05)
+- [ ] 07.1-02-PLAN.md -- SVG deity animator + nebula particle cloud (VIZ-01, VIZ-02)
+- [ ] 07.1-03-PLAN.md -- Oracle reading visual sequence director + backend health fix (VIZ-06, VIZ-09)
+- [ ] 07.1-04-PLAN.md -- Ditherpunk WebGL halftone shader + S9 Logos terminal accent (VIZ-07, VIZ-08)
+
 ### Phase 8: Kickstarter Campaign
 **Goal**: Campaign launches with two tiers — Oracle Engine (accessible) and Spirit Sphere (premium) — compelling video, validated manufacturing, active community
 **Depends on**: Phase 5 (Oracle Engine ready), Phase 7 (Spirit Sphere ready)
