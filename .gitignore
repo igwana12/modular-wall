@@ -26,6 +26,10 @@
 !scripts/
 !scripts/**
 
+# Campaign materials (manufacturing, shipping, video)
+!campaign/
+!campaign/**
+
 # POV Globe firmware
 !firmware/
 !firmware/**
