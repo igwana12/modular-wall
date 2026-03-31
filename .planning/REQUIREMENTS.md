@@ -79,14 +79,14 @@
 
 ### Kickstarter Campaign
 
-- [ ] **KS-01**: Campaign video: 30s demo + 2-3min full (production budget $2-5K)
+- [x] **KS-01**: Campaign video: 30s demo + 2-3min full (production budget $2-5K)
 - [x] **KS-02**: "Maker Edition" positioning (not consumer appliance)
 - [x] **KS-03**: $179 early bird tier (first 500 units)
 - [ ] **KS-04**: Accurate shipping costs via BackerKit with real dimensional quotes
 - [ ] **KS-05**: PCB design validated with small-batch JLCPCB order
 - [x] **KS-06**: Discord community active before campaign launch
 - [x] **KS-07**: Open-source firmware skeleton published on GitHub (pre-campaign)
-- [ ] **KS-08**: 5-10 prototype units seeded to tech YouTubers
+- [x] **KS-08**: 5-10 prototype units seeded to tech YouTubers
 
 ## v2 Requirements
 
@@ -175,14 +175,14 @@
 | SPHERE-07 | Phase 7 | Complete |
 | SPHERE-08 | Phase 7 | Pending |
 | SPHERE-09 | Phase 7 | Pending |
-| KS-01 | Phase 8 | Pending |
+| KS-01 | Phase 8 | Complete |
 | KS-02 | Phase 8 | Complete |
 | KS-03 | Phase 8 | Complete |
 | KS-04 | Phase 8 | Pending |
 | KS-05 | Phase 8 | Pending |
 | KS-06 | Phase 8 | Complete |
 | KS-07 | Phase 8 | Complete |
-| KS-08 | Phase 8 | Pending |
+| KS-08 | Phase 8 | Complete |
 
 **Coverage:**
 - v1 requirements: 53 total (47 original + 6 ENGINE)
