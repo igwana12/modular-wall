@@ -205,4 +205,13 @@
 // ============================================================
 #define SERIAL_BAUD     115200
 
+// ============================================================
+// Watchdog & Stability Monitoring
+// ============================================================
+#define WDT_TIMEOUT_MS      30000   // Watchdog timeout (30s auto-reboot on hang)
+#define HEAP_WARNING_KB      40     // Heap warning threshold (bytes = KB * 1024)
+#define HEAP_CRITICAL_KB     30     // Heap critical threshold
+#define WIFI_RECONNECT_INTERVAL_MS  5000  // WiFi reconnect check interval
+#define MOTOR_HALL_TIMEOUT_MS       5000  // Stop motor if no Hall pulses for this long
+
 #endif // CONFIG_H

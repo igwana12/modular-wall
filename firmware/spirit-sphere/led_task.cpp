@@ -17,6 +17,7 @@
 #include "state_machine.h"
 #include "status_display.h"
 #include "image_data.h"
+#include "esp_task_wdt.h"
 
 // ============================================================
 // Task handle
@@ -70,11 +71,19 @@ void ledTask(void* param) {
     motor_init();
     Serial.printf("[LED] Motor initialized (GPIO%d)\n", MOTOR_PIN);
 
-    // -- Step 2: Start motor ramp --
+    // -- Step 2: Subscribe to watchdog timer --
+    esp_task_wdt_add(NULL);  // Subscribe this task to watchdog
+    Serial.println("[LED] Watchdog subscribed");
+
+    // -- Step 3: Start motor ramp --
     motor_ramp(TARGET_RPM, MOTOR_RAMP_MS);
     Serial.printf("[LED] Motor ramping to %.1f RPM over %d ms\n", TARGET_RPM, MOTOR_RAMP_MS);
 
-    // -- Step 3: Main loop --
+    // Motor safety: track last valid Hall activity
+    unsigned long lastHallActivity = millis();
+    bool motorStopped = false;
+
+    // -- Step 4: Main loop --
     uint16_t lastColumn = 0;
     bool animationActive = false;
     SphereEvent evt;
@@ -117,9 +126,25 @@ void ledTask(void* param) {
         // -- Get rotation period --
         uint32_t period = hall_get_period_us();
 
+        // -- Motor safety shutoff: stop motor if no Hall pulses --
+        if (period > 0 && period < HALL_TIMEOUT_US) {
+            lastHallActivity = millis();
+            if (motorStopped) {
+                motorStopped = false;
+                Serial.println("[LED] Hall pulses restored, motor running");
+            }
+        } else if ((millis() - lastHallActivity) > MOTOR_HALL_TIMEOUT_MS) {
+            if (!motorStopped) {
+                motor_stop();
+                motorStopped = true;
+                Serial.println("[LED] Motor stopped -- no Hall pulses for 5s");
+            }
+        }
+
         // Safety: no Hall signal means motor stopped or stalled
         if (period == 0 || period > HALL_TIMEOUT_US) {
             led_clear();
+            esp_task_wdt_reset();  // Feed watchdog even when idle
             vTaskDelay(pdMS_TO_TICKS(10));
             continue;
         }
@@ -157,5 +182,8 @@ void ledTask(void* param) {
         if (columnDelay > 50) {
             delayMicroseconds(columnDelay - 50);
         }
+
+        // -- Feed the watchdog --
+        esp_task_wdt_reset();
     }
 }
