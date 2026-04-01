@@ -220,10 +220,10 @@ Plans:
   6. Plotly.js integrated for 3D charts (surface plots, scatter3D, 3D line) alongside ECharts 2D — JSON-driven, triggered via show_chart with chart_library field
   7. Frame-in-frame composition — widgets can overlay media panels, 3D objects float over charts, nested_widgets array in ScriptSegment renders child components inside parent panels
   8. Background gradient + panel timing synchronized — gradient shifts match panel entrance duration, not independent 2.5s cycle
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
-- [ ] 07.4-01-PLAN.md -- Schema enrichment + CSS transition library (CHOREO-01, CHOREO-02, CHOREO-03)
+- [x] 07.4-01-PLAN.md -- Schema enrichment + CSS transition library (CHOREO-01, CHOREO-02, CHOREO-03)
 - [ ] 07.4-02-PLAN.md -- Spatial layout + auto-animate morphing (CHOREO-04, CHOREO-05)
 - [ ] 07.4-03-PLAN.md -- Plotly 3D + frame-in-frame + delight polish (CHOREO-06, CHOREO-07, CHOREO-08)
 
