@@ -179,22 +179,30 @@ Plans:
   4. Perplexity research results render as structured cards (not just spoken text)
   5. Paperclip at :3100 running, login working, task data flows into JARVIS briefings
   6. All data sources pluggable — new adapters follow the same DataPayload + parser pattern
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 07.2-01-PLAN.md -- Pluggable adapter registry + RSS parser + enhanced Grok/X Twitter integration (DATA-02, DATA-03, DATA-06)
 - [x] 07.2-02-PLAN.md -- Paperclip diagnosis/fix + task parser + briefing integration (DATA-05)
-- [ ] 07.2-03-PLAN.md -- Widget panel + data card renderer + Perplexity structured cards (DATA-01, DATA-04)
+- [x] 07.2-03-PLAN.md -- Widget panel + data card renderer + Perplexity structured cards (DATA-01, DATA-04)
 
-### Phase 07.2.1: Media Orchestration Engine (INSERTED)
+### Phase 07.3: Media Orchestration Engine (INSERTED)
 
-**Goal:** [Urgent work - to be planned]
-**Requirements**: TBD
-**Depends on:** Phase 7.2
+**Goal:** Replace reactive media detection with pre-planned storyboard architecture — Claude generates structured scripts with visual cues, all media assets fetched in parallel, synchronized playback fires visuals at exact speech timestamps.
+**Requirements**: ORCH-01, ORCH-02, ORCH-03, ORCH-04, ORCH-05
+**Depends on:** Phase 07.1 (visual modules), Phase 07.2 (data sources)
+**Success Criteria** (what must be TRUE):
+  1. Claude generates script + visual storyboard BEFORE TTS starts (structured JSON with segments → module → data)
+  2. All media queries fire in parallel during TTS render — assets pre-loaded before speech begins
+  3. Frontend receives storyboard with offset_s timestamps and fires visuals synced to actual speech
+  4. Actual TTS duration from ElevenLabs fed back to frontend (not estimated 0.4s/word)
+  5. Story beat tracking — banner waypoints advance at narrative transitions, not clock ticks
+  6. show_presentation tool produces coordinated multi-panel sequences (banner + map + media as atomic unit)
+  7. Story context from Obsidian myth notes (story_stage_manager.py) fed into MediaDirector
 **Plans:** 0 plans
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 07.2.1 to break down)
+- [ ] TBD (run /gsd:plan-phase 07.3 to break down)
 
 ### Phase 8: Kickstarter Campaign
 **Goal**: Campaign launches with two tiers — Oracle Engine (accessible) and Spirit Sphere (premium) — compelling video, validated manufacturing, active community
