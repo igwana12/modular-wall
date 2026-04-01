@@ -199,12 +199,12 @@ Plans:
   5. Story beat tracking — banner waypoints advance at narrative transitions, not clock ticks
   6. show_presentation tool produces coordinated multi-panel sequences (banner + map + media as atomic unit)
   7. Story context from Obsidian myth notes (story_stage_manager.py) fed into MediaDirector
-**Plans:** 1/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 07.3-01-PLAN.md -- Script pre-planner + parallel media fetcher + TTS duration measurement (ORCH-01, ORCH-02, ORCH-04)
-- [ ] 07.3-02-PLAN.md -- Frontend storyboard scheduler + offset_s sync + tts_duration wiring (ORCH-03, ORCH-04)
-- [ ] 07.3-03-PLAN.md -- Story stage manager integration + beat-based banner advance + show_presentation activation (ORCH-05)
+- [x] 07.3-02-PLAN.md -- Frontend storyboard scheduler + offset_s sync + tts_duration wiring (ORCH-03, ORCH-04)
+- [x] 07.3-03-PLAN.md -- Story stage manager integration + beat-based banner advance + show_presentation activation (ORCH-05)
 
 ### Phase 07.4: Media Choreography & Delight Layer (INSERTED)
 
