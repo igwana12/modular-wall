@@ -199,10 +199,12 @@ Plans:
   5. Story beat tracking — banner waypoints advance at narrative transitions, not clock ticks
   6. show_presentation tool produces coordinated multi-panel sequences (banner + map + media as atomic unit)
   7. Story context from Obsidian myth notes (story_stage_manager.py) fed into MediaDirector
-**Plans:** 0 plans
+**Plans:** 3 plans
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 07.3 to break down)
+- [ ] 07.3-01-PLAN.md -- Script pre-planner + parallel media fetcher + TTS duration measurement (ORCH-01, ORCH-02, ORCH-04)
+- [ ] 07.3-02-PLAN.md -- Frontend storyboard scheduler + offset_s sync + tts_duration wiring (ORCH-03, ORCH-04)
+- [ ] 07.3-03-PLAN.md -- Story stage manager integration + beat-based banner advance + show_presentation activation (ORCH-05)
 
 ### Phase 8: Kickstarter Campaign
 **Goal**: Campaign launches with two tiers — Oracle Engine (accessible) and Spirit Sphere (premium) — compelling video, validated manufacturing, active community
@@ -237,8 +239,9 @@ Phases 1-3 sequential (Oracle Cards). Then two parallel tracks: Track A (Phases 
 | 5. Oracle Engine — Product Shell | A | 3/3 | Complete | 2026-03-30 |
 | 6. POV Globe Prototype | B | 3/3 | Complete | 2026-03-30 |
 | 7. Spirit Sphere Integration | A+B | 4/4 | Complete | 2026-03-31 |
-| 7.1 JARVIS V2 Visual Unification | — | 2/4 | In Progress | — |
-| 7.2 JARVIS V2 Data Integration | — | 0/3 | Planned | — |
+| 7.1 JARVIS V2 Visual Unification | — | 4/4 | Complete | — |
+| 7.2 JARVIS V2 Data Integration | — | 3/3 | Complete | — |
+| 7.3 Media Orchestration Engine | — | 0/3 | Planned | — |
 | 8. Kickstarter Campaign | — | 4/4 | Complete (3 hardware gaps) | 2026-03-31 |
 | 9. System Consolidation & Security | — | 5/5 | Complete | 2026-03-29 |
 
