@@ -206,6 +206,27 @@ Plans:
 - [ ] 07.3-02-PLAN.md -- Frontend storyboard scheduler + offset_s sync + tts_duration wiring (ORCH-03, ORCH-04)
 - [ ] 07.3-03-PLAN.md -- Story stage manager integration + beat-based banner advance + show_presentation activation (ORCH-05)
 
+### Phase 07.4: Media Choreography & Delight Layer (INSERTED)
+
+**Goal:** Transform the working multimedia engine into a cinematic, delightful experience — enriched scene schema from research, CSS transition choreography, spatial panel awareness, auto-animate morphing, Plotly 3D charts, and frame-in-frame composition. Informed by user's Perplexity research on Reveal.js/impress.js/Plotly/Scrollama patterns.
+**Requirements**: CHOREO-01, CHOREO-02, CHOREO-03, CHOREO-04, CHOREO-05, CHOREO-06, CHOREO-07, CHOREO-08
+**Depends on:** Phase 07.3 (orchestration engine must exist to choreograph)
+**Success Criteria** (what must be TRUE):
+  1. ScriptSegment enhanced with transition type, duration_ms, layout hint, actions array, and nested_widgets — matching the research JSON schema (scene/assets/actions/triggers)
+  2. CSS transition library with 7 named transitions (fade, scale, reveal, slide-up, wipe, split, zoom) using enter/exit easing curves (cubic-bezier(0.16,1,0.3,1) enter, cubic-bezier(0.7,0,0.84,0) exit)
+  3. Panel entrance stagger cascade — multi-panel arrivals choreographed with 80ms delays, not simultaneous
+  4. Spatial layout manager — panels flow to open screen space (media shifts right when chart is left), CSS Grid or layout-aware positioning
+  5. Auto-animate morphing — consecutive segments sharing the same module morph between states (chart data updates, map zoom changes) instead of hide/re-show (Reveal.js auto-animate pattern)
+  6. Plotly.js integrated for 3D charts (surface plots, scatter3D, 3D line) alongside ECharts 2D — JSON-driven, triggered via show_chart with chart_library field
+  7. Frame-in-frame composition — widgets can overlay media panels, 3D objects float over charts, nested_widgets array in ScriptSegment renders child components inside parent panels
+  8. Background gradient + panel timing synchronized — gradient shifts match panel entrance duration, not independent 2.5s cycle
+**Plans:** 3 plans
+
+Plans:
+- [ ] 07.4-01-PLAN.md -- Schema enrichment + CSS transition library (CHOREO-01, CHOREO-02, CHOREO-03)
+- [ ] 07.4-02-PLAN.md -- Spatial layout + auto-animate morphing (CHOREO-04, CHOREO-05)
+- [ ] 07.4-03-PLAN.md -- Plotly 3D + frame-in-frame + delight polish (CHOREO-06, CHOREO-07, CHOREO-08)
+
 ### Phase 8: Kickstarter Campaign
 **Goal**: Campaign launches with two tiers — Oracle Engine (accessible) and Spirit Sphere (premium) — compelling video, validated manufacturing, active community
 **Depends on**: Phase 5 (Oracle Engine ready), Phase 7 (Spirit Sphere ready)
@@ -242,6 +263,7 @@ Phases 1-3 sequential (Oracle Cards). Then two parallel tracks: Track A (Phases 
 | 7.1 JARVIS V2 Visual Unification | — | 4/4 | Complete | — |
 | 7.2 JARVIS V2 Data Integration | — | 3/3 | Complete | — |
 | 7.3 Media Orchestration Engine | — | 0/3 | Planned | — |
+| 7.4 Media Choreography & Delight | — | 0/3 | Planned | — |
 | 8. Kickstarter Campaign | — | 4/4 | Complete (3 hardware gaps) | 2026-03-31 |
 | 9. System Consolidation & Security | — | 5/5 | Complete | 2026-03-29 |
 
