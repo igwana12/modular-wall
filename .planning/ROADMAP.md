@@ -159,13 +159,13 @@ Plans:
   5. Oracle reading produces full visual sequence: hexagram → archetypes → deity gradient → agent cards
   6. Media presenter images processed through real-time ditherpunk shader
   7. All frontend visual states map to backend pipeline states via WebSocket events
-**Plans:** 2/4 plans executed
+**Plans:** 4/4 plans complete
 
 Plans:
 - [x] 07.1-01-PLAN.md -- GPU shaders + filmic tone re-enable + multi-band voice-to-blob deformation (VIZ-03, VIZ-04, VIZ-05)
 - [x] 07.1-02-PLAN.md -- SVG deity animator + nebula particle cloud (VIZ-01, VIZ-02)
-- [ ] 07.1-03-PLAN.md -- Oracle reading visual sequence director + backend health fix (VIZ-06, VIZ-09)
-- [ ] 07.1-04-PLAN.md -- Ditherpunk WebGL halftone shader + S9 Logos terminal accent (VIZ-07, VIZ-08)
+- [x] 07.1-03-PLAN.md -- Oracle reading visual sequence director + backend health fix (VIZ-06, VIZ-09)
+- [x] 07.1-04-PLAN.md -- Ditherpunk WebGL halftone shader + S9 Logos terminal accent (VIZ-07, VIZ-08)
 
 ### Phase 07.2: JARVIS V2 Data Integration Layer (INSERTED)
 
