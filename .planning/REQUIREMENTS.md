@@ -27,9 +27,9 @@ Requirements for infrastructure upgrade milestone. Each maps to roadmap phases.
 
 ### Loop Polling
 
-- [ ] **LOOP-01**: Orb-backend health poll runs every 5 minutes and reports failures
-- [ ] **LOOP-02**: Trello Command Center poll runs every 15 minutes and surfaces new cards
-- [ ] **LOOP-03**: Log scanner polls orb-backend.log every 30 minutes for errors
+- [x] **LOOP-01**: Orb-backend health poll runs every 5 minutes and reports failures
+- [x] **LOOP-02**: Trello Command Center poll runs every 15 minutes and surfaces new cards
+- [x] **LOOP-03**: Log scanner polls orb-backend.log every 30 minutes for errors
 
 ### Approval Boundaries
 
@@ -72,9 +72,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SCHED-01 | Phase 10 | Pending |
 | SCHED-02 | Phase 10 | Pending |
 | SCHED-03 | Phase 10 | Pending |
-| LOOP-01 | Phase 10 | Pending |
-| LOOP-02 | Phase 10 | Pending |
-| LOOP-03 | Phase 10 | Pending |
+| LOOP-01 | Phase 10 | Complete |
+| LOOP-02 | Phase 10 | Complete |
+| LOOP-03 | Phase 10 | Complete |
 | APPR-01 | Phase 11 | Pending |
 | APPR-02 | Phase 11 | Pending |
 | APPR-03 | Phase 11 | Pending |
