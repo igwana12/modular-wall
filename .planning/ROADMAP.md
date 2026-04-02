@@ -246,10 +246,10 @@ Plans:
   3. API health check fires every 6 hours and sends a notification to #the-orb when any service is unreachable
   4. Orb-backend health poll detects a stopped service within 5 minutes and reports the failure to #the-orb
   5. Trello poll surfaces new Command Center cards within 15 minutes of creation
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
-- [ ] 10-01-PLAN.md -- Scheduled task cadence alignment, health check fix, cron activation (SCHED-01, SCHED-02, SCHED-03)
+- [x] 10-01-PLAN.md -- Scheduled task cadence alignment, health check fix, cron activation (SCHED-01, SCHED-02, SCHED-03)
 - [ ] 10-02-PLAN.md -- Polling loops for orb-backend, Trello, and log scanner (LOOP-01, LOOP-02, LOOP-03)
 
 ### Phase 11: Security & Routing Hardening
@@ -302,7 +302,7 @@ Phases execute in numeric order. Phases 10 and 11 are independent and could run 
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 10. Automation Activation | v1.1 | 0/2 | Planning complete | - |
+| 10. Automation Activation | v1.1 | 1/2 | In Progress|  |
 | 11. Security & Routing Hardening | v1.1 | 0/2 | Not started | - |
 | 12. Session Mobility | v1.1 | 0/1 | Not started | - |
 | 13. Visual QA Hook | v1.1 | 0/2 | Not started | - |
