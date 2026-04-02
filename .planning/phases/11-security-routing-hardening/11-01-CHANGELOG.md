@@ -25,3 +25,4 @@ Files modified outside repo (system config):
 
 **File:** `/Users/claw2501/.claude/settings.json`
 **Change:** PreToolUse matcher updated from "Write|Edit" to "Write|Edit|Bash"
+**Verified:** `node -e` confirms matcher includes "Bash"
