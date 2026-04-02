@@ -262,11 +262,11 @@ Plans:
   3. Attempting to write to a .env or credentials file triggers a prompt guard rejection
   4. A JARVIS task session automatically includes services/jarvis/ directories and excludes firmware/
   5. An Orb firmware task session automatically includes firmware/ and excludes services/jarvis/
-**Plans**: TBD
+**Plans:** 1/2 plans complete
 
 Plans:
-- [ ] 11-01: Extend gsd-prompt-guard.js with Slack, main branch, and secret file rules
-- [ ] 11-02: Add context profiles to Smithers routing_policy.json and verify task-based routing
+- [x] 11-01-PLAN.md -- Extend gsd-prompt-guard.js with Slack, main branch, and secret file rules (APPR-01, APPR-02, APPR-03)
+- [ ] 11-02: Add context profiles to Smithers routing_policy.json and verify task-based routing (CTXP-01, CTXP-02, CTXP-03)
 
 ### Phase 12: Session Mobility
 **Goal**: Claude Code sessions move seamlessly between devices -- start on desktop, continue on phone, no context loss
@@ -303,6 +303,6 @@ Phases execute in numeric order. Phases 10 and 11 are independent and could run 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
 | 10. Automation Activation | v1.1 | 2/2 | Complete   | 2026-04-02 |
-| 11. Security & Routing Hardening | v1.1 | 0/2 | Not started | - |
+| 11. Security & Routing Hardening | v1.1 | 1/2 | In progress | - |
 | 12. Session Mobility | v1.1 | 0/1 | Not started | - |
 | 13. Visual QA Hook | v1.1 | 0/2 | Not started | - |

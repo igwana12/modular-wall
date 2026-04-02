@@ -24720,3 +24720,9 @@ ERROR:    [Errno 48] Address already in use
 2026-04-02 01:09:12,866 [INFO] Loaded 7104 images from catalog. Drive mounted: True
 2026-04-02 01:09:12,920 [INFO] Service smithers: OK
 2026-04-02 01:09:12,931 [INFO] Service llm_router: OK
+2026-04-02 18:20:23,728 [INFO] orb-backend starting up...
+2026-04-02 18:20:23,942 [INFO] Loaded 21 deity configs from /Users/claw2501/services/orb-backend/gods
+2026-04-02 18:20:23,943 [INFO] Loaded 21 deity configs
+2026-04-02 18:20:24,178 [INFO] Loaded 7104 images from catalog. Drive mounted: True
+2026-04-02 18:20:24,823 [INFO] Service smithers: OK
+2026-04-02 18:20:24,847 [INFO] Service llm_router: OK
