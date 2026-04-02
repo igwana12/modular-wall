@@ -1,8 +1,9 @@
 # The Orb — Roadmap (Oracle Cards + Spirit Sphere)
 
-## Overview
+## Milestones
 
-Three products, one backend, nine phases. Oracle Cards (Phases 1-3) ship first — digital experience + physical deck. Revenue and audience from cards de-risk hardware. The hardware splits into two independent product tracks: **Track A: Oracle Engine** (Phases 4-5) — a form-factor-agnostic voice AI device (ESP32 + mic + speaker + local LLM + RAG) that ships inside any enclosure (stuffed animal, lamp, crystal, toy). **Track B: POV Globe** (Phase 6) — the LED hologram sphere display. **Spirit Sphere** (Phase 7) = Oracle Engine + POV Globe combined in one premium product. Phase 8 is the Kickstarter campaign for both products. Tracks A and B run in parallel.
+- [x] **v1.0 The Orb** - Phases 1-8 (shipped 2026-03-31)
+- [ ] **v1.1 Claude Code Infrastructure Upgrades** - Phases 9-12 (in progress)
 
 ## Phases
 
@@ -12,16 +13,22 @@ Three products, one backend, nine phases. Oracle Cards (Phases 1-3) ship first �
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [x] **Phase 1: Pipeline Audit + Oracle Backend** - Verify SC pipeline gaps and stand up orb-backend :8300 with deity config, Content DB, and reading pipeline ✓ 2026-03-29
-- [x] **Phase 2: Oracle Reading Experience** ✓ 2026-03-29 - Build the end-to-end AI oracle reading flow with deity voice, PANTHEON visuals, and payment tiers
-- [x] **Phase 3: Physical Cards + Market Launch** ✓ 2026-03-29 - Design and print 21-card deck, build landing page, capture email list, validate revenue
-- [ ] **Phase 4: Oracle Engine — Hardware Fundamentals** [Track A] - ESP32-S3-BOX-3 voice round-trip, WebSocket to orb-backend, prove the voice AI works on hardware
-- [ ] **Phase 5: Oracle Engine — Product Shell** [Track A] - Local LLM option, swappable personality protocols, form-factor-agnostic enclosure (stuffed animal, lamp, crystal)
-- [ ] **Phase 6: POV Globe Prototype** [Track B] - LED POV display from flat 2D through spherical, position sync, ambient light visibility
-- [x] **Phase 7: Spirit Sphere Integration** ✓ 2026-03-31 - Combine Oracle Engine + POV Globe in one premium enclosure with battery and demo capability
-- [x] **Phase 8: Kickstarter Campaign** ✓ 2026-03-31 - Campaign for Oracle Engine ($79) + Spirit Sphere ($179), video, community, manufacturing validation
+<details>
+<summary>v1.0 The Orb (Phases 1-8) - SHIPPED 2026-03-31</summary>
 
-## Phase Details
+- [x] **Phase 1: Pipeline Audit + Oracle Backend** - Verify SC pipeline gaps and stand up orb-backend :8300 with deity config, Content DB, and reading pipeline
+- [x] **Phase 2: Oracle Reading Experience** - Build the end-to-end AI oracle reading flow with deity voice, PANTHEON visuals, and payment tiers
+- [x] **Phase 3: Physical Cards + Market Launch** - Design and print 21-card deck, build landing page, capture email list, validate revenue
+- [x] **Phase 4: Oracle Engine — Hardware Fundamentals** [Track A] - ESP32-S3-BOX-3 voice round-trip, WebSocket to orb-backend, prove the voice AI works on hardware
+- [x] **Phase 5: Oracle Engine — Product Shell** [Track A] - Local LLM option, swappable personality protocols, form-factor-agnostic enclosure
+- [x] **Phase 6: POV Globe Prototype** [Track B] - LED POV display from flat 2D through spherical, position sync, ambient light visibility
+- [x] **Phase 7: Spirit Sphere Integration** - Combine Oracle Engine + POV Globe in one premium enclosure with battery and demo capability
+- [x] **Phase 07.1: JARVIS V2 Visual Unification** (INSERTED) - SVG deity animations, nebula particles, voice-to-blob, GPU shaders, oracle visual flow
+- [x] **Phase 07.2: JARVIS V2 Data Integration Layer** (INSERTED) - Widgets, RSS, Grok/X, Paperclip, pluggable data adapters
+- [x] **Phase 07.3: Media Orchestration Engine** (INSERTED) - Pre-planned storyboards, parallel media fetch, synchronized playback
+- [x] **Phase 07.4: Media Choreography & Delight Layer** (INSERTED) - CSS transitions, spatial layout, auto-animate, Plotly 3D, frame-in-frame
+- [x] **Phase 8: Kickstarter Campaign** - Campaign for Oracle Engine ($79) + Spirit Sphere ($179), video, community, manufacturing validation
+- [x] **Phase 9: System Consolidation & Security Hardening** - Credentials, skill dedup, bloat removal, git init services, verification
 
 ### Phase 1: Pipeline Audit + Oracle Backend
 **Goal**: The shared backend exists and the full AI reading pipeline works end-to-end from a single API call
@@ -33,7 +40,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. A single API call triggers the full chain: Smithers -> LLM Router -> Pinecone RAG -> ElevenLabs TTS and returns a streaming response
   4. Content DB returns god-specific images when queried by deity name
   5. SSE endpoint streams reading content in real-time (no buffered bulk response)
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [x] 01-01-PLAN.md -- SC pipeline audit + orb-backend scaffold with deity config and Content DB (INFRA-01, INFRA-02, INFRA-04)
@@ -49,7 +56,7 @@ Plans:
   3. User can pull a daily card and receive a unique reading each time (not canned responses)
   4. Free tier user hits a monthly limit; paid user ($9.99/mo via Stripe) gets unlimited readings
   5. Digital guidebook page exists for each god with mythology, keywords, and meanings
-**Plans:** 4/5 plans executed
+**Plans:** 5/5 plans complete
 **UI hint**: yes
 
 Plans:
@@ -68,7 +75,7 @@ Plans:
   2. Every card's QR code resolves to its god's permanent reading URL (no link rot)
   3. Landing page at oracleball.ai captures email signups with $1 reservation deposits
   4. First 100 paid readings completed (revenue validation)
-**Plans:** 4 plans
+**Plans:** 4/4 plans complete
 **UI hint**: yes
 
 Plans:
@@ -78,7 +85,7 @@ Plans:
 - [x] 03-04-PLAN.md -- Figma card design for all 21 cards + proof deck order from MakePlayingCards (CARD-01, CARD-03, CARD-04)
 
 ### Phase 4: Oracle Engine — Hardware Fundamentals [Track A]
-**Goal**: Voice AI round-trip proven on real hardware — speak to an ESP32-S3 and hear a deity respond
+**Goal**: Voice AI round-trip proven on real hardware -- speak to an ESP32-S3 and hear a deity respond
 **Depends on**: Phase 1 (orb-backend WebSocket endpoint)
 **Requirements**: HW-01, HW-02, HW-03, HW-04, HW-05
 **Success Criteria** (what must be TRUE):
@@ -86,7 +93,7 @@ Plans:
   2. Speak into built-in mic and hear AI deity response through built-in speaker
   3. Full voice round-trip latency measured and documented (target under 5 seconds)
   4. Same firmware runs on ESP32-S3-BOX-3 and bare ESP32-S3-DevKitC-1 + INMP441 + MAX98357A (pin config swap only)
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 04-01-PLAN.md -- Backend WebSocket /ws/sphere: STT->LLM->TTS pipeline + Python test client (HW-03, HW-04)
@@ -94,17 +101,17 @@ Plans:
 - [x] 04-03-PLAN.md -- End-to-end voice round-trip: WebSocket client + push-to-talk + latency measurement (HW-03, HW-04, HW-05)
 
 ### Phase 5: Oracle Engine — Product Shell [Track A]
-**Goal**: The Oracle Engine is a standalone product — a voice AI device with local LLM fallback, swappable personality protocols, and a form factor ready for market testing
+**Goal**: The Oracle Engine is a standalone product -- a voice AI device with local LLM fallback, swappable personality protocols, and a form factor ready for market testing
 **Depends on**: Phase 4
 **Requirements**: ENGINE-01, ENGINE-02, ENGINE-03, ENGINE-04, ENGINE-05, ENGINE-06
 **Success Criteria** (what must be TRUE):
   1. Device runs with local LLM (quantized model on home server via Ollama) when cloud is unavailable
-  2. Personality protocols are swappable config files — switch deity voice/knowledge without reflashing
+  2. Personality protocols are swappable config files -- switch deity voice/knowledge without reflashing
   3. RAG knowledge system queries mythology corpus from onboard or networked storage
   4. Device fits inside at least 2 different form factors (e.g., desk crystal + stuffed animal) with same electronics
   5. OTA firmware updates work over WiFi
   6. Setup takes under 10 minutes via BLE/captive portal WiFi provisioning
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 05-01-PLAN.md -- Ollama LLM fallback, swappable protocol API, RAG query endpoint (ENGINE-01, ENGINE-02, ENGINE-03)
@@ -112,7 +119,7 @@ Plans:
 - [x] 05-03-PLAN.md -- WiFi provisioning captive portal, multi-board config, form factor checkpoint (ENGINE-06, ENGINE-04)
 
 ### Phase 6: POV Globe Prototype [Track B]
-**Goal**: A spinning LED arm renders a visible image in normal room lighting — the core visual magic proven independently
+**Goal**: A spinning LED arm renders a visible image in normal room lighting -- the core visual magic proven independently
 **Depends on**: Nothing (runs parallel to Track A)
 **Requirements**: POV-01, POV-02, POV-03, POV-04, POV-05
 **Success Criteria** (what must be TRUE):
@@ -121,7 +128,7 @@ Plans:
   3. Single-arm spherical POV renders an image using FastLED DMA at 3-5 RPM
   4. Image is visible in ambient room lighting (not just darkness)
   5. Motor noise measures under 45dB at 30cm distance
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 06-01-PLAN.md -- Firmware scaffold: FastLED DMA, Hall ISR, motor PWM, frame buffer + image-to-POV converter (POV-01, POV-02, POV-03)
@@ -129,7 +136,7 @@ Plans:
 - [x] 06-03-PLAN.md -- Spherical POV upgrade, ambient visibility tuning, motor noise measurement (POV-03, POV-04, POV-05)
 
 ### Phase 7: Spirit Sphere Integration
-**Goal**: Oracle Engine + POV Globe combined in one premium enclosure that demos reliably — the flagship product
+**Goal**: Oracle Engine + POV Globe combined in one premium enclosure that demos reliably -- the flagship product
 **Depends on**: Phase 5 (Oracle Engine), Phase 6 (POV Globe)
 **Requirements**: SPHERE-01, SPHERE-02, SPHERE-03, SPHERE-04, SPHERE-05, SPHERE-06, SPHERE-07, SPHERE-08, SPHERE-09
 **Success Criteria** (what must be TRUE):
@@ -138,27 +145,18 @@ Plans:
   3. Battery-powered operation (3x 18650) with USB-C charging pass-through
   4. At least one deity avatar animation displays on the POV sphere during a reading
   5. Prototype demos reliably for 10 continuous minutes without crash or audio dropout
-**Plans:** 1/4 plans executed
+**Plans:** 4/4 plans complete
 
 Plans:
 - [x] 07-01-PLAN.md -- Unified firmware scaffold: FreeRTOS dual-core, state machine, mute button, carried-forward modules (SPHERE-01, SPHERE-02, SPHERE-06, SPHERE-08, SPHERE-09)
 - [x] 07-02-PLAN.md -- Zeus deity POV animation + hardware BOM + wiring diagram (SPHERE-05)
-- [ ] 07-03-PLAN.md -- Integration test plan, bench test log, watchdog timer + stability monitoring (SPHERE-07)
+- [x] 07-03-PLAN.md -- Integration test plan, bench test log, watchdog timer + stability monitoring (SPHERE-07)
 - [x] 07-04-PLAN.md -- 3D-printed enclosure design + 3S battery system documentation (SPHERE-03, SPHERE-04)
 
 ### Phase 07.1: JARVIS V2 Visual Unification (INSERTED)
-
-**Goal:** Complete the JARVIS V2 frontend visual layer and wire it seamlessly to the Oracle Engine backend — SVG deity animations, nebula particle system, voice-to-blob mapping, GPU shaders, filmic tone, oracle reading visual flow, ditherpunk shader, and S9 logos aesthetic.
+**Goal:** Complete the JARVIS V2 frontend visual layer and wire it seamlessly to the Oracle Engine backend
 **Requirements**: VIZ-01, VIZ-02, VIZ-03, VIZ-04, VIZ-05, VIZ-06, VIZ-07, VIZ-08, VIZ-09
-**Depends on:** Phase 7 (Oracle Engine backend complete)
-**Success Criteria** (what must be TRUE):
-  1. Speaking triggers deity SVG animation floating above chat messages with smooth lerp transitions
-  2. Nebula particle cloud visible around blob, shifts color/intensity during oracle readings
-  3. TTS audio frequency bands (bass/mid/high) drive distinct blob deformation parameters beyond simple scale
-  4. GPU particle shaders and filmic tone active without rendering crashes
-  5. Oracle reading produces full visual sequence: hexagram → archetypes → deity gradient → agent cards
-  6. Media presenter images processed through real-time ditherpunk shader
-  7. All frontend visual states map to backend pipeline states via WebSocket events
+**Depends on:** Phase 7
 **Plans:** 4/4 plans complete
 
 Plans:
@@ -168,17 +166,9 @@ Plans:
 - [x] 07.1-04-PLAN.md -- Ditherpunk WebGL halftone shader + S9 Logos terminal accent (VIZ-07, VIZ-08)
 
 ### Phase 07.2: JARVIS V2 Data Integration Layer (INSERTED)
-
-**Goal:** Expand JARVIS data sources and contextual presentation — widgets, RSS feeds, Grok/X integration, Paperclip task dashboard, and pluggable data adapters that feed the visual toolkit from Phase 07.1.
+**Goal:** Expand JARVIS data sources and contextual presentation
 **Requirements**: DATA-01, DATA-02, DATA-03, DATA-04, DATA-05, DATA-06
-**Depends on:** Phase 07.1 (visual layer must be ready to display data)
-**Success Criteria** (what must be TRUE):
-  1. Widget framework renders embeddable mini-apps (weather, stocks, calendar, tasks) in VisualStageController
-  2. RSS feed ingestion polls configurable feed list on schedule, surfaces new items via voice or panel
-  3. Grok pulls live Twitter/X trends, threads, and sentiment for any topic JARVIS is discussing
-  4. Perplexity research results render as structured cards (not just spoken text)
-  5. Paperclip at :3100 running, login working, task data flows into JARVIS briefings
-  6. All data sources pluggable — new adapters follow the same DataPayload + parser pattern
+**Depends on:** Phase 07.1
 **Plans:** 3/3 plans complete
 
 Plans:
@@ -187,18 +177,9 @@ Plans:
 - [x] 07.2-03-PLAN.md -- Widget panel + data card renderer + Perplexity structured cards (DATA-01, DATA-04)
 
 ### Phase 07.3: Media Orchestration Engine (INSERTED)
-
-**Goal:** Replace reactive media detection with pre-planned storyboard architecture — Claude generates structured scripts with visual cues, all media assets fetched in parallel, synchronized playback fires visuals at exact speech timestamps.
+**Goal:** Replace reactive media detection with pre-planned storyboard architecture
 **Requirements**: ORCH-01, ORCH-02, ORCH-03, ORCH-04, ORCH-05
-**Depends on:** Phase 07.1 (visual modules), Phase 07.2 (data sources)
-**Success Criteria** (what must be TRUE):
-  1. Claude generates script + visual storyboard BEFORE TTS starts (structured JSON with segments → module → data)
-  2. All media queries fire in parallel during TTS render — assets pre-loaded before speech begins
-  3. Frontend receives storyboard with offset_s timestamps and fires visuals synced to actual speech
-  4. Actual TTS duration from ElevenLabs fed back to frontend (not estimated 0.4s/word)
-  5. Story beat tracking — banner waypoints advance at narrative transitions, not clock ticks
-  6. show_presentation tool produces coordinated multi-panel sequences (banner + map + media as atomic unit)
-  7. Story context from Obsidian myth notes (story_stage_manager.py) fed into MediaDirector
+**Depends on:** Phase 07.1, Phase 07.2
 **Plans:** 3/3 plans complete
 
 Plans:
@@ -207,19 +188,9 @@ Plans:
 - [x] 07.3-03-PLAN.md -- Story stage manager integration + beat-based banner advance + show_presentation activation (ORCH-05)
 
 ### Phase 07.4: Media Choreography & Delight Layer (INSERTED)
-
-**Goal:** Transform the working multimedia engine into a cinematic, delightful experience — enriched scene schema from research, CSS transition choreography, spatial panel awareness, auto-animate morphing, Plotly 3D charts, and frame-in-frame composition. Informed by user's Perplexity research on Reveal.js/impress.js/Plotly/Scrollama patterns.
+**Goal:** Transform the working multimedia engine into a cinematic, delightful experience
 **Requirements**: CHOREO-01, CHOREO-02, CHOREO-03, CHOREO-04, CHOREO-05, CHOREO-06, CHOREO-07, CHOREO-08
-**Depends on:** Phase 07.3 (orchestration engine must exist to choreograph)
-**Success Criteria** (what must be TRUE):
-  1. ScriptSegment enhanced with transition type, duration_ms, layout hint, actions array, and nested_widgets — matching the research JSON schema (scene/assets/actions/triggers)
-  2. CSS transition library with 7 named transitions (fade, scale, reveal, slide-up, wipe, split, zoom) using enter/exit easing curves (cubic-bezier(0.16,1,0.3,1) enter, cubic-bezier(0.7,0,0.84,0) exit)
-  3. Panel entrance stagger cascade — multi-panel arrivals choreographed with 80ms delays, not simultaneous
-  4. Spatial layout manager — panels flow to open screen space (media shifts right when chart is left), CSS Grid or layout-aware positioning
-  5. Auto-animate morphing — consecutive segments sharing the same module morph between states (chart data updates, map zoom changes) instead of hide/re-show (Reveal.js auto-animate pattern)
-  6. Plotly.js integrated for 3D charts (surface plots, scatter3D, 3D line) alongside ECharts 2D — JSON-driven, triggered via show_chart with chart_library field
-  7. Frame-in-frame composition — widgets can overlay media panels, 3D objects float over charts, nested_widgets array in ScriptSegment renders child components inside parent panels
-  8. Background gradient + panel timing synchronized — gradient shifts match panel entrance duration, not independent 2.5s cycle
+**Depends on:** Phase 07.3
 **Plans:** 3/3 plans complete
 
 Plans:
@@ -228,17 +199,10 @@ Plans:
 - [x] 07.4-03-PLAN.md -- Plotly 3D + frame-in-frame + delight polish (CHOREO-06, CHOREO-07, CHOREO-08)
 
 ### Phase 8: Kickstarter Campaign
-**Goal**: Campaign launches with two tiers — Oracle Engine (accessible) and Spirit Sphere (premium) — compelling video, validated manufacturing, active community
-**Depends on**: Phase 5 (Oracle Engine ready), Phase 7 (Spirit Sphere ready)
+**Goal**: Campaign launches with two tiers -- Oracle Engine (accessible) and Spirit Sphere (premium)
+**Depends on**: Phase 5, Phase 7
 **Requirements**: KS-01, KS-02, KS-03, KS-04, KS-05, KS-06, KS-07, KS-08
-**Success Criteria** (what must be TRUE):
-  1. Campaign video (30s demo + 2-3min full) shows BOTH real working prototypes, not renders
-  2. Two tiers: Oracle Engine ~$79 early bird, Spirit Sphere ~$179 early bird
-  3. PCB design validated with small-batch JLCPCB order (manufacturing path proven)
-  4. Shipping costs verified with real dimensional quotes via BackerKit
-  5. Discord community has active members before campaign goes live
-  6. Open-source firmware skeleton published on GitHub before campaign launch
-**Plans:** 4 plans
+**Plans:** 4/4 plans complete
 
 Plans:
 - [x] 08-01-PLAN.md -- Campaign page copy, reward tiers, FAQ, risks, and stretch goals (KS-02, KS-03)
@@ -246,39 +210,11 @@ Plans:
 - [x] 08-03-PLAN.md -- Discord setup, email sequences, build-in-public calendar, open-source repo prep (KS-06, KS-07)
 - [x] 08-04-PLAN.md -- Video scripts, storyboards, shot lists, gear plan, influencer outreach (KS-01, KS-08)
 
-## Progress
-
-**Execution Order:**
-Phases 1-3 sequential (Oracle Cards). Then two parallel tracks: Track A (Phases 4-5: Oracle Engine) and Track B (Phase 6: POV Globe). Phase 7 merges both tracks. Phase 8 is Kickstarter. Phase 9 is infrastructure (can run anytime).
-
-| Phase | Track | Plans Complete | Status | Completed |
-|-------|-------|----------------|--------|-----------|
-| 1. Pipeline Audit + Oracle Backend | — | 2/2 | Complete | 2026-03-28 |
-| 2. Oracle Reading Experience | — | 5/5 | Complete | 2026-03-28 |
-| 3. Physical Cards + Market Launch | — | 4/4 | Complete | 2026-03-29 |
-| 4. Oracle Engine — Hardware | A | 3/3 | Complete | 2026-03-30 |
-| 5. Oracle Engine — Product Shell | A | 3/3 | Complete | 2026-03-30 |
-| 6. POV Globe Prototype | B | 3/3 | Complete | 2026-03-30 |
-| 7. Spirit Sphere Integration | A+B | 4/4 | Complete | 2026-03-31 |
-| 7.1 JARVIS V2 Visual Unification | — | 4/4 | Complete | — |
-| 7.2 JARVIS V2 Data Integration | — | 3/3 | Complete | — |
-| 7.3 Media Orchestration Engine | — | 0/3 | Planned | — |
-| 7.4 Media Choreography & Delight | — | 0/3 | Planned | — |
-| 8. Kickstarter Campaign | — | 4/4 | Complete (3 hardware gaps) | 2026-03-31 |
-| 9. System Consolidation & Security | — | 5/5 | Complete | 2026-03-29 |
-
 ### Phase 9: System Consolidation & Security Hardening
-**Goal**: All credentials centralized and encrypted, skills deduplicated into single source of truth, bloat removed, critical services version-controlled, system verified working
-**Depends on**: Nothing (infrastructure phase, can run anytime)
-**Requirements**: SEC-01 (credential consolidation), SEC-02 (skill deduplication), SEC-03 (bloat removal), SEC-04 (git init critical services), SEC-05 (worktree cleanup), SEC-06 (post-consolidation verification)
-**Success Criteria** (what must be TRUE):
-  1. All API keys consolidated into encrypted vault; no plain-text .env files on external drives
-  2. Skills exist in one canonical location with symlinks; no duplicate skill sources
-  3. Irrelevant skills (bioinformatics, quantum, pharma) removed; dormant projects archived
-  4. Smithers, LLM Router, and Sacred Circuits pipeline have git repos with initial commits
-  5. Stale agent worktrees cleaned from services/smithers/
-  6. All services still running, all cron jobs intact, all MCP servers responding after changes
-**Plans:** 5 plans
+**Goal**: All credentials centralized and encrypted, skills deduplicated, bloat removed, critical services version-controlled
+**Depends on**: Nothing (infrastructure phase)
+**Requirements**: SEC-01, SEC-02, SEC-03, SEC-04, SEC-05, SEC-06
+**Plans:** 5/5 plans complete
 
 Plans:
 - [x] 08-01-PLAN.md -- Credential audit, sync-keys.sh hardening, canonical load-keys.sh (SEC-01)
@@ -286,3 +222,87 @@ Plans:
 - [x] 08-03-PLAN.md -- Git init Extreme Pro services, stale worktree cleanup (SEC-04, SEC-05)
 - [x] 08-04-PLAN.md -- Custom skill creation and Smithers manifest routing integration (SEC-02)
 - [x] 08-05-PLAN.md -- Post-consolidation verification of all services, skills, and credentials (SEC-06)
+
+</details>
+
+### v1.1 Claude Code Infrastructure Upgrades (In Progress)
+
+**Milestone Goal:** Upgrade the existing Smithers-controlled system with tactical improvements that enhance session mobility, automation, visual QA, and security.
+
+- [ ] **Phase 10: Automation Activation** - Verify scheduled tasks and configure loop polling on existing infrastructure
+- [ ] **Phase 11: Security & Routing Hardening** - Extend prompt guard rules and add context profiles to Smithers routing
+- [ ] **Phase 12: Session Mobility** - Enable teleport and remote control for cross-device Claude Code sessions
+- [ ] **Phase 13: Visual QA Hook** - Create Playwright-based screenshot capture and regression detection hook
+
+## Phase Details
+
+### Phase 10: Automation Activation
+**Goal**: All background automation runs unattended -- scheduled tasks fire on cadence and polling loops surface issues without manual checking
+**Depends on**: Nothing (first phase of v1.1)
+**Requirements**: SCHED-01, SCHED-02, SCHED-03, LOOP-01, LOOP-02, LOOP-03
+**Success Criteria** (what must be TRUE):
+  1. Running `crontab -l` shows all 5 tasks active with their defined cadences (local cron, not cloud /schedule per D-01)
+  2. Morning briefing fires at 7am via Smithers with service status, Trello cards, and calendar items
+  3. API health check fires every 6 hours and sends a notification to #the-orb when any service is unreachable
+  4. Orb-backend health poll detects a stopped service within 5 minutes and reports the failure to #the-orb
+  5. Trello poll surfaces new Command Center cards within 15 minutes of creation
+**Plans:** 2 plans
+
+Plans:
+- [ ] 10-01-PLAN.md -- Scheduled task cadence alignment, health check fix, cron activation (SCHED-01, SCHED-02, SCHED-03)
+- [ ] 10-02-PLAN.md -- Polling loops for orb-backend, Trello, and log scanner (LOOP-01, LOOP-02, LOOP-03)
+
+### Phase 11: Security & Routing Hardening
+**Goal**: Claude Code sessions are constrained to safe operations and automatically receive relevant context for their task type
+**Depends on**: Nothing (independent of Phase 10)
+**Requirements**: APPR-01, APPR-02, APPR-03, CTXP-01, CTXP-02, CTXP-03
+**Success Criteria** (what must be TRUE):
+  1. Attempting to post a Slack message to any channel other than #pantheon or #the-orb triggers a prompt guard rejection
+  2. Running `git push origin main` triggers an explicit confirmation prompt before proceeding
+  3. Attempting to write to a .env or credentials file triggers a prompt guard rejection
+  4. A JARVIS task session automatically includes services/jarvis/ directories and excludes firmware/
+  5. An Orb firmware task session automatically includes firmware/ and excludes services/jarvis/
+**Plans**: TBD
+
+Plans:
+- [ ] 11-01: Extend gsd-prompt-guard.js with Slack, main branch, and secret file rules
+- [ ] 11-02: Add context profiles to Smithers routing_policy.json and verify task-based routing
+
+### Phase 12: Session Mobility
+**Goal**: Claude Code sessions move seamlessly between devices -- start on desktop, continue on phone, no context loss
+**Depends on**: Nothing (independent)
+**Requirements**: MOBIL-01, MOBIL-02, MOBIL-03
+**Success Criteria** (what must be TRUE):
+  1. User starts a Claude Code session on Mac, runs teleport, and resumes the same conversation on iPhone/iPad
+  2. Remote control interface is accessible from a mobile browser and can issue commands to the desktop session
+  3. Teleported session includes conversation history and file context from the originating device
+**Plans**: TBD
+
+Plans:
+- [ ] 12-01: Teleport and remote control configuration, testing, and documentation
+
+### Phase 13: Visual QA Hook
+**Goal**: Frontend file changes are automatically screenshot-tested -- visual regressions caught before they reach commits
+**Depends on**: Nothing (independent, but highest complexity -- scheduled last)
+**Requirements**: VISQA-01, VISQA-02, VISQA-03
+**Success Criteria** (what must be TRUE):
+  1. Saving a .tsx, .css, or .html file in the JARVIS frontend triggers an automatic Playwright screenshot
+  2. Screenshot comparison against baseline detects layout shifts, color changes, or missing elements above a configurable threshold
+  3. Committing with a visual delta above threshold is blocked with a clear diff image showing what changed
+**Plans**: TBD
+
+Plans:
+- [ ] 13-01: PostToolUse hook for frontend file detection and Playwright screenshot capture
+- [ ] 13-02: Baseline management, pixel comparison, threshold-gated commit blocking
+
+## Progress
+
+**Execution Order:**
+Phases execute in numeric order. Phases 10 and 11 are independent and could run in parallel.
+
+| Phase | Milestone | Plans Complete | Status | Completed |
+|-------|-----------|----------------|--------|-----------|
+| 10. Automation Activation | v1.1 | 0/2 | Planning complete | - |
+| 11. Security & Routing Hardening | v1.1 | 0/2 | Not started | - |
+| 12. Session Mobility | v1.1 | 0/1 | Not started | - |
+| 13. Visual QA Hook | v1.1 | 0/2 | Not started | - |
