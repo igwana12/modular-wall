@@ -26,3 +26,21 @@ Files modified outside repo (system config):
 **File:** `/Users/claw2501/.claude/settings.json`
 **Change:** PreToolUse matcher updated from "Write|Edit" to "Write|Edit|Bash"
 **Verified:** `node -e` confirms matcher includes "Bash"
+
+## Bug Fix: Slack guard false positive on hashtags
+
+**File:** `/Users/claw2501/.claude/hooks/gsd-prompt-guard.js`
+**Rule 1 (auto-fix bug):** The `/#[a-z]/` context check in `checkSlackChannel` matched any `#word` pattern in any Bash command, including git commit messages with `#CHANGELOG`. Fixed to only trigger when command contains `\bslack\b` (case-insensitive) or matches the `SLACK_POST_PATTERN` regex.
+
+## Task 3: Integration test results (all 8 pass)
+
+| # | Test | Expected | Result |
+|---|------|----------|--------|
+| 1 | Slack to #general | WARN | WARN |
+| 2 | Slack to #the-orb | PASS | PASS |
+| 3 | Slack to #pantheon | PASS | PASS |
+| 4 | git push origin main | WARN | WARN |
+| 5 | git push origin feature-branch | PASS | PASS |
+| 6 | Write to .env | WARN | WARN |
+| 7 | Write to normal .ts | PASS | PASS |
+| 8 | Prompt injection in .planning/ | WARN | WARN |
