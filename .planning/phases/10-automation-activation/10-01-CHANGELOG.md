@@ -17,16 +17,17 @@ This file records what was changed for traceability.
 - Logs to /Users/claw2501/.openclaw/workspace/logs/morning-briefing.log
 - Made executable (chmod +x)
 
-## Task 2: Crontab Updates
+## Task 2: Crontab Updates (VERIFIED)
 
 ### Modified: crontab (system)
-- daily-obsidian-note: 30 6 -> 0 6 (6:00 AM)
-- service-health-check: 0 7 -> 0 */6 (every 6 hours)
-- wispr-sync: 0 8 -> 0 23 (11:00 PM)
-- morning-briefing: 30 8 inline curl -> 0 7 wrapper script
-- weekly-improvement: 0 10 * * 0 (unchanged, verified correct)
-- Added Phase 10 comment block
-- All non-automation entries preserved unchanged
+- daily-obsidian-note: 30 6 -> 0 6 (6:00 AM) -- VERIFIED
+- service-health-check: 0 7 -> 0 */6 (every 6 hours) -- VERIFIED
+- wispr-sync: 0 8 -> 0 23 (11:00 PM) -- VERIFIED
+- morning-briefing: 30 8 inline curl -> 0 7 wrapper script -- VERIFIED
+- weekly-improvement: 0 10 * * 0 (unchanged, verified correct) -- VERIFIED
+- Added Phase 10 comment block with decision references
+- All non-automation entries preserved unchanged (trading bot, github backup, etc.)
+- Backup saved at /tmp/crontab-backup-20260402.txt
 
 ## Task 3: Dry-run Validation
 - All 4 scripts pass bash -n syntax check
