@@ -39,9 +39,9 @@ Requirements for infrastructure upgrade milestone. Each maps to roadmap phases.
 
 ### Context Profiles
 
-- [ ] **CTXP-01**: Routing policy includes context profiles mapping task types to relevant directories
-- [ ] **CTXP-02**: Smithers routing applies the correct context profile based on task classification
-- [ ] **CTXP-03**: Unnecessary directories are excluded from sessions to reduce context pollution
+- [x] **CTXP-01**: Routing policy includes context profiles mapping task types to relevant directories
+- [x] **CTXP-02**: Smithers routing applies the correct context profile based on task classification
+- [x] **CTXP-03**: Unnecessary directories are excluded from sessions to reduce context pollution
 
 ## v2 Requirements
 
@@ -78,9 +78,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | APPR-01 | Phase 11 | Pending |
 | APPR-02 | Phase 11 | Pending |
 | APPR-03 | Phase 11 | Pending |
-| CTXP-01 | Phase 11 | Pending |
-| CTXP-02 | Phase 11 | Pending |
-| CTXP-03 | Phase 11 | Pending |
+| CTXP-01 | Phase 11 | Complete |
+| CTXP-02 | Phase 11 | Complete |
+| CTXP-03 | Phase 11 | Complete |
 | MOBIL-01 | Phase 12 | Pending |
 | MOBIL-02 | Phase 12 | Pending |
 | MOBIL-03 | Phase 12 | Pending |

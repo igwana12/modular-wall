@@ -230,7 +230,7 @@ Plans:
 **Milestone Goal:** Upgrade the existing Smithers-controlled system with tactical improvements that enhance session mobility, automation, visual QA, and security.
 
 - [x] **Phase 10: Automation Activation** - Verify scheduled tasks and configure loop polling on existing infrastructure (completed 2026-04-02)
-- [ ] **Phase 11: Security & Routing Hardening** - Extend prompt guard rules and add context profiles to Smithers routing
+- [x] **Phase 11: Security & Routing Hardening** - Extend prompt guard rules and add context profiles to Smithers routing (completed 2026-04-02)
 - [ ] **Phase 12: Session Mobility** - Enable teleport and remote control for cross-device Claude Code sessions
 - [ ] **Phase 13: Visual QA Hook** - Create Playwright-based screenshot capture and regression detection hook
 
@@ -266,7 +266,7 @@ Plans:
 
 Plans:
 - [ ] 11-01: Extend gsd-prompt-guard.js with Slack, main branch, and secret file rules
-- [ ] 11-02: Add context profiles to Smithers routing_policy.json and verify task-based routing
+- [x] 11-02: Add context profiles to Smithers routing_policy.json and verify task-based routing
 
 ### Phase 12: Session Mobility
 **Goal**: Claude Code sessions move seamlessly between devices -- start on desktop, continue on phone, no context loss
@@ -303,6 +303,6 @@ Phases execute in numeric order. Phases 10 and 11 are independent and could run 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
 | 10. Automation Activation | v1.1 | 2/2 | Complete   | 2026-04-02 |
-| 11. Security & Routing Hardening | v1.1 | 0/2 | Not started | - |
+| 11. Security & Routing Hardening | v1.1 | 1/1 | Complete   | 2026-04-02 |
 | 12. Session Mobility | v1.1 | 0/1 | Not started | - |
 | 13. Visual QA Hook | v1.1 | 0/2 | Not started | - |
