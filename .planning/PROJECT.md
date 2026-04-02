@@ -84,6 +84,18 @@ Each card activates a personalized AI oracle experience — mythology meets tech
 | Self-printed cards for v1 | Validate before investing in professional manufacturing | -- Pending |
 | Builder does hardware himself | Learning investment, full control, deeper product understanding | -- Pending |
 
+## Current Milestone: v1.1 Claude Code Infrastructure Upgrades
+
+**Goal:** Upgrade the existing Smithers-controlled system with 6 tactical improvements that enhance session mobility, automation, visual QA, and security.
+
+**Target features:**
+- Activate 5 existing scheduled tasks (morning-briefing, api-health-check, wispr-daily-sync, weekly-improvement, daily-obsidian-note)
+- Configure teleport/remote control for cross-device session mobility
+- Add visual QA hook for JARVIS frontend work (Playwright-based screenshot + compare)
+- Activate `/loop` polling for orb-backend health, Trello, and log monitoring
+- Tighten approval boundaries in `gsd-prompt-guard.js` (Slack channel restrictions, main branch protection, secret file guards)
+- Add context profiles to Smithers routing policy (task-type → directory mapping)
+
 ## Evolution
 
 This document evolves at phase transitions and milestone boundaries.
@@ -102,4 +114,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-28 after initialization*
+*Last updated: 2026-04-01 after milestone v1.1 start*

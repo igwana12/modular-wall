@@ -2,41 +2,41 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: Claude Code Infrastructure Upgrades
-status: completed
-stopped_at: Completed 10-01-PLAN.md
-last_updated: "2026-04-02T05:08:34.518Z"
-last_activity: 2026-04-01
+status: executing
+stopped_at: Phase 10 context gathered
+last_updated: "2026-04-02T05:02:45.455Z"
+last_activity: 2026-04-02 -- Phase 10 execution started
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 2
-  completed_plans: 1
-  percent: 100
+  completed_plans: 0
+  percent: 0
 ---
 
 # The Orb — Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-03-28)
+See: .planning/PROJECT.md (updated 2026-04-01)
 
 **Core value:** Each card activates a personalized AI oracle experience -- mythology meets technology, delivered through the Sacred Circuits pipeline.
-**Current focus:** Phase 06 — pov-globe-prototype-track-b
+**Current focus:** Phase 10 — automation-activation
 
 ## Current Position
 
-Phase: 07.4
-Plan: Not started
-Status: All Phase 08 plans complete
-Last activity: 2026-04-01
+Phase: 10 (automation-activation) — EXECUTING
+Plan: 1 of 2
+Status: Executing Phase 10
+Last activity: 2026-04-02 -- Phase 10 execution started
 
-Progress: [██████████] 100%
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 0
+- Total plans completed: 0 (v1.1)
 - Average duration: --
 - Total execution time: 0 hours
 
@@ -46,53 +46,12 @@ Progress: [██████████] 100%
 |-------|-------|-------|----------|
 | - | - | - | - |
 
-**Recent Trend:**
+**Recent Trend (from v1.0):**
 
-- Last 5 plans: --
-- Trend: --
+- Last 5 plans: 3min, 5min, 4min, 2min, 2min
+- Trend: Stable (~3-4min/plan)
 
 *Updated after each plan completion*
-| Phase 01 P01 | 10min | 2 tasks | 30 files |
-| Phase 02 P01 | 8min | 2 tasks | 36 files |
-| Phase 02 P03 | 4min | 2 tasks | 8 files |
-| Phase 02 P05 | 7min | 2 tasks | 8 files |
-| Phase 02 P02 | 12min | 3 tasks | 11 files |
-| Phase 02 P04 | 6min | 2 tasks | 17 files |
-| Phase 03 P01 | 2min | 2 tasks | 26 files |
-| Phase 03 P02 | 4min | 2 tasks | 10 files |
-| Phase 08 P03 | 2min | 2 tasks | 3 files |
-| Phase 08 P01 | 8min | 2 tasks | 4 files |
-| Phase 08 P04 | 4min | 2 tasks | 9 files |
-| Phase 03 P03 | 3min | 2 tasks | 4 files |
-| Phase 03 P04 | 8min | 2 tasks | 8 files |
-| Phase 04 P01 | 3min | 2 tasks | 5 files |
-| Phase 06 P01 | 4min | 2 tasks | 12 files |
-| Phase 05 P02 | 3min | 2 tasks | 7 files |
-| Phase 05 P01 | 3min | 2 tasks | 6 files |
-| Phase 04 P02 | 5min | 3 tasks | 6 files |
-| Phase 04 P03 | 5min | 2 tasks | 4 files |
-| Phase 05 P03 | 4min | 2 tasks | 4 files |
-| Phase 06 P02 | 3min | 2 tasks | 3 files |
-| Phase 06 P03 | 1min | 2 tasks | 5 files |
-| Phase 07 P02 | 4min | 2 tasks | 5 files |
-| Phase 07 P04 | 3min | 2 tasks | 2 files |
-| Phase 08 P03 | 5min | 2 tasks | 6 files |
-| Phase 08 P01 | 9 | 2 tasks | 5 files |
-| Phase 08 P04 | 10 | 2 tasks | 6 files |
-| Phase 07.1 P01 | 4min | 2 tasks | 4 files |
-| Phase 07.1 P02 | 4min | 2 tasks | 9 files |
-| Phase 07.1 P03 | 4min | 2 tasks | 5 files |
-| Phase 07.1 P04 | 5min | 2 tasks | 4 files |
-| Phase 07.2 P01 | 5min | 2 tasks | 7 files |
-| Phase 07.2 P02 | 6min | 2 tasks | 4 files |
-| Phase 07.2 P03 | 4min | 2 tasks | 6 files |
-| Phase 07.3 P01 | 3min | 2 tasks | 4 files |
-| Phase 07.3 P02 | 2min | 2 tasks | 2 files |
-| Phase 07.3 P03 | 2min | 2 tasks | 3 files |
-| Phase 07.4 P01 | 3min | 2 tasks | 4 files |
-| Phase 07.4 P02 | 5min | 2 tasks | 4 files |
-| Phase 07.4 P03 | 4min | 2 tasks | 7 files |
-| Phase 10 P01 | 3min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -101,112 +60,22 @@ Progress: [██████████] 100%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- [Roadmap]: Oracle Cards (Phases 1-3) before Spirit Sphere (Phases 4-7) -- leverage 80% existing infra, validate market first
-- [Roadmap]: Phases 4 and 5 run in parallel -- audio I/O and POV display are independent workstreams
-- [Roadmap]: Print-on-demand from day one (not self-printed) -- amateur quality poisons brand
-- [Phase 01]: ChromaDB for Phase 1 RAG -- Pinecone not configured, ChromaDB has 15,645 chunks ready
-- [Phase 01]: SC pipeline (:5173/:8000) not needed for Oracle Cards -- mythology data extracted into deity configs
-- [Phase 01]: 5 project + 7 premade ElevenLabs voices mapped across 21 gods for Phase 1
-- [Phase 02]: Next.js 16 (latest) used for oracle app -- create-next-app installs current stable
-- [Phase 02]: shadcn base-nova style (current default) -- functionally equivalent to planned new-york
-- [Phase 02]: Daily card uses localStorage date tracking -- anonymous until auth plan
-- [Phase 02]: Reading tracker is client-only enforcement -- server enforcement deferred to paywall plan
-- [Phase 02]: All 21 deity McKee guidance already complete from Phase 1 -- no modifications needed
-- [Phase 02]: Serwist uses webpack plugin with empty turbopack config for Next.js 16 compatibility
-- [Phase 02]: Mythology text extracted by splitting system_prompt on 'When giving a reading' marker
-- [Phase 02]: CardReveal lazy-loaded with next/dynamic SSR:false for fast FCP
-- [Phase 02]: Reading page 3-phase client state machine (reveal -> intent -> reading) with AudioContext on user gesture
-- [Phase 02]: JSON file user store (data/users.json) for v1 -- avoids database dependency, focuses on payment flow
-- [Phase 02]: Auth.js v5 beta with JWT sessions -- tier exposed to client via session callback
-- [Phase 02]: SessionProvider wrapper in root layout enables useSession across all client components
-- [Phase 03]: Root package.json created for monorepo-level scripts (generate:qr, qrcode dep)
-- [Phase 03]: Webhook metadata routing: check session.metadata.type before subscription logic for deposit handling
-- [Phase 03]: Root URL is now public landing page; oracle app moved to /oracle route
-- [Phase 03]: reading_completed analytics event tracks deity and tier for LAUNCH-04 revenue validation
-- [Phase 08]: Removed .env from git tracking in Smithers and LLM Router (were committed in history, now untracked)
-- [Phase 08]: Canonical load-keys.sh pattern: services source one file instead of maintaining per-service .env duplicates
-- [Phase 08]: Wallet freshness guard in sync-keys.sh prevents propagating stale keys after rotation
-- [Phase 08]: Skills live outside worktree at ~/.claude/skills/ (gitignored) -- activation_triggers enable Smithers auto-routing
-- [Phase 03]: Kit calls are fire-and-forget: errors logged but never thrown, deposit/signup flow unaffected
-- [Phase 03]: Task 1 (domain purchase) deferred -- code works without domain
-- [Phase 03]: React server components as print templates — fully programmable, no Figma, rerunnable card generation
-- [Phase 03]: Card PNGs gitignored (100MB+) — MANIFEST.txt tracks, script regenerates in seconds
-- [Phase 03]: 5 deities (persephone, hestia, eros, nike, tyche) need PANTHEON art generation — placeholders used
-- [Phase 04]: AssemblyAI REST API (not WebSocket streaming) for v1 -- simpler, hardware sends complete utterance
-- [Phase 04]: PCM 16-bit 16kHz mono as bidirectional audio format -- native ESP32 I2S format
-- [Phase 04]: JSON-typed WebSocket protocol with config/audio/end_audio client messages and status/transcript/text/audio/done/error server messages
-- [Phase 06]: BGR color order for APA102/SK9822 strips (FastLED standard)
-- [Phase 06]: Equirectangular projection as default sphere mode for image-to-POV converter
-- [Phase 06]: Linear RPM-to-duty motor mapping as starting point, marked for calibration with real hardware
-- [Phase 05]: Semantic version comparison via split-on-dots integer compare; SHA256 verification deferred to v2; binary existence check gates update_available
-- [Phase 05]: Cascading LLM fallback (not toggle): Anthropic -> LLM Router -> Ollama, automatic failover
-- [Phase 05]: Protocol API reuses gods/ JSON configs directly -- no separate protocol schema
-- [Phase 04]: Hardware verification deferred -- ESP32-S3-BOX-3 not available for physical testing
-- [Phase 04]: Hardware verification deferred -- ESP32-S3-BOX-3 not available for physical testing
-- [Phase 05]: Captive portal over BLE provisioning -- simpler, works with any phone browser
-- [Phase 05]: Form factor assessment approved: desk crystal + stuffed animal first, physical work after Phase 04 hardware verification
-- [Phase 06]: Hardware assembly deferred -- ESP32-S3, APA102, Hall sensor, N20 motor not yet available; firmware code-complete and flash-ready
-- [Phase 06]: Hardware verification deferred -- POV components not yet available; firmware code-complete and flash-ready
-- [Phase 07]: sizeof(FRAME_DATA) for FRAME_DATA_LEN -- type-safe compile-time resolved
-- [Phase 07]: SPI_SPEED 6MHz recommended for slip ring reliability (derated from 12MHz)
-- [Phase 07]: 130mm cylindrical base with 80mm height accommodates all components with clearance
-- [Phase 07]: Single straight arm (Option A) for v1 -- simplest to print and balance; curved arc deferred to v1.2+
-- [Phase 07]: 5V-only USB-C charger for v1 BMS -- PD 12V charging deferred to v1.1
-- [Phase 08]: Multi-license approach: MIT (firmware), CERN-OHL-S-2.0 (hardware), CC BY-SA 4.0 (enclosure)
-- [Phase 08]: Phased GitHub releases: v0.1.0 oracle-engine only, v0.2.0 adds pov-globe, v0.3.0 spirit-sphere, v1.0.0 at launch
-- [Phase 08]: Maker Edition positioning throughout campaign copy: assembled but hackable, not sealed appliance
-- [Phase 08]: All stretch goals software-only (no hardware additions) to avoid scope creep and BOM explosion
-- [Phase 07.1]: Fixed GLSL nested function bug (noise inside main) that caused GPU shader compilation failure -- root cause of system being disabled
-- [Phase 07.1]: Multi-band TTS deformation via postMessage bridge: bass->scale, mid->morph, high->sensitivity, centroid->color temperature
-- [Phase 07.1]: 2D Canvas for nebula (not Three.js) to avoid WebGL context conflicts with deity-overlay.js and particle-shell.js
-- [Phase 07.1]: Oracle visual state machine: idle->gate->casting->panels->reading->complete->cleanup with 3s cleanup delay
-- [Phase 07.1]: WebGL2 halftone overlay canvas on media-presenter rather than replacing img elements; SVG filter kept as fallback
-- [Phase 07.2]: Adapter registry pattern: dict[str, Callable] with register_source() -- simpler than base class inheritance
-- [Phase 07.2]: RSS 5-min TTL separate from main 60s pipeline cache -- feeds don't need sub-minute freshness
-- [Phase 07.2]: Twitter content auto-detected via multi-signal heuristic (2+ of: handles, hashtags, thread markers, twitter URLs, twitter terms)
-- [Phase 07.2]: Paperclip bootstrap_pending fix: direct DB insert of instance_admin role (faster than CLI bootstrap invite)
-- [Phase 07.2]: Better Auth email/password sign-in for Paperclip API access (session cookies, not API keys)
-- [Phase 07.2]: DataCardRenderer as standalone utility (not embedded in panel) -- reusable by chart panel for tabular fallback
-- [Phase 07.3]: MP3 bitrate estimate (bytes*8/128000) for TTS duration -- ElevenLabs Flash v2.5 ~128kbps
-- [Phase 07.3]: ScriptPlan optional parameter on MediaDirector.direct() for gradual migration -- no existing callers break
-- [Phase 07.3]: setTimeout-based scheduling for second-scale storyboard events (not rAF)
-- [Phase 07.3]: StagePlan injected as Claude system prompt context, not structured tool parameters
-- [Phase 07.3]: Banner advance events embedded in storyboard segment data array at segment boundaries (narrative beats)
-
-- Phase 7.4 inserted after Phase 7.3: Media Choreography & Delight Layer — transition library, spatial layout, auto-animate, Plotly 3D, frame-in-frame, informed by user's Perplexity research
-- [Phase 07.4]: CSS transitions via class toggle (not keyframes) for simpler state management
-- [Phase 07.4]: Split layout assigns left to existing panel, right to newcomer; morph path short-circuits before queue for zero-latency
-- [Phase 07.4]: Plotly CDN loaded after ECharts CDN -- both available for chart routing based on chart_library field
-- [Phase 07.4]: Widget overlay mode via CSS class toggle -- simpler than DOM reparenting
-- [Phase 07.4]: Gradient syncDuration uses speed override with setTimeout reset
-- [Phase 10]: Alert channel changed from #operations to #the-orb (C0APJ8ZL752) per D-10
+- [Roadmap v1.1]: SCHED + LOOP combined into Phase 10 (both activate existing infrastructure)
+- [Roadmap v1.1]: APPR + CTXP combined into Phase 11 (both modify config for existing systems)
+- [Roadmap v1.1]: VISQA gets its own phase (Phase 13) due to highest complexity -- new hook creation
+- [Roadmap v1.1]: Phase numbering continues at 10 (Phase 9 was System Consolidation in v1.0)
 
 ### Pending Todos
 
 None yet.
 
-### Roadmap Evolution
-
-- Phase 8 added: System Consolidation & Security Hardening — consolidate API keys, deduplicate skills, remove bloat, git-init critical services, clean worktrees
-- Phase 7.1 inserted after Phase 7: JARVIS V2 Visual Unification (URGENT) — complete frontend visual layer + wire to Oracle Engine backend
-- Phase 7.2 inserted after Phase 7.1: JARVIS V2 Data Integration Layer (URGENT) — widgets, RSS, Grok/X, Paperclip, pluggable data adapters
-- Phase 7.3 inserted after Phase 7.2: Media Orchestration Engine (URGENT) — pre-planned storyboards, parallel media fetch, synchronized playback, speech-synced visuals
-
-### Quick Tasks Completed
-
-| # | Description | Date | Commit | Directory |
-|---|-------------|------|--------|-----------|
-| 260330-viw | Batch all remaining logos through 3D pipeline, wire JARVIS MediaDirector deity overlays | 2026-03-31 | 821d032 | [260330-viw-batch-all-remaining-logos-through-3d-pip](./quick/260330-viw-batch-all-remaining-logos-through-3d-pip/) |
-| 260331-622 | Wire ARTEF4KT visualizer voice ripple + 3D deity overlay into JARVIS V2 | 2026-03-31 | 19cf11c | [260331-622-wire-artef4kt-visualizer-voice-ripple-3d](./quick/260331-622-wire-artef4kt-visualizer-voice-ripple-3d/) |
-
 ### Blockers/Concerns
 
-- SC pipeline "80% complete" claim is unverified -- Phase 1 audit may reveal larger gaps
-- POV display visibility in ambient lighting is unproven -- all reference projects demo in darkness
-- ElevenLabs cost at scale uncertain -- 21 deity voices x streaming TTS needs cost tracking from Phase 2
+- MOBIL features depend on Anthropic's current CLI feature state -- teleport/remote may have changed since last check
+- Playwright MCP availability needs verification before Phase 13 planning
 
 ## Session Continuity
 
-Last session: 2026-04-02T05:08:34.515Z
-Stopped at: Completed 10-01-PLAN.md
-Resume file: None
+Last session: 2026-04-02T04:41:19.964Z
+Stopped at: Phase 10 context gathered
+Resume file: .planning/phases/10-automation-activation/10-CONTEXT.md
