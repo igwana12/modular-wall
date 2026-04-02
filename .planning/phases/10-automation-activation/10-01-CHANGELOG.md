@@ -29,6 +29,11 @@ This file records what was changed for traceability.
 - All non-automation entries preserved unchanged (trading bot, github backup, etc.)
 - Backup saved at /tmp/crontab-backup-20260402.txt
 
-## Task 3: Dry-run Validation
-- All 4 scripts pass bash -n syntax check
-- Crontab confirms 5 correct automation entries
+## Task 3: Dry-run Validation (VERIFIED)
+- All 4 scripts pass bash -n syntax check (exit 0)
+- Smithers at :8200 reachable (HTTP 200)
+- daily-obsidian-note.sh ran successfully (created today's note)
+- service-health-check.sh ran (some services down -- expected, script works correctly)
+- morning-briefing-cron.sh syntax validated (not executed to avoid triggering real briefing)
+- wispr-sync.sh syntax validated
+- Crontab confirms 5 correct automation entries at correct cadences
