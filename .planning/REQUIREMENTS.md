@@ -33,9 +33,9 @@ Requirements for infrastructure upgrade milestone. Each maps to roadmap phases.
 
 ### Approval Boundaries
 
-- [ ] **APPR-01**: Prompt guard blocks Slack messages to channels outside #pantheon and #the-orb
-- [ ] **APPR-02**: Prompt guard requires explicit confirmation before git push to main
-- [ ] **APPR-03**: Prompt guard blocks writes to files containing API keys or tokens (.env, credentials)
+- [x] **APPR-01**: Prompt guard blocks Slack messages to channels outside #pantheon and #the-orb
+- [x] **APPR-02**: Prompt guard requires explicit confirmation before git push to main
+- [x] **APPR-03**: Prompt guard blocks writes to files containing API keys or tokens (.env, credentials)
 
 ### Context Profiles
 
