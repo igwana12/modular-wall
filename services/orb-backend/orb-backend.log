@@ -24726,3 +24726,6 @@ ERROR:    [Errno 48] Address already in use
 2026-04-02 18:20:24,178 [INFO] Loaded 7104 images from catalog. Drive mounted: True
 2026-04-02 18:20:24,823 [INFO] Service smithers: OK
 2026-04-02 18:20:24,847 [INFO] Service llm_router: OK
+2026-04-02 18:20:29,433 [INFO] ChromaDB initialized: 1 collections: ['obsidian_vault']
+2026-04-02 18:20:29,436 [INFO] orb-backend ready on :8300 | services: {'smithers': 'ok', 'llm_router': 'ok', 'content_drive': 'ok', 'ota': 'ready', 'ollama': 'ok', 'rag': 'chromadb'}
+2026-04-02 18:20:29,445 [INFO] orb-backend shutting down
