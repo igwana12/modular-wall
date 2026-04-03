@@ -15,9 +15,9 @@ Requirements for infrastructure upgrade milestone. Each maps to roadmap phases.
 
 ### Session Mobility
 
-- [ ] **MOBIL-01**: User can start a session on desktop and resume it on mobile via teleport
-- [ ] **MOBIL-02**: Remote control is enabled and accessible from browser/phone
-- [ ] **MOBIL-03**: Session handoff preserves conversation context across devices
+- [x] **MOBIL-01**: User can start a session on desktop and resume it on mobile via teleport
+- [x] **MOBIL-02**: Remote control is enabled and accessible from browser/phone
+- [x] **MOBIL-03**: Session handoff preserves conversation context across devices
 
 ### Visual QA
 
@@ -81,9 +81,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CTXP-01 | Phase 11 | Complete |
 | CTXP-02 | Phase 11 | Complete |
 | CTXP-03 | Phase 11 | Complete |
-| MOBIL-01 | Phase 12 | Pending |
-| MOBIL-02 | Phase 12 | Pending |
-| MOBIL-03 | Phase 12 | Pending |
+| MOBIL-01 | Phase 12 | Complete |
+| MOBIL-02 | Phase 12 | Complete |
+| MOBIL-03 | Phase 12 | Complete |
 | VISQA-01 | Phase 13 | Pending |
 | VISQA-02 | Phase 13 | Pending |
 | VISQA-03 | Phase 13 | Pending |
