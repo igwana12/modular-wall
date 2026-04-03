@@ -27,7 +27,20 @@ Files modified outside repository boundary. Tracked here for audit trail.
 ## Task 2: Commit guard and PreToolUse wiring
 
 ### Created
-- `/Users/claw2501/.claude/hooks/visual-qa-commit-guard.js` - PreToolUse hook blocking git commit during regression
+- `/Users/claw2501/.claude/hooks/visual-qa-commit-guard.js` - PreToolUse hook (83 lines)
+  - Reads /tmp/visual-qa-state.json for regression state
+  - Filters: only Bash tool calls containing "git commit"
+  - 1-hour staleness check (ignores old state from previous sessions)
+  - Advisory warning with baseline name, diff %, diff image path, resolution steps
+  - User can override via Claude Code permission prompt
 
 ### Modified
 - `/Users/claw2501/.claude/settings.json` - Added PreToolUse entry for visual-qa-commit-guard.js
+  - PostToolUse: 4 hooks, PreToolUse: 2 hooks (all existing hooks preserved)
+
+### Verification Results
+- Regression active + git commit -> BLOCKED (with message)
+- No regression + git commit -> ALLOWED (silent exit)
+- Non-git-commit Bash commands -> ALLOWED (silent exit)
+- Stale state (>1 hour) -> ALLOWED
+- Settings.json valid JSON with correct hook counts
