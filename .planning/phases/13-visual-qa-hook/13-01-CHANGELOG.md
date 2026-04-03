@@ -25,3 +25,11 @@
 - `/Users/claw2501/.claude/settings.json`
   - Added PostToolUse entry for visual-qa-hook.js with 20s timeout
   - Existing hooks preserved (gsd-context-monitor, jarvis-memory-bridge, obsidian-archive)
+  - Playwright 1.58.2 confirmed available
+
+**Verification results:**
+- Hook wired: YES (timeout=20)
+- Total PostToolUse entries: 4 (3 existing + 1 new)
+- Non-JARVIS file test: silent exit(0)
+- JARVIS frontend file test: advisory "JARVIS not running" + exit(0)
+- Syntax check: PASSED
