@@ -21,7 +21,7 @@ Requirements for infrastructure upgrade milestone. Each maps to roadmap phases.
 
 ### Visual QA
 
-- [ ] **VISQA-01**: PostToolUse hook fires on frontend file changes (tsx/css/html) and captures a Playwright screenshot
+- [x] **VISQA-01**: PostToolUse hook fires on frontend file changes (tsx/css/html) and captures a Playwright screenshot
 - [ ] **VISQA-02**: Screenshot comparison detects visual regressions above a configurable threshold
 - [ ] **VISQA-03**: Visual QA results block commit when delta exceeds threshold
 
@@ -84,7 +84,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MOBIL-01 | Phase 12 | Complete |
 | MOBIL-02 | Phase 12 | Complete |
 | MOBIL-03 | Phase 12 | Complete |
-| VISQA-01 | Phase 13 | Pending |
+| VISQA-01 | Phase 13 | Complete |
 | VISQA-02 | Phase 13 | Pending |
 | VISQA-03 | Phase 13 | Pending |
 
