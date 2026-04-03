@@ -289,11 +289,11 @@ Plans:
   1. Saving a .tsx, .css, or .html file in the JARVIS frontend triggers an automatic Playwright screenshot
   2. Screenshot comparison against baseline detects layout shifts, color changes, or missing elements above a configurable threshold
   3. Committing with a visual delta above threshold is blocked with a clear diff image showing what changed
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] 13-01: PostToolUse hook for frontend file detection and Playwright screenshot capture
-- [ ] 13-02: Baseline management, pixel comparison, threshold-gated commit blocking
+- [ ] 13-01-PLAN.md -- PostToolUse hook for JARVIS frontend file detection + Playwright screenshot capture (VISQA-01)
+- [ ] 13-02-PLAN.md -- Pixelmatch baseline comparison + commit-blocking PreToolUse guard (VISQA-02, VISQA-03)
 
 ## Progress
 
@@ -304,5 +304,5 @@ Phases execute in numeric order. Phases 10 and 11 are independent and could run 
 |-------|-----------|----------------|--------|-----------|
 | 10. Automation Activation | v1.1 | 2/2 | Complete   | 2026-04-02 |
 | 11. Security & Routing Hardening | v1.1 | 1/1 | Complete   | 2026-04-02 |
-| 12. Session Mobility | v1.1 | 1/1 | Complete   | 2026-04-03 |
+| 12. Session Mobility | v1.1 | 1/1 | Complete    | 2026-04-03 |
 | 13. Visual QA Hook | v1.1 | 0/2 | Not started | - |
