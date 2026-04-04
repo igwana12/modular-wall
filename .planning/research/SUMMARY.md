@@ -1,214 +1,206 @@
-# Project Research Summary
+# Research Summary — v1.2 Smithers-First + JARVIS Agentic Tools
 
-**Project:** The Orb (Oracle Cards + Spirit Sphere)
-**Domain:** AI-powered physical+digital oracle experience (cards) + volumetric LED hardware with voice AI (sphere)
-**Researched:** 2026-03-28
-**Confidence:** HIGH
+**Project:** The Orb — JARVIS Bridge
+**Milestone:** v1.2 Smithers-First Architecture + JARVIS Agentic Tools
+**Researched:** 2026-04-03
+**Confidence:** HIGH (all findings verified against live system and codebase)
+
+---
 
 ## Executive Summary
 
-The Orb is a two-product line where Oracle Cards validate the market and Spirit Sphere is the flagship hardware play. The critical insight from research is that roughly 80% of the infrastructure already exists in the Sacred Circuits pipeline -- LLM routing, RAG via Pinecone, ElevenLabs deity voices, PANTHEON art, Content DB. The Oracle Cards product is primarily an integration and packaging exercise on top of existing infrastructure, not a greenfield build. The new backend work is a single FastAPI service (orb-backend at :8300) that both products share. This is the correct architecture: one backend with two protocol adapters (REST+SSE for web, WebSocket for hardware).
+v1.2 adds three capabilities to `orb_bridge.py`: a unified intent classifier that replaces two scattered inline regex checks, voice-role binding that locks the correct deity voice before any async work begins, and an agentic tool loop that lets JARVIS read/write r1-frontend files and reload Chrome on the R1 hardware. All three features are achievable with zero new pip dependencies — `anthropic==0.86.0`, `websockets==16.0`, and `httpx==0.28.1` are already installed. The highest-risk component is the classifier, which sits on the latency-critical hot path before every voice response.
 
-The Spirit Sphere is where all the risk lives. The builder is new to hardware, and POV volumetric displays demand simultaneous mastery of rotational mechanics, LED timing, position synchronization, and structural balance. Research strongly indicates that the POV display must be approached incrementally: flat 2D POV first, then single-arm sphere, then full multi-arm assembly. The voice AI latency pipeline (STT -> LLM -> TTS) must stream end-to-end from day one -- no sequential buffering. The "crystal ball glowing while channeling" pattern masks latency as ritual, turning a technical constraint into a product feature.
+The central architectural tension in this milestone is the classifier implementation. ARCHITECTURE.md initially recommended an LLM Router call with a classification prompt. STACK.md measured that path at 1,667ms minimum for Haiku — more than 5x the 300ms budget. The resolution is unambiguous: **regex wins**. Four routes (smithers, deity, build, jarvis) have non-overlapping keyword signals that a 30,000-line-per-second regex handles with headroom to spare. The LLM Router is reserved for actual answer generation, not classification. Any future need for semantic routing can be solved at that time with a dedicated lightweight endpoint.
 
-The top project-killing risks are: (1) POV display physics gap causing months of mechanical debugging and builder discouragement, (2) voice latency destroying the demo experience, (3) prototype-to-production gap consuming the budget, (4) self-printed cards looking amateur and poisoning the brand, and (5) shipping cost miscalculation eating Kickstarter margins. Mitigations exist for all of these, but they require deliberate phase gates -- not "figure it out as we go." The Oracle Cards product should use print-on-demand (The Game Crafter or MakePlayingCards) from the first public sale, not home printing. The Kickstarter should sell a "Maker Edition" kit, not a consumer appliance, to reset production expectations.
+The second tension — FEATURES.md flagging "fix port conflict first" versus PITFALLS.md treating health fixes as last-priority — resolves cleanly once the actual port landscape is understood. The 8000/8300 pair are two separate legitimate services, not a conflict. The real conflict is Chrome Helper occasionally occupying the bridge's own port 8400. This is a startup-time race condition, not a blocking issue for feature development. The recommended fix (auto-increment fallback at startup) takes 8 lines and can be merged in the same PR as the classifier. System health restoration of Mission Control, JARVIS web, and Health Dashboard is genuinely independent and belongs in its own phase after the feature work is stable.
 
-## Key Findings
+---
 
-### Recommended Stack
+## Stack Additions
 
-The stack splits cleanly between the two products with a shared backend layer. Oracle Cards is a standard modern web stack (Next.js 15 / React 19 / TypeScript / Tailwind / shadcn/ui) deployed on Vercel, with Serwist for PWA support. The Spirit Sphere firmware runs on ESP32-S3-WROOM-1 (N16R8) with Arduino IDE 2.x and ESP32 Core 3.x. Both products talk to the same orb-backend (Python FastAPI) which orchestrates the existing AI pipeline.
+| Component | Status | What It Is | Integration Point |
+|-----------|--------|-----------|-------------------|
+| `classify_intent()` | New function | Regex router returning `{route, voice, confidence}` | Top of `process_query()`, replaces lines 744-756 |
+| `process_build_intent()` | New coroutine | Anthropic tool_use agentic loop, 5-iteration cap | Called when `route == "build"` |
+| `execute_tool()` / `dispatch_tool()` | New helper | Dispatches read_file, write_file, exec_shell, reload_frontend | Called inside agentic loop per tool_use block |
+| `reload_r1_frontend()` | New async helper | CDP WebSocket `Page.reload` via ADB-forwarded port 9222 | Called by `reload_frontend` tool; reuses `R1_SERIAL` global |
+| `_find_free_port(start)` | New startup helper | Scans 8400-8409, returns first free port | Module startup, replaces hardcoded `PORT = 8400` |
+| `anthropic_client` | Already exists | Used for vision (line 45); extend for tool_use | No change needed — API already imported |
+| `websockets` | Already installed v16.0 | CDP WebSocket connection | New usage in `reload_r1_frontend()` |
+| `httpx` | Already installed v0.28.1 | CDP tab discovery | New usage in `reload_r1_frontend()`, reuses existing client pattern |
 
-**Core technologies -- Oracle Cards:**
-- **Next.js 15 (App Router):** Web framework -- SSR for landing pages, App Router for reading experience, Vercel for zero-config CDN
-- **Serwist:** PWA service worker -- successor to next-pwa, enables "Add to Home Screen" after QR scan
-- **FastAPI (orb-backend :8300):** New shared backend -- reading orchestration, deity config, Content DB access, ElevenLabs voice, session management
-- **Stripe + Auth.js v5:** Payments and auth -- tiered access (free sample, paid full readings), magic link login
+**Zero new pip installs required.**
 
-**Core technologies -- Spirit Sphere:**
-- **ESP32-S3-WROOM-1 (N16R8):** MCU -- 16MB Flash, 8MB PSRAM, dual-core 240MHz, native USB/WiFi/BLE, hardware crypto
-- **APA102/SK9822 LEDs (NOT WS2812B):** POV display -- 20kHz PWM refresh, two-wire SPI immune to WiFi interrupt glitches. This is non-negotiable.
-- **FastLED 3.7+ with I2S DMA:** LED control -- hardware SPI, 4 DMA buffers for WiFi resilience
-- **INMP441 + MAX98357A:** Audio I/O -- I2S MEMS mic + I2S amp, digital path, no ADC needed
-- **PCM 16-bit 16kHz (start here, Opus later):** Audio codec -- zero CPU cost, optimize to Opus only if bandwidth matters
+---
 
-**Critical version requirements:**
-- ESP32 Arduino Core must be 3.x (not 2.x) for S3 support
-- FastLED must be 3.7+ for ESP32-S3 I2S DMA driver
-- Next.js must be 15.x for React 19 Server Components
+## Feature Table Stakes
 
-### Expected Features
+### Smithers-First Routing
 
-**Must have (table stakes) -- Oracle Cards:**
-- High-quality card artwork (exists: PANTHEON 525 panels)
-- Mobile-first web reading experience (QR scan to reading in <3s)
-- Personalized AI reading per card (the core value prop vs static decks)
-- Daily card / single pull reading (80% of user engagement)
-- Free tier with limited readings (freemium dominates oracle market)
-- Digital guidebook per god (mythology, keywords, upright/reversed meanings)
+| Must Have | Rationale |
+|-----------|-----------|
+| <300ms classifier latency | Sits before every voice response; any overhead compounds with STT + LLM + TTS |
+| Route priority: smithers > deity > build > jarvis | "Schedule a call with Zeus" must route to Smithers, not deity |
+| Silent fallback on classifier failure | LLM Router degradation must not surface as user-visible errors |
+| Voice locked before first `await` | Eliminates mid-function voice switches and the duplicate TTS early-return path |
+| Smithers reached at :8200 for memory/Slack/Obsidian intents | The Smithers path is preserved — only the triggering mechanism changes |
 
-**Must have (table stakes) -- Spirit Sphere:**
-- Reliable voice interaction (push-to-talk for v1, not wake word)
-- Visible volumetric POV display (must work in ambient lighting, not just darkness)
-- USB-C charging with pass-through
-- Sub-45dB noise level (desk/nightstand placement)
-- Setup in under 10 minutes (WiFi provisioning via BLE or captive portal)
-- OTA firmware updates (build from day one)
-- Privacy controls (physical mic mute button + LED indicator)
+### Voice-Role Binding
 
-**Should have (differentiators):**
-- Deity voice narration via ElevenLabs (THE killer feature -- no competing deck has this)
-- Greek mythology correlation engine (myth-matched readings using SC Content DB)
-- God-specific question routing ("Ask Athena about strategy, Aphrodite about love")
-- Volumetric 3D animated deity avatars (genuinely new -- no consumer product does this)
-- Personal knowledge RAG from Obsidian vault (transforms gadget into personal oracle)
-- Battery-powered portability (room-to-room, show friends)
+| Must Have | Rationale |
+|-----------|-----------|
+| `voice_changed` WebSocket message sent before `thinking` | Frontend needs to update avatar before processing animation starts |
+| Voice validated against `VOICES.keys()` before use | Hallucinated voice names cause KeyError and drop the WebSocket connection |
+| History keyed by session, not voice name | Current design loses context when voice switches mid-conversation |
+| ElevenLabs session closed before opening new voice session | Concurrent TTS WebSocket sends corrupt the connection |
 
-**Defer to v2+:**
-- NFC chip integration (QR works fine for v1, NFC adds $0.50-1.00/card)
-- Multi-card spread readings (single pull covers 80% of engagement)
-- Shareable reading cards / social images (growth feature for month 2)
-- Reading journal / mirror analytics (nice to have, not launch-critical)
-- 21 deity animations (launch Sphere with 3-5, expand via OTA)
-- Full companion web app (basic setup page only for Kickstarter)
-- Personal RAG / Obsidian (stretch goal or post-Kickstarter)
-- Open-source hardware release (post-fulfillment, not pre-ship)
+### JARVIS Agentic Tools
 
-### Architecture Approach
+| Must Have | Rationale |
+|-----------|-----------|
+| Sandbox: `Path.resolve()` assertion on all file paths | Path traversal is a documented CVE pattern (CVE-2025-53109) |
+| `exec_shell` allowlist only, `shell=False` | Prompt injection via voice has 94.4% success rate against LLM agents without Python-level enforcement |
+| Hard cap: `MAX_AGENTIC_ITERATIONS = 5`, 30s wall-clock timeout | Uncapped loops drain credits and hold WebSocket open silently |
+| Voice acknowledgement before loop starts ("Working on it") | 10-40s loops with no feedback feel like dead hardware |
+| `asyncio.Lock` on all TTS sends per client | Concurrent sends to same WebSocket client corrupt connection state |
+| ADB subprocess wrapped in `run_in_executor` | `adb` commands block event loop for 800ms-3s if called synchronously |
 
-Two products share a single new backend (orb-backend :8300) that sits atop the existing Sacred Circuits infrastructure (Smithers :8200, LLM Router :8100, OpenClaw :18789). The web app uses REST + SSE for streaming readings. The ESP32 uses a persistent WebSocket for bidirectional audio. Both call the same reading pipeline, same RAG, same TTS. Deity configuration is data, not code -- adding a god is a config file change. The ESP32 firmware is an explicit state machine (IDLE -> LISTENING -> UPLOADING -> WAITING -> PLAYING -> IDLE). The POV display uses double-buffered PSRAM frames (49KB per frame, trivial for 8MB PSRAM) with DMA transfer synced to Hall effect sensor interrupts.
+---
 
-**Major components:**
-1. **orb-backend (:8300)** -- Single new FastAPI service. Oracle reading orchestration, WebSocket audio relay for Sphere, deity config, Content DB access, ElevenLabs TTS proxy, session management
-2. **Oracle Cards Web App** -- Next.js 15 PWA on Vercel. QR routing, reading UI, Stripe payments, SSE streaming from backend
-3. **Spirit Sphere Firmware** -- ESP32-S3 Arduino C++. Audio I/O (I2S), POV display (FastLED DMA), WiFi/WebSocket, state machine
-4. **Existing SC Pipeline** -- Smithers, LLM Router, Pinecone, Content DB. Consumed as-is, extended with mythology corpus
+## Recommended Build Order
 
-### Critical Pitfalls
+The three researchers produced two different orderings. ARCHITECTURE.md said classifier → voice-role → agentic → health. FEATURES.md said health first. The synthesized ordering below resolves this by separating "what unblocks the features" from "what is independent."
 
-1. **Voice AI latency wall** -- Sequential STT->LLM->TTS creates 2-4s dead air that kills the magic. Prevention: stream end-to-end from day one, use "channeling" animations to mask processing, target <1s to first audio byte.
+### Step 1: Regex Classifier + Voice Lock + Port Fix (1 PR)
 
-2. **POV display physics gap** -- First-time builder hits rotational mechanics, LED timing, position sync, and structural balance simultaneously. Prevention: start with flat 2D POV, master single-arm before multi-arm, use APA102 (not WS2812B), budget 4-6 print iterations.
+Build `classify_intent(text)` using the STACK.md regex patterns with route priority: smithers > deity > build > jarvis. Wire it into the top of `process_query()`. Delete the inline `smithers_triggers`/`smithers_tools` block (lines 744-756) and its early-return TTS path — there is now one TTS path at the end of `process_query()`. Add the 8-line `_find_free_port()` startup helper. Add `voice_changed` WebSocket message when classifier overrides voice. Switch `conversation_history` keying from voice name to session/connection object.
 
-3. **Prototype-to-production abyss** -- Working breadboard prototype does not equal shippable product. Prevention: sell "Maker Edition" kit (not consumer appliance), use off-the-shelf ESP32-S3 modules, design PCB early with KiCad, keep first run to 100-300 units, use JLCPCB assembly.
+**Why first:** Steps 2 and 3 consume classifier output — nothing else can be built without it. This is the highest-risk change because it touches the hot path for every voice query. Shipping it alone measures real p95 latency on R1 hardware before adding agentic complexity. The port fix belongs here because it is trivial and prevents a startup failure that would block testing the classifier itself.
 
-4. **Self-printed cards look amateur** -- Home printing cannot match commercial card quality. Prevention: use print-on-demand (The Game Crafter, MakePlayingCards) from first public sale, price v1 cards at cost ($5-10) to validate the digital experience.
+**Test gates:**
+- "What's on my calendar?" → smithers route, JARVIS voice, reaches :8200
+- "Tell me about Zeus" → deity route, zeus voice
+- "Add a dark mode toggle" → build route, JARVIS voice
+- "Schedule a call with Zeus" → smithers route (smithers > deity priority)
+- "What time is it?" → jarvis fallback
+- Classifier with LLM Router down → silent fallback, response still completes
 
-5. **Shipping cost annihilation** -- Spherical packaging = poor packing efficiency = dimensional weight pricing surprise. Prevention: get real shipping quotes before setting KS tiers, use BackerKit for post-campaign shipping collection, consider US-only for first campaign, add 30% contingency.
+### Step 2: Agentic Tool Loop (1 PR, depends on Step 1)
 
-## Implications for Roadmap
+Build `process_build_intent()`, `execute_tool()`, and `reload_r1_frontend()`. Define the four tool schemas (read_file, write_file, exec_shell, reload_frontend). Enforce path sandbox with `Path.resolve()` assertion and exec_shell allowlist at the Python level — never in the LLM prompt. Send voice acknowledgement via existing fast TTS path before dispatching loop as `asyncio.create_task`. Send voice confirmation when loop completes. Cap at `MAX_AGENTIC_ITERATIONS = 5` with a 30s wall-clock timeout. Wrap all ADB calls in `run_in_executor`.
 
-### Phase 1: Sacred Circuits Pipeline Audit + Oracle Backend
+Use `claude-haiku-4-5` for the agentic loop (1,850ms/round measured); reserve Sonnet for the final voice reply if quality warrants it.
 
-**Rationale:** Everything depends on understanding what exists and what is missing. The PROJECT.md says the SC pipeline is "80% built" but that needs verification. The orb-backend is the foundation both products share.
-**Delivers:** Working orb-backend (:8300) with deity config, Content DB access, and reading pipeline connected to Smithers/LLM Router/Pinecone.
-**Addresses:** Core infrastructure for ALL subsequent phases
-**Avoids:** Pitfall 14 (scope creep) -- timebox audit to 1 week, simplify if gaps are larger than expected
+**Why second:** Cannot build without the classifier's `route == "build"` flag. The CDP reload path and ADB sandbox require real R1 hardware for meaningful testing.
 
-### Phase 2: Oracle Cards Reading Experience
+**Test gates (hardware required):**
+- "Add a red border to the thinking bubble" → reads file → writes change → CDP reload → voice confirms
+- Path traversal attempt (`../../.ssh/authorized_keys`) → Python assertion rejects before subprocess, loop hears error, does not proceed
+- `rm -rf` shell command → allowlist rejects, loop hears error, voice reports failure
+- Impossible request → hits iteration 5 → exits loop → voice says "I ran into trouble"
+- Voice acknowledgement heard before any tool execution begins
 
-**Rationale:** The reading experience is the product. Cards are just access keys. If the AI reading is generic and boring, nothing else matters. This phase is where McKee storytelling principles and deity personality engineering happen.
-**Delivers:** Working end-to-end flow: QR scan -> intention selection -> AI reading with deity voice narration + PANTHEON visuals. Streaming SSE delivery. Free tier + paid tier via Stripe.
-**Addresses:** Table stakes (personalized readings, deity voice, mobile-first PWA, daily card pull, free tier) plus key differentiators (voice narration, mythology correlation, visual presentation)
-**Avoids:** Pitfall 7 (generic readings) -- A/B test with 20-30 people before launch, iterate until screenshots are shared unprompted; Pitfall 12 (QR link rot) -- lock URL architecture before cards go to print
+### Step 3: System Health Restoration (1 PR, independent)
 
-### Phase 3: Oracle Cards Physical Product + Launch
+Restore Mission Control (:4000), JARVIS web (:5556), Health Dashboard (:6001). Document port registry in CLAUDE.md. Define restart order: stop JARVIS web first, then fix Mission Control, then restart JARVIS web. Set canonical `ORB_BACKEND_PORT=8300` env var and grep-verify zero stale references to 8000 in startup configs. Fix R1 ADB serial caching: per-call lookup with 30s TTL instead of module-load-time capture. Add startup health check (`curl -s http://localhost:8300/health`) before declaring orb-backend live.
 
-**Rationale:** Physical cards cannot ship until the digital experience works and URLs are locked. Print-on-demand requires finalized card designs with QR codes pointing to permanent routes.
-**Delivers:** 21-card deck via print-on-demand, landing page with email capture + $1 reservation deposits, launch to initial audience
-**Addresses:** Card artwork/layout, QR generation, packaging, revenue model activation
-**Avoids:** Pitfall 5 (amateur printing) -- use professional print-on-demand, not home printer; Pitfall 11 (ElevenLabs cost spiral) -- cache common audio, implement cost tracking from day one
+**Why last:** Genuinely independent from Steps 1-2. None of these fixes enable or block the classifier or agentic loop. Mixing operational fixes with feature PRs makes regressions harder to attribute. Do this after the features are stable in production on R1.
 
-### Phase 4: ESP32 Hardware Fundamentals (Learning Phase)
+---
 
-**Rationale:** The builder is new to hardware. This phase is explicitly a learning milestone, not a product milestone. Trying to build the Sphere without foundational ESP32 skills leads to months of frustration and potential project abandonment.
-**Delivers:** Working ESP32-S3 dev board with: LED blink, I2S audio capture + playback, WiFi connection, WebSocket communication to orb-backend, basic voice round-trip (speak -> STT -> LLM -> TTS -> hear response)
-**Addresses:** Hardware learning curve, voice pipeline validation on actual hardware (not laptop)
-**Avoids:** Pitfall 1 (latency wall) -- validate voice round-trip latency early on real WiFi; Phase-specific warning (tutorial hell) -- hard 2-week timebox for Hello World
+## Watch Out For
 
-### Phase 5: POV Display Prototype
+### 1. Classifier latency creep — keep it regex, resist LLM temptation
 
-**Rationale:** The POV display is the highest-risk technical component. It must be validated independently before integration with audio and networking. Research strongly recommends 2D flat POV first, then single-arm sphere.
-**Delivers:** Working POV display: single arm with APA102 LEDs, Hall effect position sync, FastLED DMA rendering, visible image at 3-5 RPM in ambient lighting
-**Addresses:** Core Spirit Sphere differentiator (volumetric 3D display)
-**Avoids:** Pitfall 2 (POV physics gap) -- incremental approach (2D -> single arm -> multi-arm), budget 4-6 3D print iterations; Pitfall 6 (slip ring noise) -- validate power delivery early, consider batteries-on-rotating-assembly approach
+Every voice query now awaits `classify_intent()` before anything else. Haiku measured at 1,667ms on this machine — 5x over the 300ms budget. Regex runs in <0.01ms. The four routes have non-overlapping keyword signals; regex accuracy equals LLM accuracy for these patterns. If future intent ambiguity emerges (e.g., "Zeus said something about my calendar"), extend the regex patterns with a tiebreaker rule — do not add an LLM call.
 
-### Phase 6: Spirit Sphere Integration + Enclosure
+**Prevention:** Regex only. Synchronous call. Log classifier decisions for the first week to tune coverage. Measure p95 after first production deployment.
 
-**Rationale:** Voice pipeline (Phase 4) and POV display (Phase 5) ran in parallel. This phase combines them on one ESP32-S3 and adds mechanical design, battery power, and the complete user experience.
-**Delivers:** Integrated prototype: voice AI + POV display + 3D printed enclosure + battery power + at least 1 deity avatar animation. Reliable 5-minute demo capability.
-**Addresses:** Table stakes (voice interaction, display, USB-C, noise level, power button, mic mute) plus differentiators (deity avatar, battery portability)
-**Avoids:** Pitfall 8 (WiFi dependency in demos) -- build demo mode with pre-recorded responses; Phase-specific warning (I2S + LED DMA conflict) -- use Core 0 for audio, Core 1 for LEDs
+### 2. Voice name used as dict key without validation crashes the connection
 
-### Phase 7: Kickstarter Campaign Prep + Launch
+The classifier returns a `voice` string derived from text matching. If that string is not in `VOICES.keys()` — from hallucination, a new deity name, or a match error — the subsequent `VOICES[voice]` call raises `KeyError` and the WebSocket handler crashes silently. The user hears nothing; the frontend shows an error state.
 
-**Rationale:** Campaign cannot launch until the Sphere demos reliably for 10+ minutes and shipping costs are validated. PCB design (even if prototype uses breadboard) must be started before campaign to prove manufacturing path.
-**Delivers:** Kickstarter campaign live with: campaign video, "Maker Edition" positioning, $179 early bird tier, accurate shipping charges via BackerKit, PCB design validated with small-batch JLCPCB order
-**Addresses:** Kickstarter-exclusive content, limited edition scarcity, community building (Discord)
-**Avoids:** Pitfall 3 (prototype-to-production) -- "Maker Edition" resets expectations, PCB validated pre-launch; Pitfall 4 (shipping costs) -- real quotes with actual dimensions before setting tiers; Pitfall 9 (open source too early) -- promise open source, deliver post-fulfillment; Pitfall 10 (timing mismatch) -- plan for October 2026 aggressive / February 2027 realistic windows
+**Prevention:** One line immediately after the classifier call: `voice = intent["voice"] if intent["voice"] in VOICES else "jarvis"`. Log unexpected voice labels for pattern improvement.
 
-### Phase Ordering Rationale
+### 3. `conversation_history` keyed by voice name loses context on every route switch
 
-- Phases 1-3 (Oracle Cards) before Phases 4-7 (Spirit Sphere): Oracle Cards leverage 80% existing infra and can ship in 2-3 months. Revenue and audience from cards fund and de-risk the Sphere. The orb-backend built for cards is reused by the Sphere.
-- Phase 4 and 5 can run in parallel: Audio I/O learning and POV display prototyping are independent workstreams on the same ESP32-S3 platform. This compresses the timeline.
-- Phase 6 (integration) must follow 4+5: Cannot combine subsystems until each works independently. This is where hardware complexity spikes.
-- Phase 7 (Kickstarter) is gated on Phase 6: Campaign video requires reliable demo. Do not force a launch date if the demo is not solid.
+The current design writes history under the voice name. When the classifier routes a mythology question to voice `"zeus"`, the next JARVIS query reads `conversation_history["jarvis"]` and has no memory of the prior exchange. This was a pre-existing design issue that the classifier makes unavoidable to fix.
 
-### Research Flags
+**Prevention:** Key history by WebSocket connection object or session UUID, not voice name. Voice controls only which ElevenLabs voice ID goes to `get_tts_audio()`. Change this in Step 1 while the classifier is already touching `process_query()` — it is a 2-line change with high correctness impact.
 
-Phases likely needing deeper research during planning:
-- **Phase 2 (Reading Experience):** Prompt engineering for deity personalities and McKee narrative arc requires heavy iteration. No off-the-shelf pattern exists for "Greek god oracle AI with streaming voice."
-- **Phase 5 (POV Display):** Complex physics, mechanical engineering, and LED timing. Builder should study Mercator project and Flicker spherical display in detail. Consider `/gsd:research-phase` before planning.
-- **Phase 6 (Integration):** Dual-core task pinning (audio on Core 0, LEDs on Core 1), DMA channel allocation, and power management under load. Sparse documentation for this specific combination.
-- **Phase 7 (Kickstarter):** Campaign strategy, video production, fulfillment logistics. Domain-specific knowledge needed.
+### 4. `write_file` path traversal escapes the sandbox
 
-Phases with standard patterns (skip research-phase):
-- **Phase 1 (Pipeline Audit + Backend):** FastAPI service creation is well-documented. Existing SC infra provides the pattern.
-- **Phase 3 (Physical Cards + Launch):** Print-on-demand workflow is standard. Stripe integration is well-documented.
-- **Phase 4 (ESP32 Fundamentals):** Massive tutorial ecosystem. KALO project is a near-exact reference for voice AI on ESP32.
+The LLM generates `write_file("../../.ssh/authorized_keys", malicious_content)`. String prefix checks fail against traversal sequences. This matches the pattern of CVE-2025-53109 and CVE-2025-53110 in the filesystem MCP server.
+
+**Prevention:** `resolved = Path(SANDBOX_ROOT / filename).resolve(); assert str(resolved).startswith(str(SANDBOX_ROOT.resolve()))`. Always `pathlib.Path`, never string concatenation. Return an error string to the LLM on rejection — the loop can decide how to proceed without escalating.
+
+### 5. ADB calls inside `async def` block the event loop
+
+`subprocess.run()` inside an async function is synchronous. ADB commands targeting R1 take 800ms-3s depending on USB responsiveness. Every other connected WebSocket client stalls during that window. The pattern already exists correctly in `get_calendar_context()` — new ADB calls must follow it.
+
+**Prevention:** `await asyncio.get_event_loop().run_in_executor(None, lambda: subprocess.run(..., timeout=5))`. Apply to every new ADB call in `reload_r1_frontend()` and any shell tool inside `execute_tool()`. Add a 5s timeout to every ADB call — ADB hangs silently on device disconnect without one.
+
+---
+
+## Key Decisions for Requirements
+
+These are settled. The requirements author must treat them as constraints, not open questions.
+
+| Decision | Verdict | Evidence |
+|----------|---------|----------|
+| Classifier implementation | Regex, not LLM | Haiku = 1,667ms measured. Regex = <0.01ms. 30,000x headroom. |
+| LLM for agentic loop | `claude-haiku-4-5` | 1,850ms/round. Sonnet adds 4-6s/round for mechanical file I/O that needs no reasoning depth. |
+| Smithers role in v1.2 | Memory/Slack/Obsidian only | `/fast` = 17,509ms. `/execute/v2` = 60,000ms+. Not a voice-latency service. |
+| New pip dependencies | Zero | anthropic 0.86.0, websockets 16.0, httpx 0.28.1 cover all three feature areas. |
+| `exec_shell` sandboxing | Allowlist at Python level, `shell=False` | Prompt injection via voice has 94.4% LLM agent success rate. LLM system prompts are not enforcement. |
+| Chrome reload mechanism | CDP `Page.reload` via WebSocket | ADB key events, broadcasts, and javascript: URLs confirmed non-functional on Android Chrome. |
+| Port 8400 conflict | Auto-increment fallback `_find_free_port(8400)` | Chrome Helper holds 8400 intermittently. 8-line fix, no service migration needed. |
+| `conversation_history` key | Session-based, not voice name | Voice-keyed history drops context on every route switch — unavoidable with a classifier. |
+| Port registry (canonical) | 8000=JARVIS unified backend, 8100=LLM Router, 8200=Smithers, 8300=orb-backend | Verified live. Add to CLAUDE.md in Step 3. |
+| R1 ADB serial caching | 30s TTL per-call | Module-load-time capture goes stale after R1 reboot, causing silent agentic failures. |
+
+---
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | All technologies are mainstream with strong documentation. ESP32-S3 + FastLED + APA102 is a proven combination per Mercator project. Web stack is standard Next.js. |
-| Features | HIGH | Competitive analysis covers Labyrinthos, Golden Thread, AI tarot apps, Echo Show, Rabbit R1, Humane Pin. Feature priorities are well-grounded in market evidence. |
-| Architecture | HIGH | Shared backend pattern is sound. Reference architectures exist for both the web reading flow (standard SSE streaming) and ESP32 voice pipeline (KALO, MCP voice assistant). POV display timing math checks out. |
-| Pitfalls | HIGH | Multiple verified sources including real Kickstarter failure analyses, Mercator project post-mortem, Rabbit R1/Humane Pin teardowns. Hardware pitfalls are especially well-documented. |
+| Stack | HIGH | All library versions verified against live pip. Latency figures are measured values, not estimates. |
+| Features | HIGH | Classifier patterns derived from existing orb_bridge.py lines 744-756. Change surface precisely mapped from 1,389-line codebase read. |
+| Architecture | HIGH | Data flow traced through actual source code. New component boundaries identified against existing function signatures. |
+| Pitfalls | HIGH | Combination of direct codebase review and cited CVE/OWASP sources. ADB and ElevenLabs patterns observed in existing code. |
 
 **Overall confidence:** HIGH
 
-### Gaps to Address
+### Gaps to Address During Implementation
 
-- **SC Pipeline "80% complete" claim is unverified.** Phase 1 audit may reveal the gap is larger. Mitigation: timebox audit to 1 week, simplify reading experience if gaps exceed 30%.
-- **POV display visibility in ambient lighting is unproven.** All reference projects show POV displays in controlled/dark environments. Must test APA102 brightness at 3-5 RPM in normal room lighting during Phase 5.
-- **Voice round-trip latency on actual ESP32 over WiFi is theoretical.** Reference projects report ~465ms best-case but measurements were on laptops, not microcontrollers. Phase 4 must validate this on real hardware.
-- **ElevenLabs cost at scale is uncertain.** 21 deity voices x streaming TTS could hit cost limits fast. Need to measure cost-per-reading early and implement caching strategy in Phase 2.
-- **Slip ring vs batteries-on-rotating-assembly trade-off needs physical testing.** Research supports both approaches. Phase 5 should prototype both before committing.
-- **Kickstarter audience overlap (tech + spiritual) is assumed, not validated.** Oracle Cards sales data (Phase 3) will provide signal before Kickstarter launch.
+- **Classifier edge cases:** Real user utterances will have ambiguous phrasing ("Zeus said something about my calendar"). Plan a tuning pass after the first week of production use. Log all classifier route decisions for review.
+- **ADB reload confirmation:** PITFALLS recommends verifying a frontend ping-back after reload before voicing success. Decide in Step 2 whether to implement ping-back or accept best-effort confirmation for v1.2.
+- **Per-client TTS lock structure:** The `asyncio.Lock` requirement for concurrent TTS sends requires auditing existing send patterns in `process_query()` before wiring in the agentic acknowledgement flow. Confirm the current code does not already have concurrent send paths that need the lock retrofitted.
+
+---
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- [Mercator ESP32 Spherical POV Display](https://mdwdotla.medium.com/mercator-an-esp32-based-spherical-persistence-of-vision-display-a4beff4f826e) -- reference architecture for POV sphere, mechanical lessons, timing
-- [KALO ESP32 Voice Chat](https://github.com/kaloprojects/KALO-ESP32-Voice-Chat-AI-Friends) -- reference for ESP32 voice assistant with INMP441 + MAX98357A
-- [AssemblyAI: Lowest Latency Voice Agent (465ms)](https://www.assemblyai.com/blog/how-to-build-lowest-latency-voice-agent-vapi) -- voice pipeline latency benchmarks
-- [ElevenLabs WebSocket Streaming](https://elevenlabs.io/docs/developers/websockets) -- real-time TTS documentation
-- [Serwist PWA for Next.js](https://serwist.pages.dev/docs/next/getting-started) -- official PWA docs
-- [DTU Science Park: $26M Lost in Crowdfunded Hardware](https://dtusciencepark.com/article/26-million-lost-why-crowdfunded-hardware-projects-fail/) -- Kickstarter failure analysis
+- `/Volumes/AI_WORKSPACE/esp32-jarvis/bridge/orb_bridge.py` — full codebase review, 1,389 lines, 2026-04-03
+- Live latency measurements: Haiku tool_use 1,667-1,883ms; Smithers `/fast` 17,509ms; Smithers `/execute/v2` 60,000ms+; CDP `Page.reload` <100ms
+- Live port scan via `lsof` across ports 8000, 8100, 8200, 8300, 8400, 4000, 5556, 6001
+- Live pip: `anthropic==0.86.0`, `websockets==16.0`, `httpx==0.28.1`
+- Live CDP test: `adb forward tcp:9222` + `ws://localhost:9222/devtools/page/29` → `Page.reload` confirmed
 
 ### Secondary (MEDIUM confidence)
-- [Flicker Spherical Volumetric Display](https://danfoisy.github.io/flicker/) -- advanced POV reference (FPGA-driven, higher complexity than target)
-- [APA102 vs WS2812B for POV](https://www.suntechleds.com/ws2812b-vs-apa102.html) -- refresh rate comparison
-- [Labyrinthos Academy](https://labyrinthos.co/) -- leading oracle app feature reference
-- [BackerKit Shipping Strategies](https://www.backerkit.com/blog/guides/the-practical-guide-to-planning-a-crowdfunding-campaign/kickstarter-shipping-strategies/) -- fulfillment best practices
-- [pioarduino](https://randomnerdtutorials.com/vs-code-pioarduino-ide-esp32/) -- PlatformIO fork status for ESP32 Core 3.x
+- [Anthropic tool_use docs](https://docs.anthropic.com/en/docs/tool-use) — tool schema format, stop_reason patterns, bounded loop guidance
+- [Chrome DevTools Protocol Page.reload](https://chromedevtools.github.io/devtools-protocol/tot/Page/#method-reload) — WebSocket message format
+- [OWASP Top 10 for Agentic Applications 2026](https://www.trydeepteam.com/docs/frameworks-owasp-top-10-for-agentic-applications) — prompt injection success rate, path traversal CVE patterns
+- [ElevenLabs Multi-Voice Support Docs](https://elevenlabs.io/docs/eleven-agents/customization/voice/multi-voice-support) — concurrent session behavior
 
 ### Tertiary (LOW confidence)
-- ESP32-S3 Opus codec performance estimates (single source: esp-opus component page, untested on target hardware)
-- USB-C PD trigger board for 3S Li-ion charging (limited documentation, needs prototyping validation)
-- POV display visibility in ambient lighting (no quantitative data found, all demos shown in dark environments)
+- [Voice AI latency benchmarks — Trillet](https://www.trillet.ai/blogs/voice-ai-latency-benchmarks) — 3s "feels broken" threshold (industry consensus, not measured on this specific stack)
+- [macOS launchd stale process behavior](https://github.com/openclaw/openclaw/issues/39074) — port-conflict restart patterns
 
 ---
-*Research completed: 2026-03-28*
+
+*Research completed: 2026-04-03*
 *Ready for roadmap: yes*

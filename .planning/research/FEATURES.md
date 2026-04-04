@@ -210,3 +210,193 @@ Defer:
 - [POV Volumetric Display Projects](https://hackaday.com/tag/volumetric-display/) -- maker community reference
 - [Astrology App Market](https://finance.yahoo.com/news/global-astrology-app-market-triple-103800115.html) -- $3B to $9B by 2030
 - [Tarot Reading Website Development](https://devtechnosys.com/insights/develop-a-tarot-reading-website/) -- monetization models
+
+---
+
+---
+
+# Features Research — Smithers-First + Agentic Tools
+
+**Milestone:** v1.2 — Smithers-First Architecture + JARVIS Agentic Tools
+**Researched:** 2026-04-03
+**Domain:** Multi-persona voice AI routing + agentic code-editing triggered by voice commands
+**Existing system:** PTT R1 voice, AssemblyAI STT, ElevenLabs TTS, deity personas, auto-follow-up mic, on-screen PTT, camera capture — all already built
+
+---
+
+## How Intent Classification Routers Work in Voice Assistants
+
+The field has converged on a hybrid two-tier approach. A fast first-pass classifier (regex, keyword, or embedding lookup) handles the 80% of well-known intents in <10ms. A second-pass LLM call resolves the ambiguous 20%. Routing the entire load through an LLM is accurate but adds 300-800ms of latency before the real work starts — unacceptable on a voice device where 5s round-trip is already the ceiling.
+
+Smithers already has Tier 1 built: `classify_task()` uses regex `TASK_PATTERNS` and runs synchronously. The gap for v1.2 is adding a **voice-specific intent layer** that fires before Smithers' existing general classification, since voice queries are shorter, more ambiguous, and domain-specific (mythology, system ops, code editing) compared to Smithers' current design for Slack/chat tasks.
+
+The supervisor pattern is the most production-validated architecture: a single orchestrator receives every message, classifies intent, selects the right specialist handler, and hands off. Each specialist has its own system prompt, voice profile, and tool access. This maps directly to the v1.2 design: Smithers as supervisor, JARVIS/Goddess/deity voices as specialists.
+
+---
+
+## Smithers-First Routing
+
+### Table Stakes
+
+Features that must exist for Smithers-first to work at all. Missing any of these = voice queries fall through to old behavior or error.
+
+| Feature | Why Required | Complexity | Dependency |
+|---------|-------------|------------|------------|
+| **Single WebSocket entry point in orb-backend** | Every R1 voice query currently hits orb-backend's `/ws/sphere` or `/ws/voice`. Must add a dispatch layer that calls Smithers `/plan` before selecting handler | Low-Medium | orb-backend already has `SMITHERS_URL` env var pointing to :8200. Wire is there, just unused for voice |
+| **Intent → voice routing table** | Map Smithers `TaskType` to (voice_handler, persona_name, elevenlabs_voice_id). Without this table there is no dispatch, just raw classification | Low | Smithers router.py `classify_task()` already returns `TaskType` enum. Table maps enum values to downstream handler |
+| **Graceful Smithers-down fallback** | If Smithers is unreachable (port conflict, crash), voice must not hang. Fall back to JARVIS direct path | Low | orb-backend already pattern-matches `_check_service()`. Same pattern applies here |
+| **Classify-then-dispatch latency budget** | Adding Smithers classification hop must stay under 200ms. Smithers `/plan` endpoint is local HTTP, should be ~50ms. Must verify | Medium | Smithers runs on :8200 on Smithers host. R1 connects through orb-backend on :8300. Two hops, both localhost on same machine |
+| **Pass-through of transcribed text** | AssemblyAI STT produces text. That text must be the input to Smithers classification unchanged. No pre-processing that loses meaning | Low | Straightforward: STT callback → Smithers POST `/plan` with `{task: transcribed_text}` |
+
+### Differentiators
+
+Features that make Smithers-first smarter than simple if/else routing.
+
+| Feature | Value Proposition | Complexity | Notes |
+|---------|-------------------|------------|-------|
+| **Mythology keyword pre-filter before Smithers** | Greek god names (Zeus, Athena, Ares...) should immediately resolve to Goddess gateway without burning an LLM call or even a Smithers round-trip. A simple set-membership check on the 21 deity names + common mythology terms (oracle, myth, Olympus) beats any classifier for this domain | Low | 50-line lookup. Run before Smithers call. If match: route to Goddess. If no match: call Smithers. This is the "fast path" for the primary use case |
+| **BUILD_INTENT keyword pre-filter** | Same pattern for agentic commands: "change", "update", "make the", "edit", "rebuild", "add a", "remove the" + frontend-related nouns → immediately detect BUILD_INTENT before Smithers. Saves a round-trip for the second primary use case | Low | Same 50-line lookup pattern. Set of imperative verbs + UI nouns |
+| **Context carry-forward** | If previous query was mythology, subsequent vague query ("tell me more", "go deeper") should inherit the mythology context without re-classifying from scratch | Medium | Simple: store `last_intent_type` and `last_deity` in WebSocket session state. If new query is too short (<4 words) and no new intent signal, inherit last context |
+| **Confidence threshold with fallback voice** | If Smithers classification confidence is below threshold (or task_type = GENERAL with no clear signal), route to JARVIS general handler rather than forcing a specific persona. Never leave a query unhandled | Low | Smithers currently returns `task_type=GENERAL` for uncertain cases. Map GENERAL → JARVIS handler. Already the intended behavior |
+
+### Anti-Features (don't build)
+
+| Anti-Feature | Why Avoid | What to Do Instead |
+|--------------|-----------|-------------------|
+| **LLM-based intent classification** | Running a separate LLM call just to classify intent adds 300-800ms before the actual query is answered. On a voice device this is felt as sluggishness. Smithers' regex classifier is ~5ms | Use Smithers regex `classify_task()` + mythology/build keyword pre-filters. LLM classification is only worth it when your intent space is too large for rules — this one has 4 main buckets |
+| **Streaming Smithers classification** | Smithers `/plan` returns a full routing plan synchronously. Do not try to stream it. The plan is metadata, not content | Call `/plan` with httpx async, await the JSON, then proceed. Simple and fast |
+| **Per-query Smithers plan storage** | Storing every routing plan decision in a DB adds write latency and no value. Plans are ephemeral routing decisions, not durable records | Log to stdout only. Use orb-backend's existing log file for debugging |
+| **User-visible routing UI** | The user does not need to see which handler handled their query. Showing routing decisions breaks the immersion of speaking to a deity or JARVIS | Route invisibly. Only surface routing info in debug mode (log file) |
+| **Modifying Smithers server code** | Smithers :8200 is a shared service used by Slack, Claude Code, and other consumers. Do not add voice-specific logic there | orb-backend owns the voice routing layer. Smithers is called as a classification service only via its existing `/plan` endpoint |
+
+---
+
+## Voice-Role Identity
+
+### Table Stakes
+
+The minimum for voice-role identity to feel coherent rather than random persona assignment.
+
+| Feature | Why Required | Complexity | Dependency |
+|---------|-------------|------------|------------|
+| **Smithers = architect voice: terse, direct, infrastructure-focused** | If Smithers' voice answers mythology questions in an authoritative builder tone, it breaks immersion. Each role needs a consistent personality contract that holds across all queries routed to it | Low | System prompt change only. ElevenLabs voice ID already exists for "2501" persona. Smithers handler uses that voice |
+| **JARVIS = general assistant: helpful, curious, tech-aware** | JARVIS is the default handler for general queries (coding questions, task help, anything not mythology or build intent). Voice should feel like a capable AI assistant, not a deity | Low | ElevenLabs JARVIS voice profile already built. Wire to GENERAL task_type handler |
+| **Goddess = mythology gateway, can activate deity voices** | Goddess intercepts all mythology queries and determines whether to respond as herself or hand off to a specific deity voice (Zeus for leadership, Athena for strategy, etc.). She is the portal, not a dead end | Medium | Goddess ElevenLabs voice exists. The hand-off logic is new: parse deity name from query → load that deity's voice_id from `gods/*.json` → respond as that deity. `deity_config.py` + `gods/` directory already exist in orb-backend |
+| **Persona stays consistent within a conversation turn** | A single PTT press → response cycle must use the same voice start to finish. No mid-response voice switching | Low | Already guaranteed if voice_id is selected before TTS streaming begins. No special logic needed |
+| **Persona selection is invisible to user** | The user speaks naturally. They do not say "route to JARVIS" or "activate Goddess mode." The system chooses | Low | Natural output of the routing layer. User experience: ask question, hear appropriate persona respond |
+
+### Differentiators
+
+| Feature | Value Proposition | Complexity | Notes |
+|---------|-------------------|------------|-------|
+| **Deity voice selection within mythology queries** | When Goddess receives a mythology query, she can hand off to the specific god most relevant to the question. "Tell me about war strategy" → Ares. "Help me understand wisdom" → Athena. This makes the 21 deity voices feel purposeful, not decorative | Medium | Keyword match: extract deity name OR map topic to deity domain. Domain map (love→Aphrodite, strategy→Athena, etc.) is ~30 lines. Load deity config from `gods/*.json`, swap `voice_id` in TTS call |
+| **Persona-specific response length** | Smithers (architect) gives short punchy answers. JARVIS gives medium conversational answers. Goddess/deities give longer narrative answers with mythological color. Same LLM, different `max_tokens` and system prompt style | Low | System prompt already sets character. Add `max_tokens` override per persona: Smithers=150, JARVIS=300, Goddess/deities=500 |
+| **Voice crossfade signal to frontend** | When persona switches between queries (e.g., first query was mythology/Goddess, next is coding/JARVIS), send a metadata event to the JARVIS web frontend so it can animate the persona shift (color change, blob morphing) | Low | WebSocket message: `{type: "persona_change", from: "goddess", to: "jarvis"}`. Frontend already has blob animation system that can be hooked |
+
+---
+
+## JARVIS Agentic Tools
+
+### Context: How Anthropic tool_use Works
+
+Anthropic's API supports a multi-turn agentic loop where Claude receives tool definitions, decides which to call, returns a structured `tool_use` block, your code executes the tool, and you feed the result back in a `tool_result` message. The loop runs until Claude returns a final `text` response with no pending tool calls. As of March 2026, Claude Code itself uses this pattern for file editing and chained an average of 21.2 independent tool calls per task without human intervention.
+
+For voice-triggered agentic editing, the loop must complete within ~8-10 seconds total to remain conversational. This constrains which tools can be called: fast local operations (read file, write file, ADB reload) yes. Slow operations (npm build, full test suite) no — those get voice confirmation + background execution.
+
+### Table Stakes
+
+| Feature | Why Required | Complexity | Dependency |
+|---------|-------------|------------|------------|
+| **`read_file` tool: read any file under r1-frontend/** | Claude needs to read the current file state before editing it. Cannot edit blind. Sandboxed to r1-frontend/ to prevent reading sensitive files | Low | Python `Path.read_text()` wrapped in tool definition. Sandbox: check `path.is_relative_to(R1_FRONTEND_DIR)` before reading |
+| **`write_file` tool: write a file under r1-frontend/** | The actual code change. Must be atomic (write to temp, rename) to prevent partial writes on failure | Low | `Path.write_text()` with atomic tmp-then-rename. Same sandbox check |
+| **`exec_shell` tool: sandboxed shell commands** | Some changes require running a command (e.g., `npm run build`, `adb push`). Must be restricted to an allowlist of safe commands | Medium | `subprocess.run()` with `allowlist = ["npm run build", "adb push", "adb shell am start", ...]`. Reject anything not in allowlist. Return stdout+stderr |
+| **`reload_frontend` tool: ADB trigger to reload JARVIS web UI** | After a file edit, the change only appears after reload. This tool pushes the updated file via ADB and triggers the WebView to reload | Medium | Requires ADB over TCP to R1 at known IP. `adb -s <R1_IP>:5555 shell am start ...` or `adb push` + reload signal. R1 IP must be configured in orb-backend env |
+| **BUILD_INTENT detection gateway** | Before entering the agentic loop, the system must be confident this is a build/edit request. False positives (accidentally entering agentic mode during a mythology query) would be disruptive | Low | Pre-filter (see Smithers-first section above). If BUILD_INTENT detected → route to JARVIS agentic handler. Otherwise → normal JARVIS handler |
+| **Anthropic tool_use loop in orb-backend** | orb-backend currently calls Anthropic for streaming text only (`client.messages.stream`). Need a parallel non-streaming path that calls `client.messages.create` with `tools=[...]` and handles the tool_use/tool_result loop | Medium | 50-80 lines of new Python. Existing `pipeline.py` gets a new `execute_agentic_loop(user_message, tools)` function. Loop runs until `stop_reason == "end_turn"` with no tool calls |
+| **Voice confirmation before destructive writes** | Writing over a file is irreversible without git. Before `write_file` executes, Claude should speak a summary of the change and the system should wait for the user to say "yes" or "go ahead" | Medium | Two-stage flow: (1) Claude plans + speaks summary, (2) system re-engages mic in confirmation mode, (3) if user confirms, execute write. If user says "cancel" or times out, abort. This is the same PTT re-engage mechanism already built |
+| **Voice confirmation after completion** | After reload_frontend succeeds, Claude speaks a short confirmation. "Done. The button color is now gold. Reload complete." This closes the feedback loop | Low | After `reload_frontend` returns success, feed result into final Claude response turn. Claude generates the spoken confirmation naturally |
+
+### Differentiators
+
+| Feature | Value Proposition | Complexity | Notes |
+|---------|-------------------|------------|-------|
+| **Diff-aware edit (read first, patch second)** | Claude reads the current file, generates only the changed lines, writes back the full modified file. This produces smaller, more precise changes than "rewrite the whole file." Lower risk of collateral damage | Low | Instruction in system prompt: "Always read_file before write_file. Make targeted edits." Claude follows naturally |
+| **Git snapshot before write** | Before any write_file, run `git add -A && git stash` in r1-frontend/ so every voice-triggered change is recoverable. "Undo that" becomes `git stash pop` | Low | Add to `write_file` tool pre-hook: `subprocess.run(["git", "stash"], cwd=R1_FRONTEND_DIR)`. Trivial insurance |
+| **ADB over WiFi (no cable needed)** | R1 ADB TCP is already set up at 192.168.x.x:5555. The `reload_frontend` tool uses WiFi ADB, so voice-triggered code editing requires no physical connection | Low | Already done per r1-adb-handoff.md. Just configure R1_ADB_HOST in orb-backend .env |
+| **Multi-file edits in one voice command** | "Change all the button colors to gold" might require editing 2-3 files. The agentic loop naturally handles this: Claude calls `read_file` multiple times, then `write_file` multiple times. No special implementation needed — it's just the loop running | Low | Falls out naturally from the tool_use loop. No extra code. Note it in system prompt: "You may read and write multiple files to complete one request" |
+
+### Anti-Features
+
+| Anti-Feature | Why Avoid | What to Do Instead |
+|--------------|-----------|-------------------|
+| **Unrestricted shell execution** | `exec_shell` with no allowlist = voice-triggered arbitrary code execution on Smithers. This is a serious security issue even in a personal system | Maintain an explicit allowlist of permitted commands. Default deny. Add to allowlist deliberately |
+| **Agentic loop with no timeout** | If Claude enters a bad loop (calls tools repeatedly without converging), it will exhaust Anthropic API credits and block the voice pipeline | Hard timeout: max 10 tool calls per voice command. If limit hit, Claude is given a `tool_result` of "max_iterations_reached" and must conclude |
+| **No sandbox for file writes** | write_file without path validation = Claude could be instructed (via prompt injection in a file it reads) to overwrite system files or credentials | Sandbox every read/write to `r1-frontend/` directory. Validate with `path.resolve().startswith(R1_FRONTEND_DIR)` before any file operation |
+| **Streaming TTS during tool_use loop** | The agentic loop is non-streaming by nature (tool calls are discrete turns). Do not try to stream partial text during tool execution. Speak only the final confirmation | Wait for `stop_reason == "end_turn"` with no tool calls, then TTS the final response text. Mid-loop utterances ("I'm editing the file now") can be pre-scripted status sounds, not LLM-generated |
+| **File system watching / hot reload** | Building a file watcher on r1-frontend/ to auto-detect changes and push them is attractive but creates constant background ADB traffic and could reload the UI mid-conversation | Manual reload only: `reload_frontend` tool is explicitly called by Claude when it decides the change is ready. No automatic watching |
+| **Asking Claude to write tests** | "Write tests for what you just edited" sounds like a reasonable follow-up but is completely out of scope for a voice interaction. Tests take minutes, not seconds | Keep agentic tools scoped to UI changes: colors, text, layout, component additions. No test generation, no backend changes, no package.json modifications |
+
+---
+
+## Feature Dependencies for v1.2
+
+```
+SMITHERS-FIRST ROUTING:
+  Smithers :8200 running (must fix port conflict first) --> Smithers classification hop
+  orb-backend :8300 running --> voice WebSocket entry point
+  Mythology keyword pre-filter --> Goddess handler (no Smithers call needed)
+  BUILD_INTENT pre-filter --> JARVIS agentic handler (no Smithers call needed)
+  Smithers classify_task() --> GENERAL + other intents --> appropriate handler
+
+VOICE-ROLE IDENTITY:
+  ElevenLabs voice profiles (exist) --> persona-specific TTS
+  gods/*.json deity configs (exist) --> Goddess → deity hand-off
+  Routing decision --> voice_id selection --> TTS call
+  Frontend WebSocket session --> persona_change event --> blob animation
+
+JARVIS AGENTIC TOOLS:
+  ADB over WiFi to R1 (configured) --> reload_frontend tool
+  r1-frontend/ directory (exists) --> read_file + write_file sandbox
+  Anthropic API (existing key) --> tool_use agentic loop
+  Voice confirmation flow (existing re-engage mic) --> write confirmation gate
+  Smithers BUILD_INTENT classification --> agentic handler entry point
+  Agentic loop complete --> TTS confirmation --> user hears result
+
+SYSTEM HEALTH (prerequisite for everything):
+  orb-backend port conflict (8000 vs 8300) resolved --> orb-backend starts
+  Mission Control :4000 restored --> ops visibility
+  JARVIS web :5556 restored --> frontend target for ADB reload
+  Health Dashboard :6001 restored --> system health monitoring
+```
+
+---
+
+## Complexity Summary
+
+| Feature Area | Implementation Complexity | Risk | Notes |
+|-------------|--------------------------|------|-------|
+| Mythology keyword pre-filter | Low | Low | 50-line lookup, no new dependencies |
+| BUILD_INTENT keyword pre-filter | Low | Low | Same pattern |
+| Smithers classification hop | Low-Medium | Medium | Port conflict must be resolved first |
+| Voice-role persona table | Low | Low | Config change + routing logic |
+| Goddess → deity hand-off | Medium | Low | Domain map + deity_config.py already exists |
+| tool_use agentic loop | Medium | Medium | New code path in pipeline.py |
+| read_file / write_file tools | Low | Low | Path sandbox is the only tricky part |
+| exec_shell allowlist | Low-Medium | High | Security-sensitive, must be conservative |
+| reload_frontend via ADB | Medium | Medium | ADB TCP must be stable; R1 IP must be configured |
+| Voice confirmation gate | Medium | Low | Re-engage mic pattern already exists |
+
+---
+
+## Sources
+
+- [Intent Recognition and Auto-Routing in Multi-Agent Systems](https://gist.github.com/mkbctrl/a35764e99fe0c8e8c00b2358f55cd7fa) -- supervisor pattern reference
+- [Supervisor Pattern for Multi-Agent Voice AI Systems](https://livekit.com/blog/supervisor-pattern-voice-agents) -- LiveKit production architecture
+- [Arize AI Agent Router Best Practices](https://arize.com/blog/best-practices-for-building-an-ai-agent-router/) -- hybrid classification approach
+- [Anthropic Tool Use Overview](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview) -- official tool_use API docs
+- [Agentic Loop with Claude and Tool Calling](https://docs.temporal.io/ai-cookbook/agentic-loop-tool-call-claude-python) -- agentic loop implementation pattern
+- [NVIDIA: Sandboxing Agentic Workflows](https://developer.nvidia.com/blog/practical-security-guidance-for-sandboxing-agentic-workflows-and-managing-execution-risk/) -- security guidance for exec_shell
+- [Building Multi-Agent Voice Roundtable](https://learnwithparam.com/blog/building-multi-agent-voice-roundtable) -- multi-persona voice architecture
+- [Voice Mode for Claude Code](https://deeperinsights.com/ai-blog/voice-mode-to-claude-code/) -- push-to-talk voice + agentic pattern validation
+- Smithers router.py (`/Volumes/Extreme Pro/ACTIVE/smithers/router.py`) -- existing classification engine, studied directly
+- orb-backend server.py + pipeline.py (`/Users/claw2501/services/orb-backend/`) -- existing voice pipeline, studied directly

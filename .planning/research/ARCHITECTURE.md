@@ -1,366 +1,304 @@
-# Architecture Patterns
+# Architecture Research — Smithers-First + Agentic Tools
 
-**Domain:** AI Oracle Cards + Volumetric LED Spirit Sphere (shared infrastructure)
-**Researched:** 2026-03-28
+**Project:** The Orb — v1.2 Milestone
+**Researched:** 2026-04-03
+**Confidence:** HIGH (based on direct source reading of orb_bridge.py, 1389 lines)
 
-## System Overview
+---
 
-Two products share a common backend but have radically different frontends. The Oracle Cards product is a web application triggered by QR scan. The Spirit Sphere is an ESP32-S3 hardware device communicating over WebSocket. Both converge on the same AI pipeline: query understanding, RAG retrieval, LLM generation, voice synthesis, and visual presentation.
-
-```
-                    +------------------+
-                    |  SHARED BACKEND  |
-                    |  (orb-backend)   |
-                    |     :8300        |
-                    +--------+---------+
-                             |
-              +--------------+--------------+
-              |                             |
-     +--------v--------+          +--------v--------+
-     |  Oracle Cards    |          |  Spirit Sphere  |
-     |  Web App (PWA)   |          |  ESP32-S3       |
-     |  Mobile browser  |          |  Hardware device|
-     +-----------------+          +-----------------+
-```
-
-## Recommended Architecture
-
-### Layer 1: Existing Infrastructure (no changes)
-
-These services already run and should be consumed, not rebuilt.
-
-| Service | Port | Role in The Orb |
-|---------|------|-----------------|
-| Smithers | :8200 | Orchestration, tool-calling, multi-step AI workflows |
-| LLM Router | :8100 | Model selection, fallback chains (OpenRouter -> Anthropic -> Ollama) |
-| OpenClaw Gateway | :18789 | Provider abstraction, model registry |
-| Ollama | :11434 | Local model inference for cost-sensitive tasks |
-
-### Layer 2: New Shared Backend (orb-backend :8300)
-
-A single new service that both products talk to. This is the only new backend component.
-
-| Responsibility | Implementation |
-|----------------|----------------|
-| Oracle reading orchestration | Multi-step pipeline: intent -> RAG -> myth correlation -> LLM generation -> voice -> visual |
-| Spirit Sphere voice loop | WebSocket endpoint for real-time audio streaming |
-| Content DB access | Query 6,252 SC images + 2,891 Midjourney by deity/theme/mood |
-| Pinecone RAG | Vector search over Obsidian vault for personal knowledge |
-| ElevenLabs voice | Deity-specific voice profiles, TTS generation, audio streaming |
-| Session management | User sessions, reading history, usage tracking |
-| QR code routing | Map card ID -> deity -> reading configuration |
-
-**Technology:** Node.js (TypeScript) or Python FastAPI. Recommendation: **Python FastAPI** because the existing Smithers and morning briefing pipeline are Python, ElevenLabs SDK is Python-first, and the AI/ML ecosystem is Python-native. Use WebSocket support built into FastAPI (via Starlette).
-
-### Layer 3a: Oracle Cards Web App (Frontend)
-
-Mobile-first Progressive Web App. User scans QR code on physical card, lands in browser.
-
-| Component | Technology | Why |
-|-----------|-----------|-----|
-| Framework | SvelteKit | Sacred Circuits pipeline already at localhost:5173 is Svelte. Reuse knowledge and possibly components. |
-| Hosting | Static + Cloudflare tunnel | Already have tunnel infrastructure. SSR not needed for card readings. |
-| Audio playback | Web Audio API | Stream deity voice narration with ambient soundscape overlay |
-| Visual presentation | Canvas/WebGL | Display PANTHEON art panels, animated transitions |
-| QR routing | URL params | `https://orb.sacredcircuits.ai/read/{deity}/{card_id}` |
-
-### Layer 3b: Spirit Sphere Firmware (ESP32-S3)
-
-The hardware device runs C++ Arduino firmware with these subsystems:
-
-| Subsystem | Components | Protocol |
-|-----------|-----------|----------|
-| Audio Input | INMP441 MEMS mic, I2S bus | 16kHz 16-bit mono PCM |
-| Audio Output | MAX98357A amp + 3W speaker, I2S bus | 16kHz 16-bit mono PCM |
-| Network | WiFi STA mode, WebSocket client | WSS to orb-backend:8300 |
-| POV Display | 6-8 LED arms (APA102/SK9822 DotStar), FastLED DMA | SPI at 12MHz+ |
-| Motor Control | N20 micro gear motor, PWM via MOSFET | GPIO PWM 3-5 RPM |
-| Position Sensing | Hall effect sensor + magnets | GPIO interrupt |
-| Power | 3x 18650 Li-ion, USB-C charge pass-through | Slip ring (6-wire: 3 power, 3 ground) |
-
-## Component Boundaries
-
-### Boundary 1: QR Scan -> Web App -> Backend
+## Current Data Flow
 
 ```
-Physical Card (QR code)
-    |
-    v [HTTPS GET]
-Oracle Web App (SvelteKit PWA)
-    |
-    v [REST API / SSE]
-orb-backend :8300
-    |
-    +---> Smithers :8200 (orchestrate multi-step reading)
-    |       +---> LLM Router :8100 (model selection)
-    |       +---> Pinecone (Obsidian vault RAG)
-    |
-    +---> Content DB (deity images, PANTHEON panels)
-    +---> ElevenLabs API (deity voice TTS)
-    |
-    v [JSON + audio stream]
-Oracle Web App
-    |
-    v [Web Audio API + Canvas]
-User's phone screen + speaker
+R1 button press
+  → PTT daemon (ADB) → HTTP GET /ptt (port 8401)
+      → broadcast_ptt() → WebSocket {type: "ptt_toggle"} → frontend
+
+User speaks (PTT held)
+  → Browser mic → PCM bytes → WebSocket (port 8400)
+
+audio_end received
+  → transcribe_browser_pcm() → AssemblyAI → text
+  → process_query(text, voice, model, tier)
+      → check smithers_triggers / smithers_tools regex (inline)
+          → YES: route_smithers() [60s timeout, Smithers :8200]
+          → NO:  route_query()
+                  → deity voice? → route_deity() [LLM Router :8100, 30s]
+                  → JARVIS voice? → route_llm_direct() [LLM Router :8100, 30s]
+      → pick_wireframe(reply) → WebSocket {type: "wireframe"}
+      → get_tts_audio(reply, voice_id) → ElevenLabs Flash v2.5
+      → stream PCM audio bytes → WebSocket → R1 browser plays audio
+      → {type: "done", has_follow_up: bool}
 ```
 
-**Data format:** REST for reading initiation and status. Server-Sent Events (SSE) for streaming the reading as it generates (text chunks + audio chunks + image references). SSE over WebSocket because the Oracle Cards flow is request-response (user asks, AI delivers), not bidirectional.
+### Key Existing Structures
 
-### Boundary 2: Spirit Sphere -> Backend -> Cloud AI
+**conversation_history:** `defaultdict(list)` keyed by voice name. Max 6 turns (12 messages). Each route function manages its own history append independently.
 
+**Voice selection:** `client_voice` is a session-level variable set by `{type: "set_voice"}`. The `voice` key on the outbound `response` message controls what the frontend renders.
+
+**VOICES dict:** Maps voice name → ElevenLabs voice ID. All TTS calls use `VOICES.get(voice, VOICES["jarvis"])["id"]`. This is the single source of truth for voice ID resolution. 13 voices total: jarvis + 12 deities.
+
+**Smithers trigger logic:** A regex in `process_query()` lines 744-757 decides whether to call `route_smithers()` or fall through to `route_query()`. There is no pre-classification step — the decision is made with inline regexes and an early-return block that hardcodes `voice = "jarvis"` for Smithers responses.
+
+**Agentic infrastructure:** The `anthropic_client` is already instantiated at module level (line 45, used for vision). The `anthropic` package is already imported. No additional package installation needed for agentic tool_use.
+
+**ADB reload:** No ADB-based frontend reload exists today. The ADB shell command pattern is well-established throughout the file (lines 604-635, 1295-1354). Reloading the R1 browser is achievable with `adb shell am force-stop org.mozilla.firefox` followed by the URL reopen.
+
+---
+
+## Proposed Changes
+
+### New Components
+
+#### 1. `classify_intent(text: str, current_voice: str) -> dict`
+
+A new async function in `orb_bridge.py`. This is NOT a Smithers endpoint call — Smithers at 60s+ latency cannot meet the <300ms classification budget.
+
+**Implementation:** Call LLM Router directly at `:8100` with a minimal classification prompt. Use the cheapest/fastest model tier (haiku or equivalent). Return `{"route": "smithers"|"jarvis"|"goddess", "voice": str, "build_intent": bool}`.
+
+**Why not a Smithers /classify endpoint:** Smithers' 60s+ response time makes it structurally incompatible with a pre-flight classifier. The classifier must be a thin LLM call through LLM Router using a small model and a one-shot classification prompt (approximately 200 tokens input, 50 tokens output).
+
+**Why not regex-only:** The three-way routing (smithers/jarvis/goddess) and BUILD_INTENT detection require semantic understanding that regexes cannot reliably provide. The existing regex approach was an acknowledged workaround.
+
+**Classification prompt design:**
 ```
-User speaks
-    |
-    v [I2S DMA]
-INMP441 mic -> ESP32-S3 PSRAM buffer
-    |
-    v [WebSocket binary frames]
-orb-backend :8300
-    |
-    +---> AssemblyAI STT (or ElevenLabs Scribe)
-    |       v [text transcript]
-    +---> Smithers :8200 (orchestrate response)
-    |       +---> LLM Router :8100
-    |       +---> Pinecone RAG (personal knowledge)
-    |       v [response text]
-    +---> ElevenLabs TTS (deity voice)
-    |       v [audio chunks]
-    |
-    v [WebSocket binary frames]
-ESP32-S3
-    +---> MAX98357A speaker [I2S DMA]
-    +---> POV LED display [SPI DMA, animation sync]
-```
+Classify this voice query. Reply ONLY with JSON on one line.
+{"route": "smithers"|"jarvis"|"goddess", "voice": "jarvis"|"zeus"|"athena"|"poseidon"|..., "build_intent": true|false}
 
-**Data format:** WebSocket with binary frames for audio (both directions). JSON control frames for metadata (which deity, animation cue, volume level). The ESP32 should stream audio in 512-byte chunks to keep latency under 200ms.
+route: smithers if calendar/schedule/Slack/Obsidian/tasks/send message. goddess if mythology/gods/oracle/prophecy/divine/sacred. jarvis otherwise.
+build_intent: true only if user wants to modify, build, or reload the JARVIS frontend interface.
+voice: current voice unless query clearly matches a specific deity (then name that deity).
 
-### Boundary 3: POV Display Subsystem (ESP32-internal)
-
-```
-Hall effect sensor (rotation sync)
-    |
-    v [GPIO interrupt -> revolution timer]
-Frame buffer (PSRAM, 128 x N angular slices)
-    |
-    v [DMA transfer per angular slice]
-FastLED / SPI -> LED arms (APA102 DotStar)
-    |
-    v [persistence of vision]
-User sees volumetric sphere
+Current voice: {current_voice}
+Query: {text}
 ```
 
-**Critical timing:** At 3-5 RPM (200-333ms per revolution), each angular slice must render in < 1ms. With 128 slices per revolution at 5 RPM, that is 333ms / 128 = 2.6ms per slice. Comfortable for ESP32-S3 at 240MHz with DMA. At 3 RPM, even more headroom at 4.7ms per slice.
+**Timeout:** 3 seconds hard cap. On timeout or JSON parse error, fall back silently to `{"route": "jarvis", "voice": current_voice, "build_intent": False}`. No error message to the user.
 
-**Frame buffer strategy:** Double-buffering in PSRAM. One buffer displayed, one written by network/animation task. Swap on frame boundary. ESP32-S3 has 8MB PSRAM, frame buffer for 128 LEDs x 128 slices x 3 bytes RGB = ~49KB per frame. Trivial.
+#### 2. `run_agentic_loop(websocket, text: str, voice: str)`
 
-## Data Flow Summary
+A new async function. Called when `classify_result["build_intent"] == True`.
 
-### Oracle Card Reading Flow
+**Tool definitions (4 tools):**
+- `read_file(path: str)` — reads files. Sandbox check: path must resolve within the `r1-frontend/` directory. Reject with error message if outside.
+- `write_file(path: str, content: str)` — writes files, same sandbox restriction.
+- `exec_shell(command: str)` — explicit allow-list only: `["npm run build", "git status", "git diff", "python -m pytest"]`. Reject anything else with a descriptive error returned to the LLM.
+- `reload_frontend()` — no arguments. Runs ADB force-stop + URL reopen using the existing `R1_SERIAL` global.
 
-1. User scans QR on physical card
-2. Browser opens `orb.sacredcircuits.ai/read/aphrodite/017`
-3. Web app presents intention selector (love, wisdom, courage, etc.)
-4. User selects intention, web app POSTs to orb-backend
-5. orb-backend calls Smithers with structured prompt: deity + intention + user context
-6. Smithers orchestrates: Pinecone RAG for mythological context -> LLM generates reading -> ElevenLabs generates voice
-7. orb-backend streams back via SSE: text chunks, audio URL, image references from Content DB
-8. Web app renders: PANTHEON art as backdrop, text overlaid, audio plays deity voice
-9. Total target latency: < 8 seconds to first content, < 30 seconds for full reading
-
-### Spirit Sphere Voice Flow
-
-1. User presses button or speaks wake word
-2. ESP32 records audio to PSRAM via I2S DMA
-3. On button release (or silence detection), ESP32 sends audio over WebSocket
-4. orb-backend receives audio, sends to AssemblyAI STT
-5. Transcript sent to Smithers for LLM processing with RAG context
-6. Response text sent to ElevenLabs TTS
-7. Audio chunks streamed back over WebSocket
-8. ESP32 plays audio via I2S while triggering POV animation
-9. Total target latency: < 3 seconds to first audio chunk (goal), < 5 seconds acceptable
-
-## Patterns to Follow
-
-### Pattern 1: Streaming Pipeline with Backpressure
-
-**What:** Never buffer the entire AI response before delivering. Stream each stage's output to the next.
-
-**When:** Always, for both products.
-
-**Why:** An oracle reading generates ~500 words of text, ~30 seconds of audio, and references 3-5 images. Waiting for all of that before showing anything creates unacceptable perceived latency.
-
-**Implementation:**
-```
-LLM (streaming tokens) -> TTS (sentence-by-sentence) -> Client (chunk-by-chunk)
-```
-
-The LLM streams tokens. When a complete sentence is detected, that sentence is sent to TTS. TTS audio chunks are immediately forwarded to the client. The client begins playing audio while more is still generating. For the web app, SSE delivers this naturally. For the ESP32, WebSocket binary frames.
-
-### Pattern 2: Deity Configuration as Data
-
-**What:** Each of the 21 Greek gods is a configuration record, not code.
-
-**When:** Any deity-specific behavior.
-
+**Loop structure (bounded):**
 ```python
-# deity_config.json
-{
-  "aphrodite": {
-    "voice_id": "eleven_labs_voice_id_here",
-    "system_prompt": "You are Aphrodite, goddess of love...",
-    "art_collection": "pantheon/aphrodite",
-    "color_palette": ["#FFD1DC", "#FF69B4", "#C71585"],
-    "pov_animation": "swirl_roses",
-    "reading_style": "compassionate, sensual, direct"
-  }
-}
+MAX_ITERATIONS = 10
+iteration = 0
+while iteration < MAX_ITERATIONS:
+    response = anthropic_client.messages.create(
+        model="claude-sonnet-4-20250514",
+        tools=[...tool_defs],
+        messages=messages
+    )
+    if response.stop_reason == "end_turn":
+        break
+    # execute tool calls, append results, continue
+    iteration += 1
 ```
 
-**Why:** Adding a new deity should be a config file change, not a code change. The 21 gods ship with cards; more can be added as expansion packs.
+**Voice confirmation:** When the loop completes, the final assistant text is sent through `get_tts_audio()` and streamed back — same pipeline as any other query response.
 
-### Pattern 3: Firmware State Machine
+**UI feedback during loop:** Send `{type: "thinking", voice: voice}` before the loop starts. Optionally send `{type: "response", text: "Reading file...", voice: voice, model: "agentic"}` for each tool call so the user can see progress in the frontend.
 
-**What:** ESP32 firmware operates as an explicit state machine, not spaghetti conditionals.
+#### 3. `execute_tool(tool_name: str, tool_input: dict) -> str`
 
-**States:**
-```
-IDLE -> LISTENING -> UPLOADING -> WAITING -> PLAYING -> IDLE
-                                         \-> ANIMATING (parallel to PLAYING)
-```
+A synchronous helper called inside `run_agentic_loop()`. Returns a string result to append to the Anthropic messages list as a `tool_result` block.
 
-**Why:** Hardware firmware must be deterministic. Every state has clear entry/exit conditions, timeout behavior, and error recovery. The KALO project demonstrates this with RGB LED color states (GREEN=ready, RED=recording, CYAN=processing, BLUE=generating, PINK=speaking).
+Handles the four tools with all sandbox enforcement. The `reload_frontend` tool wraps the existing ADB pattern from `_startup_r1()`.
 
-### Pattern 4: Shared Backend, Separate Protocols
+### Modified Components
 
-**What:** orb-backend exposes two distinct protocol endpoints but shares all business logic.
+#### `process_query()` — Insert Classification Pre-Flight
 
-```
-/api/oracle/*     -> REST + SSE (web app)
-/ws/sphere        -> WebSocket (ESP32)
-```
-
-**Why:** The web app and hardware device have fundamentally different communication needs. The web app is request-response with streaming. The hardware device is persistent bidirectional. But both call the same reading pipeline, same RAG, same TTS. One codebase, two protocols.
-
-## Anti-Patterns to Avoid
-
-### Anti-Pattern 1: Separate Backends per Product
-
-**What:** Building oracle-backend and sphere-backend as separate services.
-
-**Why bad:** 80% of the logic is identical (RAG retrieval, LLM orchestration, TTS generation, Content DB queries). Separate services means duplicated code, divergent behavior, double the maintenance.
-
-**Instead:** One orb-backend with protocol adapters for web and hardware.
-
-### Anti-Pattern 2: ESP32 Doing AI Processing
-
-**What:** Running any AI model on the ESP32 itself.
-
-**Why bad:** ESP32-S3 has 512KB SRAM + 8MB PSRAM. Even tiny models produce garbage. The device is a sensor/actuator, not a compute node.
-
-**Instead:** ESP32 handles only: audio I/O, POV display, WiFi, WebSocket framing. All intelligence lives in the cloud backend.
-
-### Anti-Pattern 3: Polling for Audio
-
-**What:** ESP32 polling the backend for audio data availability.
-
-**Why bad:** Adds 50-200ms latency per poll cycle. Destroys conversational feel.
-
-**Instead:** WebSocket push. Backend pushes audio frames as they arrive from TTS. ESP32 plays immediately from a small ring buffer.
-
-### Anti-Pattern 4: Monolithic Reading Generation
-
-**What:** Generating the entire oracle reading (text + audio + images) before returning anything.
-
-**Why bad:** 15-30 second wait with no feedback. Users will think it is broken.
-
-**Instead:** Stream progressively. Show a PANTHEON image immediately (< 1s). Start text streaming (< 3s). Start audio playback (< 5s). Full reading completes in background.
-
-## Scalability Considerations
-
-| Concern | 1 User (Dev) | 100 Users | 10K Users |
-|---------|-------------|-----------|-----------|
-| LLM calls | Smithers direct | Smithers with queue | Rate limit per user, queue with priority |
-| TTS generation | ElevenLabs direct | ElevenLabs with caching | Cache common readings, pre-generate deity intros |
-| Content DB | File system | File system + CDN | CDN with edge caching |
-| WebSocket (Sphere) | Single connection | 100 persistent WS | Load balancer with sticky sessions |
-| Pinecone | Free tier | Free tier (1M vectors) | Starter tier ($70/mo) |
-| Audio storage | Local disk | S3-compatible | S3 + CDN |
-
-**Key insight for this project:** At Kickstarter scale (1,370 break-even units), the system needs to handle ~100-500 concurrent Spirit Spheres and maybe 1,000 concurrent oracle readings. This is well within single-server capacity with proper async handling. Do not over-engineer for scale that may never arrive.
-
-## Suggested Build Order (Dependencies)
-
-The build order reflects hard dependencies between components.
-
-### Phase 1: Oracle Cards (leverages 80% existing infra)
-
-```
-1. Audit existing SC pipeline (what works, what is missing)
-   |
-2. orb-backend core (FastAPI skeleton, deity config, Content DB access)
-   |
-   +---> 3a. Oracle reading pipeline (Smithers integration, RAG, LLM prompt)
-   +---> 3b. ElevenLabs voice integration (deity profiles, streaming TTS)
-   |
-4. Oracle web app (SvelteKit, QR routing, reading UI)
-   |
-5. Streaming integration (SSE from backend to web app)
-   |
-6. Card design + QR generation (physical product)
-   |
-7. Landing page + payment (Stripe, tiered access)
+**Current structure (simplified):**
+```python
+def process_query(ws, text, voice, model, tier):
+    if smithers_triggers.search(text) or smithers_tools.search(text):
+        voice = "jarvis"          # hardcoded override
+        result = await route_smithers(...)
+        # early return after TTS
+        return
+    # fast path
+    result = await route_query(text, voice, model, tier)
+    # TTS + done
 ```
 
-**Critical path:** Steps 2 and 3 are the core. If the reading pipeline works and sounds good, the rest is UI and logistics.
-
-### Phase 2: Spirit Sphere (hardware, new territory)
-
-```
-1. ESP32-S3 dev board + breadboard prototyping
-   +---> Audio I/O (mic + speaker, I2S, prove round-trip works)
-   +---> WiFi + WebSocket (connect to orb-backend, send/receive)
-   |
-2. orb-backend WebSocket endpoint (reuse reading pipeline, add audio streaming)
-   |
-3. Voice loop end-to-end (speak -> STT -> LLM -> TTS -> hear response)
-   |
-4. POV display prototype (LED strip + motor, prove persistence of vision)
-   +---> Hall sensor timing
-   +---> Frame buffer + DMA
-   |
-5. Integration (voice + display on same ESP32-S3)
-   |
-6. Mechanical design (3D printed enclosure, slip ring, bearing mount)
-   |
-7. Battery + power management
-   |
-8. Kickstarter campaign prep
-```
-
-**Critical path:** Step 1 (audio I/O) and Step 4 (POV display) can run in parallel. Step 3 (voice loop) is the moment of truth -- if the round-trip latency is acceptable, the product works. Step 5 (integration) is where hardware complexity spikes.
-
-### Dependency Graph Between Products
-
-```
-Oracle Cards Phase:
-  [SC Audit] -> [orb-backend] -> [Reading Pipeline] -> [Web App] -> [Cards + QR]
-                     |
-Spirit Sphere Phase: |
-  [ESP32 Basics] ----+---> [WebSocket Endpoint] -> [Voice Loop] -> [POV Display]
-                                                                        |
-                                                              [Integration + Enclosure]
+**New structure:**
+```python
+async def process_query(ws, text, voice, model, tier):
+    classification = await classify_intent(text, voice)
+    
+    # Voice-role binding
+    if classification["voice"] != voice:
+        voice = classification["voice"]
+        await ws.send(json.dumps({"type": "voice_changed", "voice": voice}))
+    
+    # Agentic path — short-circuits routing entirely
+    if classification["build_intent"]:
+        await run_agentic_loop(ws, text, voice)
+        return
+    
+    await ws.send(json.dumps({"type": "thinking", "voice": voice}))
+    
+    # Routing
+    route = classification["route"]
+    if route == "smithers":
+        result = await route_smithers(text, voice, None, None)
+    elif route == "goddess":
+        result = await route_deity(text, voice, model, tier)
+    else:
+        result = await route_llm_direct(text, voice, model or "anthropic/claude-sonnet-4.5", tier)
+    
+    # [TTS + wireframe + done pipeline — unchanged]
 ```
 
-The arrow from orb-backend into Spirit Sphere is the key dependency. Building Oracle Cards first means the backend exists when Spirit Sphere development begins. The Spirit Sphere only needs a new WebSocket protocol adapter, not a new backend.
+The inline regex block (`smithers_triggers`, `smithers_tools`, lines 744-757) and its early-return block are deleted. The duplicate TTS/done code in the early-return path is eliminated — there is now one TTS path at the end of `process_query()`.
+
+**Voice override:** When classification switches voice, send `{type: "voice_changed", voice: classified_voice}` before `{type: "thinking"}`. Update local `voice` variable. The `VOICES` dict and `get_tts_audio()` call at the end remain unchanged.
+
+#### `route_smithers()`, `route_deity()`, `route_llm_direct()` — No Changes
+
+These functions are stable. All new behavior routes through them via `process_query()`. Their internal fallback chains are preserved.
+
+#### `conversation_history` — No Changes
+
+History is keyed by voice name. When classification switches voice, the new voice gets its own history automatically (defaultdict behavior). The agentic loop does NOT touch conversation_history — its messages list is local and ephemeral.
+
+#### `HealthHandler` — No Changes for Core Features
+
+Port conflict fix (8000 vs 8300), Mission Control (:4000) restore, JARVIS web (:5556), Health Dashboard (:6001) are operational fixes. Handle in Phase 4, separate from feature PRs.
+
+### Data Flow Changes
+
+```
+BEFORE:
+  text → process_query()
+       → [inline regex] → route_smithers() [early return path]
+                       OR route_query() [fast path]
+       → TTS → done
+
+AFTER:
+  text → classify_intent() [<300ms, LLM Router cheap model]
+       → build_intent? → run_agentic_loop() → tool execution → TTS confirm → done
+       → route == "smithers" → route_smithers()
+       → route == "goddess"  → route_deity(text, classified_voice)
+       → route == "jarvis"   → route_llm_direct()
+       → [single TTS + wireframe + done pipeline]
+```
+
+**New WebSocket message types emitted (net additions only):**
+- `{type: "tool_call", tool: "read_file", path: "..."}` — agentic loop progress (optional, for UI feedback)
+- `{type: "tool_result", tool: "write_file", success: bool}` — tool execution result
+
+No existing WebSocket message types are removed or renamed. The frontend does not require changes for Phases 1-2. Phase 3 (agentic) may warrant frontend display of tool call progress, but the feature works without it.
+
+---
+
+## Build Order
+
+### Phase 1: Classifier Shim (foundation — build first)
+
+Build `classify_intent()` and integrate it into `process_query()`.
+
+**Deliverables:**
+- `classify_intent()` function with LLM Router call, 3s timeout, fallback
+- Remove inline regex block from `process_query()`
+- Replace early-return Smithers path with classifier-driven dispatch
+- Single TTS/done path at end of `process_query()`
+
+**Test gates:**
+- "What's on my calendar?" routes to smithers
+- "Tell me about Zeus" routes to goddess, voice = zeus
+- "What time is it?" routes to jarvis
+- Smithers tool path still reaches :8200
+- JARVIS fast path still hits LLM Router
+- Classifier failure (LLM Router down) falls back silently, response still works
+
+**Why first:** Phase 2 (voice-role) and Phase 3 (agentic) both consume classifier output. Neither can be built independently without it. This is also the highest-risk component — measuring actual p95 latency of classify_intent() must happen here before committing to the architecture.
+
+### Phase 2: Voice-Role Binding (depends on Phase 1, small change)
+
+Add voice override logic in `process_query()` using `classification["voice"]`.
+
+**Deliverables:**
+- `voice_changed` message sent before `thinking` when classifier overrides voice
+- Local `voice` variable updated before routing
+- Validate that VOICES dict has all expected voice names (it does: 13 voices)
+
+**Why second:** Depends on classifier. Is a 3-4 line change. Validates that the classifier is returning useful voice recommendations before the agentic loop adds complexity. Ship and confirm in production on R1 before proceeding.
+
+### Phase 3: Agentic Tools (depends on Phase 1)
+
+Build `run_agentic_loop()` and `execute_tool()`.
+
+**Deliverables:**
+- Tool schema definitions (Anthropic tool_use format)
+- `read_file`, `write_file`, `exec_shell`, `reload_frontend` implementations
+- Sandbox enforcement on file paths and shell commands
+- Loop integration in `process_query()` via `build_intent` flag
+- Bounded loop (10 iterations max)
+
+**Test gates (must run against real R1 hardware):**
+- "Add a red border to the thinking bubble" → reads index.html → writes change → reloads R1 browser → voice confirms
+- Sandbox rejection: attempt to read `/etc/passwd` → loop receives error, does not proceed
+- Shell allow-list: attempt `rm -rf /` → rejected, loop receives error
+
+**Why third:** Most complex feature. Has the most failure modes. Should not be in the same PR as Phase 1+2. The ADB reload path cannot be unit-tested without hardware.
+
+### Phase 4: System Health Fixes (independent, last)
+
+Fix port conflict between orb-backend :8000 vs expected :8300. Restore Mission Control (:4000), JARVIS web (:5556), Health Dashboard (:6001).
+
+**Why last:** Independent of the new features. Does not block Phases 1-3. Mixing operational fixes with feature work risks masking regressions.
+
+---
+
+## Key Design Decisions
+
+**Decision 1: Classifier lives in orb_bridge.py, not as a Smithers /classify endpoint.**
+Smithers at 60s+ cannot be a pre-flight gate. The classifier is a direct LLM Router call. If Smithers adds a fast /classify endpoint later, the swap is a one-line URL change.
+
+**Decision 2: The classifier always returns a voice recommendation.**
+This unifies the hardcoded `voice = "jarvis"` override in the current Smithers trigger path (lines 749-757) with new mythology routing. One `voice` key replaces the scattered inline overrides.
+
+**Decision 3: BUILD_INTENT is a short-circuit, not a route variant.**
+The agentic loop is a separate execution path, not a new value in `route`. This keeps `run_agentic_loop()` self-contained and prevents tool execution artifacts from leaking into `conversation_history`.
+
+**Decision 4: `exec_shell` uses an allow-list, not a denylist.**
+Safer by default. The allow-list is `["npm run build", "git status", "git diff", "python -m pytest"]`. Any command not on this list is rejected with an explicit error fed back into the Anthropic loop. The LLM can then decide how to proceed without that command.
+
+**Decision 5: Do not modify `route_smithers()`, `route_deity()`, or `route_llm_direct()`.**
+All new behavior routes through them. Change surface is limited to `process_query()` and the new functions. This is the lowest-risk approach given the existing fallback chains in each route function.
+
+**Decision 6: `conversation_history` is not passed to the agentic loop.**
+The agentic loop is a one-shot task execution, not a conversational turn. Its messages list is created locally, used, and discarded. Mixing it into conversation_history would corrupt the persona's conversational context.
+
+**Decision 7: Classifier fallback must be silent and fast.**
+If `classify_intent()` fails, fall back to current behavior with no user-visible error. Log internally. This preserves voice UX when LLM Router is degraded.
+
+---
+
+## Integration Risks
+
+| Risk | Severity | Mitigation |
+|------|----------|------------|
+| Classifier adds >300ms latency | HIGH | Use cheapest model tier (haiku), minimal prompt, 3s hard timeout with silent fallback |
+| Classifier misroutes mythology as Smithers | MEDIUM | Tune prompt with examples; user can still say "ask Smithers..." to force-route |
+| Agentic loop runs indefinitely | HIGH | Hard cap at 10 tool call iterations; voice error response if exceeded |
+| exec_shell sandboxing bypassed via path traversal | HIGH | Explicit allow-list only; no substring matching of commands |
+| ADB reload fails silently in agentic loop | MEDIUM | tool result must include success/failure bool; loop reports failure in voice response |
+| Port conflict (8000 vs 8300) causes content image fetch to fail | LOW | Already failing silently (line 928: `pass`); fix in Phase 4 |
+| Duplicate TTS path removed, edge case missed | MEDIUM | Read the full early-return block (lines 760-784) before deleting; validate against test matrix |
+
+---
 
 ## Sources
 
-- [Mercator: ESP32 POV Globe](https://mdwdotla.medium.com/mercator-an-esp32-based-spherical-persistence-of-vision-display-a4beff4f826e) -- Reference design for ESP32 + DotStar + slip ring + Hall sensor architecture
-- [Flicker: Spherical Volumetric Display](https://danfoisy.github.io/flicker/) -- Advanced reference: 256 LEDs, FPGA-driven, 15Hz frame rate, slip ring power delivery
-- [KALO ESP32 Voice Chat](https://github.com/kaloprojects/KALO-ESP32-Voice-Chat-AI-Friends) -- Reference for ESP32 voice assistant: INMP441 + MAX98357A + ElevenLabs STT/TTS pipeline
-- [ESP32 AI Voice Assistant with MCP](https://hackaday.io/project/204691-esp32-ai-voice-assistant-with-mcp-integration) -- WebSocket audio streaming architecture, state machine firmware pattern
-- [Arduino POV Display](https://projecthub.arduino.cc/jobitjoseph/open-source-high-resolution-pov-display-using-esp32-799677) -- ESP32 POV with 74HC595 shift registers, 128px resolution
-- [ESP32 I2S DMA Settings](https://www.atomic14.com/2021/04/20/esp32-i2s-dma-buf-len-buf-count) -- DMA buffer configuration for low-latency audio
-- [Pinecone RAG Pipeline Design](https://www.pinecone.io/learn/series/vector-databases-in-production-for-busy-engineers/rag-pipeline-design/) -- Production RAG architecture patterns
-- [PCBWay ESP32 POV Display](https://www.pcbway.com/project/shareproject/High_Resolution_POV_Display_using_ESP32_2d12b725.html) -- ESP32 POV reference with 128px, 20FPS
+- Direct reading of `/Volumes/AI_WORKSPACE/esp32-jarvis/bridge/orb_bridge.py` (full file, 1389 lines) — HIGH confidence
+- `/Users/claw2501/.planning/PROJECT.md` — milestone v1.2 target features — HIGH confidence
+- Anthropic tool_use API: pattern already used in file via `anthropic_client` for vision (lines 960-984) — HIGH confidence
