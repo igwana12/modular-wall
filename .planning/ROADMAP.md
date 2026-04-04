@@ -3,7 +3,8 @@
 ## Milestones
 
 - [x] **v1.0 The Orb** - Phases 1-8 (shipped 2026-03-31)
-- [ ] **v1.1 Claude Code Infrastructure Upgrades** - Phases 9-12 (in progress)
+- [x] **v1.1 Claude Code Infrastructure Upgrades** - Phases 10-13 (shipped 2026-04-03)
+- [ ] **v1.2 Smithers-First Architecture + JARVIS Agentic Tools** - Phases 14-16 (in progress)
 
 ## Phases
 
@@ -225,16 +226,8 @@ Plans:
 
 </details>
 
-### v1.1 Claude Code Infrastructure Upgrades (In Progress)
-
-**Milestone Goal:** Upgrade the existing Smithers-controlled system with tactical improvements that enhance session mobility, automation, visual QA, and security.
-
-- [x] **Phase 10: Automation Activation** - Verify scheduled tasks and configure loop polling on existing infrastructure (completed 2026-04-02)
-- [x] **Phase 11: Security & Routing Hardening** - Extend prompt guard rules and add context profiles to Smithers routing (completed 2026-04-02)
-- [x] **Phase 12: Session Mobility** - Enable teleport and remote control for cross-device Claude Code sessions (completed 2026-04-03)
-- [x] **Phase 13: Visual QA Hook** - Create Playwright-based screenshot capture and regression detection hook (completed 2026-04-03)
-
-## Phase Details
+<details>
+<summary>v1.1 Claude Code Infrastructure Upgrades (Phases 10-13) - SHIPPED 2026-04-03</summary>
 
 ### Phase 10: Automation Activation
 **Goal**: All background automation runs unattended -- scheduled tasks fire on cadence and polling loops surface issues without manual checking
@@ -262,11 +255,10 @@ Plans:
   3. Attempting to write to a .env or credentials file triggers a prompt guard rejection
   4. A JARVIS task session automatically includes services/jarvis/ directories and excludes firmware/
   5. An Orb firmware task session automatically includes firmware/ and excludes services/jarvis/
-**Plans**: TBD
+**Plans**: 1/1 plans complete
 
 Plans:
-- [ ] 11-01: Extend gsd-prompt-guard.js with Slack, main branch, and secret file rules
-- [x] 11-02: Add context profiles to Smithers routing_policy.json and verify task-based routing
+- [x] 11-02-PLAN.md -- Context profiles in Smithers routing_policy.json and task-based routing verification
 
 ### Phase 12: Session Mobility
 **Goal**: Claude Code sessions move seamlessly between devices -- start on desktop, continue on phone, no context loss
@@ -276,10 +268,10 @@ Plans:
   1. User starts a Claude Code session on Mac, runs teleport, and resumes the same conversation on iPhone/iPad
   2. Remote control interface is accessible from a mobile browser and can issue commands to the desktop session
   3. Teleported session includes conversation history and file context from the originating device
-**Plans**: TBD
+**Plans**: 1/1 plans complete
 
 Plans:
-- [x] 12-01: Teleport and remote control configuration, testing, and documentation
+- [x] 12-01-PLAN.md -- Teleport and remote control configuration, testing, and documentation
 
 ### Phase 13: Visual QA Hook
 **Goal**: Frontend file changes are automatically screenshot-tested -- visual regressions caught before they reach commits
@@ -295,14 +287,66 @@ Plans:
 - [x] 13-01-PLAN.md -- PostToolUse hook for JARVIS frontend file detection + Playwright screenshot capture (VISQA-01)
 - [x] 13-02-PLAN.md -- Pixelmatch baseline comparison + commit-blocking PreToolUse guard (VISQA-02, VISQA-03)
 
+</details>
+
+### v1.2 Smithers-First Architecture + JARVIS Agentic Tools (In Progress)
+
+**Milestone Goal:** Make Smithers the single conversation entry point with clear voice-role identity, and give JARVIS the ability to modify its own interface via voice commands.
+
+- [ ] **Phase 14: Routing Foundation + Voice Identity** - Regex intent classifier, voice-role binding, parallel pre-warm, and conversation history re-keying
+- [ ] **Phase 15: JARVIS Agentic Tools** - Build-intent detection, sandboxed file I/O, allowlisted shell commands, ADB frontend reload, and bounded agentic loop
+- [ ] **Phase 16: System Health Restoration** - Fix port conflicts, restore Mission Control / JARVIS web / Health Dashboard, canonicalize port registry
+
+## Phase Details
+
+### Phase 14: Routing Foundation + Voice Identity
+**Goal**: Every voice query is classified and dispatched to the correct handler and voice before reaching the LLM -- with zero perceptible latency cost
+**Depends on**: Nothing (first phase of v1.2)
+**Requirements**: ROUT-01, ROUT-02, ROUT-03, ROUT-04
+**Success Criteria** (what must be TRUE):
+  1. Saying "What's on my calendar?" routes to Smithers and responds in the JARVIS voice; saying "Tell me about Zeus" routes to the deity handler and responds in the Zeus voice; saying "What time is it?" falls through to the JARVIS general path
+  2. Voice identity is locked before any async work begins -- no mid-response voice switches or duplicate TTS sends
+  3. Switching from a Zeus conversation to a Smithers task and back preserves full conversation history (context is not lost when voice changes)
+  4. End-to-end voice latency on R1 hardware stays under 300ms overhead compared to the pre-classifier baseline (measured, not estimated)
+**Plans:** 2 plans
+
+Plans:
+- [ ] 14-01-PLAN.md -- Re-key conversation_history to session-based + port 8400 auto-increment fix (ROUT-04)
+- [ ] 14-02-PLAN.md -- Regex intent classifier, voice-role binding, unified process_query dispatch (ROUT-01, ROUT-02, ROUT-03)
+
+### Phase 15: JARVIS Agentic Tools
+**Goal**: Users can speak a UI change request and JARVIS reads, edits, reloads, and confirms -- voice to working code on the R1 device
+**Depends on**: Phase 14 (classifier provides `route == "build"` flag)
+**Requirements**: AGEN-01, AGEN-02, AGEN-03, AGEN-04, AGEN-05
+**Success Criteria** (what must be TRUE):
+  1. Saying "make the orb pulse faster" triggers JARVIS to read the relevant file, write the change, reload the R1 browser via ADB, and voice-confirm the result -- all without manual intervention
+  2. Attempting to read or write a file outside r1-frontend/ returns an error to the LLM and JARVIS voices "I can only edit the R1 frontend" (path traversal blocked at Python level)
+  3. Attempting to run a shell command not on the allowlist (e.g., `rm -rf`) is refused -- JARVIS voices the rejection rather than executing
+  4. If the agentic loop hits 5 iterations without completing, JARVIS speaks a failure summary and exits cleanly (no silent hang, no runaway credit burn)
+  5. User hears a voice acknowledgement ("Working on it") before the first tool executes -- silence during a 10-40 second loop is not acceptable
+**Plans**: TBD
+
+### Phase 16: System Health Restoration
+**Goal**: All core services run cleanly with no port conflicts, and their status is visible from a single dashboard
+**Depends on**: Nothing (independent of Phases 14-15)
+**Requirements**: HLTH-01, HLTH-02, HLTH-03, HLTH-04
+**Success Criteria** (what must be TRUE):
+  1. orb-backend starts on the first attempt with `ORB_BACKEND_PORT=8300` canonical and zero stale references to port 8000 in any startup config
+  2. Mission Control at :4000, JARVIS web at :5556, and Health Dashboard at :6001 all respond to HTTP health checks after a clean system restart
+  3. Health Dashboard at :6001 shows accurate up/down status for all registered services including the three restored in this phase
+**Plans**: TBD
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order. Phases 10 and 11 are independent and could run in parallel.
+Phases execute in numeric order. Phase 16 is independent and could run in parallel with 14-15.
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 10. Automation Activation | v1.1 | 2/2 | Complete   | 2026-04-02 |
-| 11. Security & Routing Hardening | v1.1 | 1/1 | Complete   | 2026-04-02 |
-| 12. Session Mobility | v1.1 | 1/1 | Complete    | 2026-04-03 |
-| 13. Visual QA Hook | v1.1 | 2/2 | Complete    | 2026-04-03 |
+| 10. Automation Activation | v1.1 | 2/2 | Complete | 2026-04-02 |
+| 11. Security & Routing Hardening | v1.1 | 1/1 | Complete | 2026-04-02 |
+| 12. Session Mobility | v1.1 | 1/1 | Complete | 2026-04-03 |
+| 13. Visual QA Hook | v1.1 | 2/2 | Complete | 2026-04-03 |
+| 14. Routing Foundation + Voice Identity | v1.2 | 0/2 | In progress | - |
+| 15. JARVIS Agentic Tools | v1.2 | 0/0 | Not started | - |
+| 16. System Health Restoration | v1.2 | 0/0 | Not started | - |
