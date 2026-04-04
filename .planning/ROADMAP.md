@@ -293,7 +293,7 @@ Plans:
 
 **Milestone Goal:** Make Smithers the single conversation entry point with clear voice-role identity, and give JARVIS the ability to modify its own interface via voice commands.
 
-- [ ] **Phase 14: Routing Foundation + Voice Identity** - Regex intent classifier, voice-role binding, parallel pre-warm, and conversation history re-keying
+- [x] **Phase 14: Routing Foundation + Voice Identity** - Regex intent classifier, voice-role binding, parallel pre-warm, and conversation history re-keying (completed 2026-04-04)
 - [ ] **Phase 15: JARVIS Agentic Tools** - Build-intent detection, sandboxed file I/O, allowlisted shell commands, ADB frontend reload, and bounded agentic loop
 - [ ] **Phase 16: System Health Restoration** - Fix port conflicts, restore Mission Control / JARVIS web / Health Dashboard, canonicalize port registry
 
@@ -308,7 +308,7 @@ Plans:
   2. Voice identity is locked before any async work begins -- no mid-response voice switches or duplicate TTS sends
   3. Switching from a Zeus conversation to a Smithers task and back preserves full conversation history (context is not lost when voice changes)
   4. End-to-end voice latency on R1 hardware stays under 300ms overhead compared to the pre-classifier baseline (measured, not estimated)
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [ ] 14-01-PLAN.md -- Re-key conversation_history to session-based + port 8400 auto-increment fix (ROUT-04)
@@ -347,6 +347,6 @@ Phases execute in numeric order. Phase 16 is independent and could run in parall
 | 11. Security & Routing Hardening | v1.1 | 1/1 | Complete | 2026-04-02 |
 | 12. Session Mobility | v1.1 | 1/1 | Complete | 2026-04-03 |
 | 13. Visual QA Hook | v1.1 | 2/2 | Complete | 2026-04-03 |
-| 14. Routing Foundation + Voice Identity | v1.2 | 0/2 | In progress | - |
+| 14. Routing Foundation + Voice Identity | v1.2 | 0/2 | Complete    | 2026-04-04 |
 | 15. JARVIS Agentic Tools | v1.2 | 0/0 | Not started | - |
 | 16. System Health Restoration | v1.2 | 0/0 | Not started | - |
