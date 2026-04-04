@@ -308,11 +308,11 @@ Plans:
   2. Voice identity is locked before any async work begins -- no mid-response voice switches or duplicate TTS sends
   3. Switching from a Zeus conversation to a Smithers task and back preserves full conversation history (context is not lost when voice changes)
   4. End-to-end voice latency on R1 hardware stays under 300ms overhead compared to the pre-classifier baseline (measured, not estimated)
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] 14-01-PLAN.md -- Re-key conversation_history to session-based + port 8400 auto-increment fix (ROUT-04)
-- [ ] 14-02-PLAN.md -- Regex intent classifier, voice-role binding, unified process_query dispatch (ROUT-01, ROUT-02, ROUT-03)
+- [x] 14-02-PLAN.md -- Regex intent classifier, voice-role binding, unified process_query dispatch (ROUT-01, ROUT-02, ROUT-03)
 
 ### Phase 15: JARVIS Agentic Tools
 **Goal**: Users can speak a UI change request and JARVIS reads, edits, reloads, and confirms -- voice to working code on the R1 device
@@ -347,6 +347,6 @@ Phases execute in numeric order. Phase 16 is independent and could run in parall
 | 11. Security & Routing Hardening | v1.1 | 1/1 | Complete | 2026-04-02 |
 | 12. Session Mobility | v1.1 | 1/1 | Complete | 2026-04-03 |
 | 13. Visual QA Hook | v1.1 | 2/2 | Complete | 2026-04-03 |
-| 14. Routing Foundation + Voice Identity | v1.2 | 0/2 | In progress | - |
+| 14. Routing Foundation + Voice Identity | v1.2 | 1/2 | In Progress|  |
 | 15. JARVIS Agentic Tools | v1.2 | 0/0 | Not started | - |
 | 16. System Health Restoration | v1.2 | 0/0 | Not started | - |
