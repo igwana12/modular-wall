@@ -110,6 +110,16 @@ export const MODULES: ModuleType[] = [
     shortDesc: "Smart mirror + camera + AI",
     image: "/module-mirror.jpg",
   },
+  {
+    id: "ring",
+    name: "Ring",
+    price: 49,
+    color: "#00D4AA",
+    icon: "CircleDot",
+    description: "3D-printed smart ring. Gesture mouse, voice input, motion capture, haptic feedback. The wall on your finger.",
+    shortDesc: "Wearable gesture controller",
+    image: "/module-ring.jpg",
+  },
 ];
 
 export interface Scene {
