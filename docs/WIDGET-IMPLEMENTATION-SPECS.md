@@ -783,6 +783,1104 @@ Each widget must:
 
 ---
 
+## 5. Glow LED Pattern Engine
+
+### Overview
+**Module**: Glow (71x71mm, 16x16 SK6812 RGBW LED matrix = 256 LEDs)
+**Assigned**: Hephaestus (Engineer) + Prometheus (Software Engineer)
+**MVI Stack**: `DataTexture + ShaderMaterial + Color + Clock`
+
+### Visual Design
+- **Hub dashboard preview**: 16x16 Points visualization mirroring physical LEDs
+- **Shader-generated patterns**: Circadian rhythm, mood waves, notification pulses
+- **Real-time preview**: Live preview on Hub syncs with physical module
+- **Color modes**: Circadian (sunrise/sunset), Mood (calm/energized), Notification (pulse)
+
+### Technical Specification
+
+#### Scene Structure
+```javascript
+Scene
+├── PerspectiveCamera (fov: 45, aspect: 1.0)
+├── WebGLRenderer (antialias: true)
+│
+├── LED Grid Preview (Points)
+│   ├── BufferGeometry (16x16 = 256 points)
+│   ├── PointsMaterial (size: 10, sizeAttenuation: false)
+│   └── Color per point (matches physical LED)
+│
+└── Clock (for time-based animation)
+```
+
+#### LED Grid Setup
+
+```javascript
+const gridSize = 16;
+const totalLEDs = gridSize * gridSize;
+
+// Create point cloud for LED visualization
+const positions = new Float32Array(totalLEDs * 3);
+const colors = new Float32Array(totalLEDs * 3);
+
+let index = 0;
+for (let y = 0; y < gridSize; y++) {
+    for (let x = 0; x < gridSize; x++) {
+        positions[index * 3] = x - gridSize / 2;
+        positions[index * 3 + 1] = y - gridSize / 2;
+        positions[index * 3 + 2] = 0;
+        index++;
+    }
+}
+
+const geometry = new THREE.BufferGeometry();
+geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+const material = new THREE.PointsMaterial({
+    size: 10,
+    vertexColors: true,
+    sizeAttenuation: false
+});
+
+const ledGrid = new THREE.Points(geometry, material);
+scene.add(ledGrid);
+```
+
+#### Pattern Generator: Circadian Rhythm
+
+```javascript
+const color = new THREE.Color();
+
+function generateCircadianPattern(timeOfDay) {
+    // timeOfDay: 0-24 hours
+    const colors = geometry.attributes.color;
+
+    for (let i = 0; i < totalLEDs; i++) {
+        let hue, saturation, lightness;
+
+        if (timeOfDay >= 6 && timeOfDay < 12) {
+            // Morning: warm sunrise (orange to yellow)
+            const progress = (timeOfDay - 6) / 6; // 0-1
+            hue = 0.08 + progress * 0.08; // 0.08 (orange) to 0.16 (yellow)
+            saturation = 0.8;
+            lightness = 0.4 + progress * 0.3; // Getting brighter
+        } else if (timeOfDay >= 12 && timeOfDay < 18) {
+            // Day: bright neutral (cool white)
+            hue = 0.55; // Cyan
+            saturation = 0.3;
+            lightness = 0.7;
+        } else if (timeOfDay >= 18 && timeOfDay < 22) {
+            // Evening: warm sunset (orange to red)
+            const progress = (timeOfDay - 18) / 4;
+            hue = 0.08 - progress * 0.08; // Orange to red
+            saturation = 0.9;
+            lightness = 0.5 - progress * 0.3; // Getting dimmer
+        } else {
+            // Night: very dim warm (red)
+            hue = 0.0; // Red
+            saturation = 0.7;
+            lightness = 0.1;
+        }
+
+        color.setHSL(hue, saturation, lightness);
+        colors.setXYZ(i, color.r, color.g, color.b);
+    }
+
+    colors.needsUpdate = true;
+}
+```
+
+#### Pattern Generator: Mood Waves
+
+```javascript
+function generateMoodWave(time, moodType) {
+    const colors = geometry.attributes.color;
+
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            const index = y * gridSize + x;
+
+            // Wave parameters based on mood
+            let baseHue, waveSpeed, waveAmplitude;
+
+            if (moodType === 'calm') {
+                baseHue = 0.55; // Teal/cyan
+                waveSpeed = 0.3;
+                waveAmplitude = 0.05;
+            } else if (moodType === 'energized') {
+                baseHue = 0.08; // Orange
+                waveSpeed = 1.5;
+                waveAmplitude = 0.15;
+            } else if (moodType === 'focus') {
+                baseHue = 0.67; // Purple
+                waveSpeed = 0.5;
+                waveAmplitude = 0.08;
+            }
+
+            // Calculate wave effect
+            const wave1 = Math.sin(x * 0.5 + time * waveSpeed) * waveAmplitude;
+            const wave2 = Math.cos(y * 0.5 + time * waveSpeed * 0.7) * waveAmplitude;
+            const hue = (baseHue + wave1 + wave2) % 1.0;
+
+            color.setHSL(hue, 0.8, 0.5);
+            colors.setXYZ(index, color.r, color.g, color.b);
+        }
+    }
+
+    colors.needsUpdate = true;
+}
+```
+
+#### Pattern Generator: Notification Pulse
+
+```javascript
+function generateNotificationPulse(time, notificationType) {
+    const colors = geometry.attributes.color;
+
+    // Notification color based on type
+    const notificationColors = {
+        slack: new THREE.Color(0xFFB347), // Amber
+        calendar: new THREE.Color(0x00D4AA), // Teal
+        email: new THREE.Color(0x8888FF), // Purple
+        alert: new THREE.Color(0xFF4466)  // Coral
+    };
+
+    const pulseColor = notificationColors[notificationType] || notificationColors.alert;
+
+    // Radial pulse from center
+    const centerX = gridSize / 2;
+    const centerY = gridSize / 2;
+    const pulseSpeed = 2.0;
+    const pulseRadius = (time * pulseSpeed) % gridSize;
+
+    for (let y = 0; y < gridSize; y++) {
+        for (let x = 0; x < gridSize; x++) {
+            const index = y * gridSize + x;
+            const dist = Math.sqrt((x - centerX) ** 2 + (y - centerY) ** 2);
+
+            // Pulse ring with fade
+            const intensity = Math.max(0, 1.0 - Math.abs(dist - pulseRadius) / 2.0);
+
+            if (intensity > 0) {
+                color.copy(pulseColor);
+                color.multiplyScalar(intensity);
+            } else {
+                color.setRGB(0.05, 0.05, 0.1); // Dark background
+            }
+
+            colors.setXYZ(index, color.r, color.g, color.b);
+        }
+    }
+
+    colors.needsUpdate = true;
+}
+```
+
+#### DataTexture for ESP32 Upload
+
+```javascript
+// Generate 16x16 color map to send to ESP32
+function generateDataTexture() {
+    const size = 16;
+    const data = new Uint8Array(size * size * 4); // RGBA
+
+    const colors = geometry.attributes.color;
+
+    for (let i = 0; i < size * size; i++) {
+        const r = colors.getX(i) * 255;
+        const g = colors.getY(i) * 255;
+        const b = colors.getZ(i) * 255;
+
+        data[i * 4] = r;
+        data[i * 4 + 1] = g;
+        data[i * 4 + 2] = b;
+        data[i * 4 + 3] = 255; // Alpha
+    }
+
+    return new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
+}
+
+// Send to Wall Controller API
+async function uploadToModule() {
+    const texture = generateDataTexture();
+    const canvas = document.createElement('canvas');
+    canvas.width = 16;
+    canvas.height = 16;
+    const ctx = canvas.getContext('2d');
+
+    // Draw texture to canvas
+    const imageData = ctx.createImageData(16, 16);
+    imageData.data.set(texture.image.data);
+    ctx.putImageData(imageData, 0, 0);
+
+    // Convert to base64 and send
+    const base64 = canvas.toDataURL('image/png');
+    await fetch('http://hub.local:8200/api/modules/glow-01/pattern', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pattern: base64 })
+    });
+}
+```
+
+### Modes
+1. **Circadian**: Auto-adjusts color temperature based on time of day
+2. **Mood Wave**: Animated color waves (calm/energized/focus)
+3. **Notification**: Pulse effect for incoming notifications
+4. **Custom**: User-defined static color or pattern
+
+### Deliverables
+- [ ] `glow-led-engine.html` — standalone demo with all 4 modes
+- [ ] Circadian rhythm pattern generator
+- [ ] Mood wave pattern generator (3 presets)
+- [ ] Notification pulse effect
+- [ ] DataTexture upload to ESP32
+- [ ] Integration with `/api/modules/glow-{id}/pattern` endpoint
+- [ ] Screenshot for brochure
+- [ ] Education lesson outline: "Generative LED Patterns with Three.js DataTexture"
+
+---
+
+## 6. Voice Waveform Visualizer
+
+### Overview
+**Module**: Voice (audio module with INMP441 mic + MAX98357A amp)
+**Assigned**: Hephaestus (Engineer)
+**MVI Stack**: `Audio + AudioAnalyser + ShaderMaterial + BufferGeometry`
+
+### Visual Design
+- **Oscilloscope waveform**: Classic glowing teal waveform on dark background
+- **Displayed on Screen-S**: Voice visualization shown on nearby screen module
+- **Real-time**: 60fps responsive to voice/audio input
+- **Shader glow**: ShaderMaterial for glowing line effect
+
+### Technical Specification
+
+#### Scene Structure
+```javascript
+Scene
+├── PerspectiveCamera (fov: 45, aspect: 320/240)
+├── WebGLRenderer (antialias: true)
+│
+├── AudioListener (attached to camera)
+├── Audio (microphone input)
+├── AudioAnalyser (fftSize: 256)
+│
+├── Waveform Line (Line)
+│   ├── BufferGeometry (256 points)
+│   ├── ShaderMaterial (glowing teal line)
+│   └── Updated each frame with amplitude data
+│
+└── Background Gradient (PlaneGeometry + ShaderMaterial)
+```
+
+#### Waveform Setup
+
+```javascript
+// Create waveform line geometry
+const waveformPoints = 256;
+const positions = new Float32Array(waveformPoints * 3);
+
+for (let i = 0; i < waveformPoints; i++) {
+    positions[i * 3] = (i / waveformPoints) * 10 - 5; // X: -5 to 5
+    positions[i * 3 + 1] = 0; // Y: will be updated by audio
+    positions[i * 3 + 2] = 0;
+}
+
+const waveformGeometry = new THREE.BufferGeometry();
+waveformGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+// Glowing line shader
+const waveformMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+        color: { value: new THREE.Color(0x00D4AA) },
+        glowIntensity: { value: 1.5 }
+    },
+    vertexShader: `
+        varying vec2 vUv;
+        void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+    `,
+    fragmentShader: `
+        uniform vec3 color;
+        uniform float glowIntensity;
+        varying vec2 vUv;
+
+        void main() {
+            // Glow effect
+            vec3 glowColor = color * glowIntensity;
+            gl_FragColor = vec4(glowColor, 1.0);
+        }
+    `,
+    transparent: true,
+    blending: THREE.AdditiveBlending
+});
+
+const waveformLine = new THREE.Line(waveformGeometry, waveformMaterial);
+scene.add(waveformLine);
+```
+
+#### Audio Analysis
+
+```javascript
+const listener = new THREE.AudioListener();
+camera.add(listener);
+
+const audio = new THREE.Audio(listener);
+
+navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+    .then(stream => {
+        const mediaStreamSource = listener.context.createMediaStreamSource(stream);
+        audio.setNodeSource(mediaStreamSource);
+    });
+
+const analyser = new THREE.AudioAnalyser(audio, 256);
+```
+
+#### Animation Loop
+
+```javascript
+function animate() {
+    requestAnimationFrame(animate);
+
+    // Get waveform time-domain data
+    const data = analyser.data; // Uint8Array of length 256
+
+    // Update waveform geometry
+    const positions = waveformGeometry.attributes.position;
+
+    for (let i = 0; i < waveformPoints; i++) {
+        const amplitude = (data[i] / 255.0) * 2 - 1; // Normalize to -1 to 1
+        const y = amplitude * 2; // Scale for visibility
+        positions.setY(i, y);
+    }
+
+    positions.needsUpdate = true;
+
+    renderer.render(scene, camera);
+}
+
+animate();
+```
+
+### Deliverables
+- [ ] `voice-waveform.html` — standalone demo
+- [ ] Real-time waveform from microphone
+- [ ] Glowing teal ShaderMaterial line
+- [ ] AudioAnalyser time-domain integration
+- [ ] Integration with Wall Controller `/api/audio/waveform` endpoint
+- [ ] Screenshot for brochure
+- [ ] Education lesson outline: "Real-Time Audio Visualization with Three.js"
+
+---
+
+## 7. Mirror AR Pipeline
+
+### Overview
+**Module**: Mirror (Ø120mm circular display + camera)
+**Assigned**: Prometheus (Software Engineer) + Apollo (Creative Director)
+**MVI Stack**: `VideoTexture + BufferGeometry + EffectComposer + UnrealBloomPass`
+
+### Visual Design
+- **Camera feed background**: VideoTexture from webcam/camera
+- **Face mesh overlay**: MediaPipe 468-vertex face mesh rendered as BufferGeometry
+- **AR filter effects**: Deity crowns, glows, particle effects
+- **Post-processing**: UnrealBloomPass for ethereal glow
+- **Stats overlay**: CSS2D exercise/health stats
+
+### Technical Specification
+
+#### Scene Structure
+```javascript
+Scene
+├── PerspectiveCamera (fov: 50, aspect: 1.0)
+├── WebGLRenderer (antialias: true)
+├── EffectComposer (post-processing chain)
+│   ├── RenderPass
+│   └── UnrealBloomPass (strength: 1.5, radius: 0.5, threshold: 0.3)
+│
+├── Video Feed (PlaneGeometry + VideoTexture)
+│   └── Camera feed as background
+│
+├── Face Mesh (BufferGeometry from MediaPipe)
+│   ├── 468 vertices
+│   ├── MeshStandardMaterial (semi-transparent for AR overlay)
+│   └── ShaderMaterial for deity crown/helmet effect
+│
+└── CSS2DRenderer (exercise stats overlay)
+```
+
+#### Video Feed Setup
+
+```javascript
+// Get camera feed
+const video = document.createElement('video');
+video.autoplay = true;
+
+navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+    .then(stream => {
+        video.srcObject = stream;
+    });
+
+const videoTexture = new THREE.VideoTexture(video);
+videoTexture.minFilter = THREE.LinearFilter;
+videoTexture.magFilter = THREE.LinearFilter;
+
+const videoGeometry = new THREE.PlaneGeometry(4, 3);
+const videoMaterial = new THREE.MeshBasicMaterial({ map: videoTexture });
+const videoMesh = new THREE.Mesh(videoGeometry, videoMaterial);
+videoMesh.position.z = -1;
+scene.add(videoMesh);
+```
+
+#### MediaPipe Face Mesh Integration
+
+```javascript
+// MediaPipe Face Mesh (requires @mediapipe/face_mesh)
+import { FaceMesh } from '@mediapipe/face_mesh';
+
+const faceMesh = new FaceMesh({
+    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
+});
+
+faceMesh.setOptions({
+    maxNumFaces: 1,
+    refineLandmarks: true,
+    minDetectionConfidence: 0.5,
+    minTrackingConfidence: 0.5
+});
+
+let faceMeshGeometry = null;
+
+faceMesh.onResults((results) => {
+    if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
+        const landmarks = results.multiFaceLandmarks[0]; // 468 vertices
+
+        // Update BufferGeometry with face landmarks
+        if (!faceMeshGeometry) {
+            const positions = new Float32Array(landmarks.length * 3);
+            faceMeshGeometry = new THREE.BufferGeometry();
+            faceMeshGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.MeshStandardMaterial({
+                color: 0x00D4AA,
+                emissive: 0x00D4AA,
+                emissiveIntensity: 0.5,
+                transparent: true,
+                opacity: 0.7,
+                wireframe: true
+            });
+
+            const mesh = new THREE.Mesh(faceMeshGeometry, material);
+            scene.add(mesh);
+        }
+
+        // Update positions
+        const positions = faceMeshGeometry.attributes.position;
+        landmarks.forEach((landmark, i) => {
+            // Convert normalized coords to 3D space
+            positions.setXYZ(i, landmark.x * 4 - 2, -(landmark.y * 3 - 1.5), -landmark.z);
+        });
+        positions.needsUpdate = true;
+    }
+});
+
+// Feed video frames to MediaPipe
+function processFaceMesh() {
+    faceMesh.send({ image: video });
+    requestAnimationFrame(processFaceMesh);
+}
+processFaceMesh();
+```
+
+#### Deity Filter: Crown Overlay
+
+```javascript
+// Add glowing crown particles above head
+function addDeityCrown(faceLandmarks) {
+    // Get forehead landmark (approximate top of head)
+    const foreheadIndex = 10; // MediaPipe landmark for forehead
+    const forehead = faceLandmarks[foreheadIndex];
+
+    // Create particle system for crown
+    const particleCount = 50;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount; i++) {
+        const angle = (i / particleCount) * Math.PI * 2;
+        const radius = 0.3 + Math.random() * 0.2;
+        const height = 0.5 + Math.random() * 0.3;
+
+        positions[i * 3] = forehead.x * 4 - 2 + Math.cos(angle) * radius;
+        positions[i * 3 + 1] = -(forehead.y * 3 - 1.5) + height;
+        positions[i * 3 + 2] = -forehead.z + Math.sin(angle) * radius;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const material = new THREE.PointsMaterial({
+        size: 0.05,
+        color: 0xFFB347, // Amber glow
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending
+    });
+
+    const crown = new THREE.Points(geometry, material);
+    scene.add(crown);
+    return crown;
+}
+```
+
+#### Post-Processing: Bloom Effect
+
+```javascript
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
+
+const composer = new EffectComposer(renderer);
+
+const renderPass = new RenderPass(scene, camera);
+composer.addPass(renderPass);
+
+const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    1.5, // strength
+    0.5, // radius
+    0.3  // threshold
+);
+composer.addPass(bloomPass);
+
+// Render with bloom
+function animate() {
+    requestAnimationFrame(animate);
+    composer.render();
+}
+```
+
+### Deliverables
+- [ ] `mirror-ar.html` — standalone demo
+- [ ] VideoTexture camera feed
+- [ ] MediaPipe face mesh integration
+- [ ] Deity crown particle overlay
+- [ ] UnrealBloomPass post-processing
+- [ ] CSS2D exercise stats overlay
+- [ ] Integration with Wall Controller `/api/camera/feed` and `/api/health/stats` endpoints
+- [ ] Screenshot for brochure
+- [ ] Education lesson outline: "Building AR Filters with Three.js and MediaPipe"
+
+---
+
+## 8. Controller Radial Menu
+
+### Overview
+**Module**: Controller (Ø62mm handheld, 480x480 round display + rotary encoder)
+**Assigned**: Athena (Industrial Designer)
+**MVI Stack**: `TorusGeometry + Sprite + ShaderMaterial + RingGeometry`
+
+### Visual Design
+- **Circular menu**: Module icons arranged on TorusGeometry track
+- **Rotary encoder sync**: Menu rotates as physical encoder turns
+- **Selection highlight**: ShaderMaterial glowing ring at selected position
+- **Center preview**: Selected module preview in center circle
+
+### Technical Specification
+
+#### Scene Structure
+```javascript
+Scene
+├── PerspectiveCamera (fov: 50, aspect: 1.0)
+├── WebGLRenderer (antialias: true)
+│
+├── Menu Track (TorusGeometry)
+│   ├── Radius: 0.7, tube: 0.02
+│   └── Subtle glow material
+│
+├── Module Icons (Sprite × N modules)
+│   ├── Arranged on torus track
+│   └── Scale based on distance from selection
+│
+├── Selection Ring (RingGeometry)
+│   ├── ShaderMaterial (glowing teal ring)
+│   └── Rotates with encoder input
+│
+└── Center Preview (CircleGeometry)
+    └── Shows selected module status
+```
+
+#### Radial Menu Setup
+
+```javascript
+const modules = [
+    { name: 'Screen-S', icon: 'screen-icon.png', color: 0x00D4AA },
+    { name: 'Glow', icon: 'glow-icon.png', color: 0xFFB347 },
+    { name: 'Pixel', icon: 'pixel-icon.png', color: 0xFF4466 },
+    { name: 'Voice', icon: 'voice-icon.png', color: 0x8888FF }
+    // ... more modules
+];
+
+const torusRadius = 0.7;
+const moduleSprites = [];
+
+modules.forEach((module, i) => {
+    const angle = (i / modules.length) * Math.PI * 2;
+
+    // Load icon texture
+    const texture = new THREE.TextureLoader().load(module.icon);
+    const material = new THREE.SpriteMaterial({
+        map: texture,
+        color: module.color
+    });
+
+    const sprite = new THREE.Sprite(material);
+    sprite.position.set(
+        Math.cos(angle) * torusRadius,
+        Math.sin(angle) * torusRadius,
+        0
+    );
+    sprite.scale.set(0.2, 0.2, 1);
+    sprite.userData.moduleData = module;
+
+    scene.add(sprite);
+    moduleSprites.push(sprite);
+});
+```
+
+#### Rotary Encoder Integration
+
+```javascript
+let encoderPosition = 0;
+let selectedIndex = 0;
+
+// Simulate rotary encoder input (in production, read from ESP32 I2C/UART)
+function onEncoderRotate(delta) {
+    encoderPosition += delta;
+
+    // Calculate selected module
+    const anglePerModule = (Math.PI * 2) / modules.length;
+    selectedIndex = Math.floor((encoderPosition * anglePerModule) / (Math.PI * 2)) % modules.length;
+    if (selectedIndex < 0) selectedIndex += modules.length;
+
+    // Update selection ring position
+    const selectionAngle = selectedIndex * anglePerModule;
+    selectionRing.rotation.z = selectionAngle;
+
+    // Scale sprites based on proximity to selection
+    moduleSprites.forEach((sprite, i) => {
+        const distToSelection = Math.abs(i - selectedIndex);
+        const scale = distToSelection === 0 ? 0.3 : 0.2 - (distToSelection * 0.02);
+        sprite.scale.set(scale, scale, 1);
+    });
+
+    // Update center preview
+    updateCenterPreview(modules[selectedIndex]);
+}
+
+// Keyboard simulation for demo (arrow keys)
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') onEncoderRotate(1);
+    if (e.key === 'ArrowLeft') onEncoderRotate(-1);
+});
+```
+
+#### Selection Ring Shader
+
+```javascript
+const selectionRing = new THREE.Mesh(
+    new THREE.RingGeometry(0.65, 0.75, 64, 1, 0, Math.PI / 6), // 30° arc
+    new THREE.ShaderMaterial({
+        uniforms: {
+            color: { value: new THREE.Color(0x00D4AA) },
+            glowIntensity: { value: 2.0 }
+        },
+        vertexShader: `
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `,
+        fragmentShader: `
+            uniform vec3 color;
+            uniform float glowIntensity;
+            varying vec2 vUv;
+
+            void main() {
+                vec3 glowColor = color * glowIntensity;
+                gl_FragColor = vec4(glowColor, 0.8);
+            }
+        `,
+        transparent: true,
+        side: THREE.DoubleSide
+    })
+);
+scene.add(selectionRing);
+```
+
+### Deliverables
+- [ ] `controller-menu.html` — standalone demo
+- [ ] Radial menu with module icons
+- [ ] Rotary encoder simulation (keyboard arrows)
+- [ ] Selection ring with glow shader
+- [ ] Center preview circle
+- [ ] Integration with ESP32 rotary encoder via `/api/controller/encoder` WebSocket
+- [ ] Screenshot for brochure
+- [ ] Education lesson outline: "Building Radial Interfaces with Three.js"
+
+---
+
+## 9. eInk Content Renderer
+
+### Overview
+**Module**: eInk (180x120mm, 800x480 e-paper display)
+**Assigned**: Apollo (Creative Director)
+**MVI Stack**: `CanvasTexture + ShaderMaterial(dither) + TextGeometry + SVGLoader`
+
+### Visual Design
+- **Pre-rendered content**: Three.js renders on Hub, converts to e-ink compatible image
+- **Dithering shader**: Color → grayscale/BW dithering for e-ink display
+- **Typography layouts**: Quotes, schedules, minimalist art
+- **SVG vector art**: Clean line art suitable for e-ink
+
+### Technical Specification
+
+#### Scene Structure
+```javascript
+Scene (rendered off-screen on Hub)
+├── OrthographicCamera (800x480 resolution)
+├── WebGLRenderer (preserveDrawingBuffer: true)
+│
+├── Text Content (TextGeometry or CSS2D)
+│   └── Quote, schedule, or calendar layout
+│
+├── Vector Art (SVGLoader)
+│   └── Minimalist illustrations
+│
+└── Dithering Pass (ShaderMaterial)
+    └── Converts render to e-ink compatible bitmap
+```
+
+#### Dithering Shader (Floyd-Steinberg)
+
+```javascript
+const ditheringShader = new THREE.ShaderMaterial({
+    uniforms: {
+        tDiffuse: { value: null }, // Input render
+        resolution: { value: new THREE.Vector2(800, 480) }
+    },
+    vertexShader: `
+        varying vec2 vUv;
+        void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+    `,
+    fragmentShader: `
+        uniform sampler2D tDiffuse;
+        uniform vec2 resolution;
+        varying vec2 vUv;
+
+        // Floyd-Steinberg dithering
+        float dither(float gray, vec2 uv) {
+            // Simplified: threshold at 0.5
+            return gray > 0.5 ? 1.0 : 0.0;
+        }
+
+        void main() {
+            vec4 color = texture2D(tDiffuse, vUv);
+
+            // Convert to grayscale
+            float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
+
+            // Apply dithering
+            float dithered = dither(gray, vUv * resolution);
+
+            gl_FragColor = vec4(vec3(dithered), 1.0);
+        }
+    `
+});
+```
+
+#### Content Layout: Daily Quote
+
+```javascript
+function renderDailyQuote(quote, author) {
+    // Clear scene
+    while(scene.children.length > 0) {
+        scene.remove(scene.children[0]);
+    }
+
+    // Load font
+    const loader = new THREE.FontLoader();
+    loader.load('fonts/Geist_Sans_Regular.json', (font) => {
+        // Quote text
+        const quoteGeometry = new THREE.TextGeometry(quote, {
+            font: font,
+            size: 24,
+            height: 0,
+            curveSegments: 12
+        });
+
+        const quoteMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+        const quoteMesh = new THREE.Mesh(quoteGeometry, quoteMaterial);
+        quoteMesh.position.set(50, 300, 0);
+        scene.add(quoteMesh);
+
+        // Author attribution
+        const authorGeometry = new THREE.TextGeometry(`— ${author}`, {
+            font: font,
+            size: 18,
+            height: 0
+        });
+
+        const authorMesh = new THREE.Mesh(authorGeometry, quoteMaterial);
+        authorMesh.position.set(500, 100, 0);
+        scene.add(authorMesh);
+
+        // Render and dither
+        renderAndDither();
+    });
+}
+```
+
+#### Render and Upload to eInk Module
+
+```javascript
+function renderAndDither() {
+    // Render scene to texture
+    renderer.render(scene, camera);
+
+    // Apply dithering shader
+    const renderTarget = new THREE.WebGLRenderTarget(800, 480);
+    renderer.setRenderTarget(renderTarget);
+    // ... apply dithering pass
+
+    // Extract as image
+    const canvas = renderer.domElement;
+    const dataURL = canvas.toDataURL('image/png');
+
+    // Send to eInk module
+    fetch('http://hub.local:8200/api/modules/eink-01/display', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: dataURL })
+    });
+}
+```
+
+### Deliverables
+- [ ] `eink-renderer.html` — standalone demo
+- [ ] Dithering shader (Floyd-Steinberg or similar)
+- [ ] Quote layout template
+- [ ] Schedule/calendar layout template
+- [ ] SVGLoader for vector art
+- [ ] Integration with `/api/modules/eink-{id}/display` endpoint
+- [ ] Screenshot for brochure
+- [ ] Education lesson outline: "Rendering for E-Ink Displays with Three.js"
+
+---
+
+## 10. Holo Sacred Geometry Engine
+
+### Overview
+**Module**: Holo (140x140mm POV hologram fan)
+**Assigned**: Apollo (Creative Director) + Athena (Industrial Designer)
+**MVI Stack**: `Points + IcosahedronGeometry + EdgesGeometry + ShaderMaterial`
+
+### Visual Design
+- **Sacred geometry patterns**: Flower of Life, Metatron's Cube, platonic solids
+- **Wireframe aesthetic**: EdgesGeometry with glowing lines
+- **Particle mandalas**: Points-based rotating patterns
+- **Hologram shader**: Scan-line effect, transparency, flicker
+
+### Technical Specification
+
+#### Scene Structure
+```javascript
+Scene
+├── PerspectiveCamera (fov: 50, aspect: 1.0)
+├── WebGLRenderer (antialias: true, alpha: true)
+│
+├── Platonic Solid (IcosahedronGeometry)
+│   ├── EdgesGeometry (wireframe)
+│   ├── ShaderMaterial (hologram glow + scan lines)
+│   └── Rotation animation
+│
+└── Particle Mandala (Points)
+    ├── BufferGeometry (geometric pattern)
+    └── PointsMaterial (glowing particles)
+```
+
+#### Sacred Geometry: Flower of Life
+
+```javascript
+function createFlowerOfLife(radius, circles) {
+    const points = [];
+
+    // Central circle
+    for (let i = 0; i < 60; i++) {
+        const angle = (i / 60) * Math.PI * 2;
+        points.push(new THREE.Vector3(
+            Math.cos(angle) * radius,
+            Math.sin(angle) * radius,
+            0
+        ));
+    }
+
+    // Surrounding circles (6 petals)
+    for (let petal = 0; petal < 6; petal++) {
+        const petalAngle = (petal / 6) * Math.PI * 2;
+        const centerX = Math.cos(petalAngle) * radius;
+        const centerY = Math.sin(petalAngle) * radius;
+
+        for (let i = 0; i < 60; i++) {
+            const angle = (i / 60) * Math.PI * 2;
+            points.push(new THREE.Vector3(
+                centerX + Math.cos(angle) * radius,
+                centerY + Math.sin(angle) * radius,
+                0
+            ));
+        }
+    }
+
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    const material = new THREE.PointsMaterial({
+        size: 0.02,
+        color: 0x00D4AA,
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending
+    });
+
+    return new THREE.Points(geometry, material);
+}
+```
+
+#### Platonic Solid: Rotating Icosahedron
+
+```javascript
+const icosahedron = new THREE.IcosahedronGeometry(1, 0);
+const edges = new THREE.EdgesGeometry(icosahedron);
+
+const hologramShader = new THREE.ShaderMaterial({
+    uniforms: {
+        time: { value: 0 },
+        color: { value: new THREE.Color(0xCC44FF) } // Magenta
+    },
+    vertexShader: `
+        varying vec3 vPosition;
+        void main() {
+            vPosition = position;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+    `,
+    fragmentShader: `
+        uniform float time;
+        uniform vec3 color;
+        varying vec3 vPosition;
+
+        void main() {
+            // Scan-line effect
+            float scanLine = fract(vPosition.y * 10.0 + time * 2.0);
+            float scanIntensity = smoothstep(0.4, 0.6, scanLine);
+
+            // Flicker
+            float flicker = 0.9 + sin(time * 50.0) * 0.1;
+
+            vec3 glowColor = color * (scanIntensity * 0.5 + 0.5) * flicker;
+            gl_FragColor = vec4(glowColor, 0.7);
+        }
+    `,
+    transparent: true,
+    blending: THREE.AdditiveBlending
+});
+
+const icosahedronMesh = new THREE.LineSegments(edges, hologramShader);
+scene.add(icosahedronMesh);
+
+// Rotation animation
+function animate() {
+    requestAnimationFrame(animate);
+
+    icosahedronMesh.rotation.x += 0.005;
+    icosahedronMesh.rotation.y += 0.01;
+    hologramShader.uniforms.time.value += 0.016;
+
+    renderer.render(scene, camera);
+}
+```
+
+#### Metatron's Cube
+
+```javascript
+function createMetatronsCube() {
+    // 13 circles arranged in sacred geometry pattern
+    const circles = [
+        new THREE.Vector2(0, 0), // Center
+        new THREE.Vector2(1, 0),
+        new THREE.Vector2(-1, 0),
+        new THREE.Vector2(0, 1),
+        new THREE.Vector2(0, -1),
+        new THREE.Vector2(0.866, 0.5),
+        new THREE.Vector2(0.866, -0.5),
+        new THREE.Vector2(-0.866, 0.5),
+        new THREE.Vector2(-0.866, -0.5),
+        new THREE.Vector2(0.5, 0.866),
+        new THREE.Vector2(-0.5, 0.866),
+        new THREE.Vector2(0.5, -0.866),
+        new THREE.Vector2(-0.5, -0.866)
+    ];
+
+    const points = [];
+    const radius = 0.3;
+
+    circles.forEach(center => {
+        for (let i = 0; i < 60; i++) {
+            const angle = (i / 60) * Math.PI * 2;
+            points.push(new THREE.Vector3(
+                center.x + Math.cos(angle) * radius,
+                center.y + Math.sin(angle) * radius,
+                0
+            ));
+        }
+    });
+
+    // Connect centers with lines
+    const linePoints = [];
+    for (let i = 0; i < circles.length; i++) {
+        for (let j = i + 1; j < circles.length; j++) {
+            linePoints.push(new THREE.Vector3(circles[i].x, circles[i].y, 0));
+            linePoints.push(new THREE.Vector3(circles[j].x, circles[j].y, 0));
+        }
+    }
+
+    const linesGeometry = new THREE.BufferGeometry().setFromPoints(linePoints);
+    const linesMaterial = new THREE.LineBasicMaterial({
+        color: 0x00D4AA,
+        transparent: true,
+        opacity: 0.5
+    });
+
+    return new THREE.LineSegments(linesGeometry, linesMaterial);
+}
+```
+
+### Deliverables
+- [ ] `holo-sacred-geometry.html` — standalone demo
+- [ ] Flower of Life particle pattern
+- [ ] Metatron's Cube wireframe
+- [ ] Rotating platonic solids (Icosahedron, Octahedron)
+- [ ] Hologram scan-line shader
+- [ ] Integration with `/api/modules/holo-{id}/pattern` endpoint
+- [ ] Screenshot/video for brochure
+- [ ] Education lesson outline: "Sacred Geometry Visualization with Three.js"
+
+---
+
 ## Reference
 - **Parent task**: SACA-74
 - **Three.js mapping**: `docs/INTERFACE-DESIGN-THREEJS.md`
