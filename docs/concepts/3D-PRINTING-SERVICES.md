@@ -125,15 +125,38 @@ print(f"Price: ${quote['price']}, Ships in {quote['days']} days")
 
 ---
 
+## Research Complete — Ranked Results
+
+| Rank | Service | API | PETG | Resin | Price (71x71x20mm) | Turnaround | Notes |
+|------|---------|-----|------|-------|--------------------|------------|-------|
+| **1** | **Slant 3D** | Excellent (API-first) | Yes | No | $5-12 | 2-5 days (US) | Built for programmatic ordering. US print farm. |
+| **2** | **JLC3DP** | Good (full API) | Yes | Yes | $5-15 | 4 days + ship | Cheapest. Resin for figurines. Partner approval needed. |
+| **3** | **Treatstock** | Good (marketplace) | Yes | Yes | $8-25 | 2-14 days | Multi-vendor comparison. GitHub API docs. |
+| **4** | **Sculpteo** | Good (full API) | Yes | Yes | $15-35 | 7-10 days | Dassault-backed. Invoice payment friction. |
+| **5** | **Craftcloud** | Fair (Swagger) | Yes | Yes | $8-20 | Varies | Price comparison, 200 manufacturers. |
+
+### Decision: Slant 3D (Primary) + JLC3DP (Backup/Resin)
+
+- **Slant 3D API**: slant3dapi.com/documentation — file upload, slicing, pricing, ordering, tracking
+- **JLC3DP API**: jlc3dp.com/help/article/JLC3DP-API — requires partner application
+- **Laser cutting**: SendCutSend (no API, manual order) or Ponoko (no API, Bay Area shipping)
+
+### Other Services Evaluated
+- **Shapeways**: $300 min per color, post-bankruptcy risk — skip
+- **Xometry**: API is tracking-only, no quoting/ordering — skip
+- **Protolabs (Hubs)**: No API — skip
+- **PCBWay**: 3D API unclear, contact needed — backup option
+- **i.materialise**: Industrial quality, higher price — skip for prototyping
+
 ## Action Items
 
-1. [ ] Research: which services have working APIs in 2026
-2. [ ] Get quotes from JLCPCB, PCBWay, and Xometry for our specific parts
-3. [ ] Export STL files from all Blender models (currently .blend only)
-4. [ ] Set up account on chosen service
-5. [ ] Order first batch of test prints
-6. [ ] Order acrylic panels from SendCutSend or Ponoko
-7. [ ] Build API integration script for automated ordering
+1. [x] Research: which services have working APIs in 2026
+2. [ ] Create Slant 3D account and test API with one part
+3. [ ] Create JLC3DP partner application for API access
+4. [ ] Export STL files from all Blender models (blocked by MCP context)
+5. [ ] Order first test print via Slant 3D API (one Screen-S housing)
+6. [ ] Order acrylic panels from SendCutSend (manual)
+7. [ ] Build API integration script (Python) for automated ordering
 8. [ ] Add 3D printing service info to master CSV
 
 ---
