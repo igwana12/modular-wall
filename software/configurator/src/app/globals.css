@@ -82,11 +82,11 @@
   --chart-5: #6644cc;
   --radius: 0.625rem;
   --sidebar: #1a1a2e;
-  --sidebar-foreground: #e8e8f0;
+  --sidebar-foreground: #F0F0F0;
   --sidebar-primary: #00D4AA;
   --sidebar-primary-foreground: #0d0d1a;
   --sidebar-accent: #232340;
-  --sidebar-accent-foreground: #e8e8f0;
+  --sidebar-accent-foreground: #F0F0F0;
   --sidebar-border: #2a2a4a;
   --sidebar-ring: #00D4AA;
 }

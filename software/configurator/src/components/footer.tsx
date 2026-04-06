@@ -16,7 +16,7 @@ export function Footer() {
 
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com"
+              href="https://github.com/igwana12/modular-wall"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-xs text-muted-foreground hover:text-teal transition-colors font-mono"
@@ -34,7 +34,10 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-8 text-center space-y-1">
+          <p className="text-xs text-muted-foreground/60 font-mono">
+            A Sacred Circuits experiment
+          </p>
           <p className="text-[10px] text-muted-foreground/40 font-mono">
             Local prototype. Not a product yet. Just an idea with magnets.
           </p>

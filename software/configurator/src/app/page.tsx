@@ -5,6 +5,8 @@ import { ModuleCatalog } from "@/components/module-catalog";
 import { Configurations } from "@/components/configurations";
 import { WallConfigurator } from "@/components/wall-configurator";
 import { Scenes } from "@/components/scenes";
+import { TheGuide } from "@/components/the-guide";
+import { HubTiers } from "@/components/hub-tiers";
 import { Thesis } from "@/components/thesis";
 import { Footer } from "@/components/footer";
 
@@ -19,6 +21,8 @@ export default function Home() {
         <Configurations />
         <WallConfigurator />
         <Scenes />
+        <TheGuide />
+        <HubTiers />
         <Thesis />
       </main>
       <Footer />

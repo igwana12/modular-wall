@@ -8,6 +8,8 @@ const NAV_ITEMS = [
   { label: "Configurations", href: "#configurations" },
   { label: "Configurator", href: "#configurator" },
   { label: "Scenes", href: "#scenes" },
+  { label: "The Guide", href: "#the-guide" },
+  { label: "Hub Tiers", href: "#hub-tiers" },
   { label: "Thesis", href: "#thesis" },
 ];
 

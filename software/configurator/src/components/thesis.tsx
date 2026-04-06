@@ -35,7 +35,7 @@ export function Thesis() {
           </p>
 
           <p>
-            [MODULAR] is that nervous system. Each module is a neuron. The mesh is the synapse. The AI is the cortex. And you — you&apos;re not a user. You&apos;re the context that makes it all meaningful.
+            mosAIc is that nervous system. Each module is a neuron. The mesh is the synapse. The AI is the cortex. And you — you&apos;re not a user. You&apos;re the context that makes it all meaningful.
           </p>
 
           <p className="text-foreground font-medium">
