@@ -58,15 +58,15 @@
 
 :root {
   --background: #0d0d1a;
-  --foreground: #e8e8f0;
+  --foreground: #F0F0F0;
   --card: #1a1a2e;
-  --card-foreground: #e8e8f0;
+  --card-foreground: #F0F0F0;
   --popover: #1a1a2e;
-  --popover-foreground: #e8e8f0;
+  --popover-foreground: #F0F0F0;
   --primary: #00D4AA;
   --primary-foreground: #0d0d1a;
   --secondary: #232340;
-  --secondary-foreground: #e8e8f0;
+  --secondary-foreground: #F0F0F0;
   --muted: #232340;
   --muted-foreground: #8888aa;
   --accent: #FFB347;
@@ -94,7 +94,7 @@
 /* Force dark — no light mode */
 .dark {
   --background: #0d0d1a;
-  --foreground: #e8e8f0;
+  --foreground: #F0F0F0;
 }
 
 @layer base {
