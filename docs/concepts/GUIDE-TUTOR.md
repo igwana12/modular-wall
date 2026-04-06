@@ -193,4 +193,80 @@ The meta-lesson: once you've learned enough from The Guide, it teaches you how I
 
 ---
 
+---
+
+## Beyond the Wall — Learning to Create with AI
+
+The Guide doesn't just teach you about the wall. It teaches you a **methodology for learning anything with AI**. The wall is the medium, but the skill is universal.
+
+### The Vibe Coding Philosophy
+
+The Guide teaches the new creative process:
+
+1. **Describe what you want** — in plain language, to an AI
+2. **Get a first draft** — AI generates code/design/content instantly
+3. **Iterate by conversation** — "make it warmer", "add a fade", "that's too bright"
+4. **Understand what happened** — the Guide explains WHY the code works
+5. **Modify it yourself** — now you know enough to tweak directly
+6. **Combine and remix** — take pieces from different projects, mash them together
+7. **Ship it** — the wall displays your creation. It's real. It works.
+
+This is how you learn in the AI era. Not textbooks → exams. **Describe → generate → understand → modify → ship.**
+
+### The Learning Stack
+
+The Guide teaches these skills in order, each building on the last:
+
+| Level | Skill | Wall Application | Universal Application |
+|-------|-------|-----------------|----------------------|
+| 1 | **Terminology** | Learn what ESP32, GPIO, WiFi mean | Know the vocabulary of any field in 30 minutes |
+| 2 | **Prompt engineering** | Ask AI to generate a weather widget | Write prompts that get results in any domain |
+| 3 | **Reading code you didn't write** | Understand the weather widget AI generated | Read any codebase, any documentation, any paper |
+| 4 | **Data structures** | JSON from APIs, CSV from sensors | Understand how information is organized anywhere |
+| 5 | **APIs and integration** | Connect Spotify to your wall | Connect any service to any other service |
+| 6 | **Rapid prototyping** | Build a new module feature in an hour | Build MVPs of any idea in a day |
+| 7 | **Debugging with AI** | "Why isn't my LED animation smooth?" | Diagnose problems by describing symptoms |
+| 8 | **Deep dives** | Understand CAN Bus protocol deeply when needed | Go deep on any topic by asking AI to teach you layer by layer |
+| 9 | **Building assets** | Train a LoRA on your art style for wall content | Build reusable resources (datasets, models, templates) |
+| 10 | **Teaching others** | Create your own Guide persona, share your wall | Document your knowledge, mentor others, build community |
+
+### Key Insight: Depth on Demand
+
+The Guide doesn't force you to learn everything. It teaches you **just enough** to accomplish what you want, then offers to go deeper:
+
+> *"Your LED animation is running at 15fps because you're using delay() in the loop. That blocks the CPU. Want me to explain why, or just fix it?"*
+
+If you say "fix it" → it fixes it and you keep building.
+If you say "explain" → it teaches you about non-blocking timers, millis(), and the event loop.
+
+**Both paths are valid.** The wall works either way. But the knowledge compounds — each "explain" moment makes the next project faster.
+
+### Building Your Knowledge Base
+
+The Guide helps you build **your own reference library** as you learn:
+
+- **Obsidian notes**: Every lesson generates a markdown note synced to your Obsidian vault
+- **Code snippets**: Working examples saved to your personal library
+- **Troubleshooting log**: Every bug you hit and how it was solved
+- **Component reference**: What you've used, what worked, what didn't
+- **Project journal**: Auto Journal captures your build process over time
+
+After 6 months, you don't just have a wall — you have a **personal knowledge base** about IoT, AI, and creative computing that no course could teach.
+
+### The Meta-Skill
+
+The most valuable thing the Guide teaches isn't any specific technology. It's the meta-skill:
+
+**How to learn something you know nothing about, quickly, using AI as your partner.**
+
+A 14-year-old who learns this on the mosAIc wall can apply it to:
+- Learning a new programming language in a weekend
+- Understanding a scientific paper in an afternoon
+- Building a prototype of any idea in a day
+- Teaching themselves music theory, architecture, game design, robotics
+
+The wall is the training ground. The skill is permanent.
+
+---
+
 *"The Guide doesn't just show you how to build a wall. It shows you how to build the thing that shows you how to build a wall. And then it lets you teach someone else."*
