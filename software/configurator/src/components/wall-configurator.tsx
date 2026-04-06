@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { MODULES, GRID_ROWS, GRID_COLS, type ModuleType, type GridCell } from "@/lib/modules";
 
 function createEmptyGrid(): GridCell[][] {
@@ -13,6 +13,8 @@ export function WallConfigurator() {
   const [grid, setGrid] = useState<GridCell[][]>(createEmptyGrid);
   const [selectedModule, setSelectedModule] = useState<ModuleType | null>(null);
   const [isErasing, setIsErasing] = useState(false);
+  const [flashCell, setFlashCell] = useState<string | null>(null);
+  const flashTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleCellClick = useCallback(
     (row: number, col: number) => {
@@ -22,6 +24,11 @@ export function WallConfigurator() {
           next[row][col] = null;
         } else if (selectedModule) {
           next[row][col] = selectedModule;
+          // Flash effect
+          const key = `${row}-${col}`;
+          setFlashCell(key);
+          if (flashTimeoutRef.current) clearTimeout(flashTimeoutRef.current);
+          flashTimeoutRef.current = setTimeout(() => setFlashCell(null), 400);
         }
         return next;
       });
@@ -43,11 +50,11 @@ export function WallConfigurator() {
   const hasHub = moduleCounts["hub"] > 0;
 
   return (
-    <section id="configurator" className="relative py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="configurator" className="relative py-24 md:py-32 noise-overlay">
+      <div className="mx-auto max-w-6xl px-6 relative z-[1]">
         {/* Section header */}
         <div className="text-center mb-12">
-          <span className="font-mono text-xs text-teal tracking-widest uppercase">
+          <span className="font-mono text-xs text-teal tracking-widest uppercase section-label">
             Interactive
           </span>
           <h2 className="mt-3 text-3xl md:text-5xl font-bold tracking-tight">
@@ -61,10 +68,10 @@ export function WallConfigurator() {
         <div className="grid lg:grid-cols-[1fr_300px] gap-8">
           {/* Grid */}
           <div className="order-2 lg:order-1">
-            <div className="rounded-2xl border border-border/50 bg-surface-raised/50 p-4 md:p-6">
+            <div className="rounded-2xl border border-border/50 bg-surface-raised/50 p-4 md:p-6 configurator-grid-bg">
               {/* Grid label */}
               <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-mono text-muted-foreground">
+                <span className="text-xs font-mono text-muted-foreground section-label">
                   WALL GRID ({GRID_COLS}x{GRID_ROWS})
                 </span>
                 <button
@@ -84,48 +91,62 @@ export function WallConfigurator() {
                 }}
               >
                 {grid.map((row, ri) =>
-                  row.map((cell, ci) => (
-                    <button
-                      key={`${ri}-${ci}`}
-                      onClick={() => handleCellClick(ri, ci)}
-                      className="relative aspect-square rounded-xl border-2 border-dashed transition-all flex flex-col items-center justify-center gap-1 text-xs font-mono cursor-pointer hover:scale-[1.03] active:scale-95"
-                      style={
-                        cell
-                          ? {
-                              backgroundColor: `${cell.color}20`,
-                              borderColor: `${cell.color}60`,
-                              borderStyle: "solid",
-                              boxShadow: `0 0 15px ${cell.color}15`,
-                            }
-                          : {
-                              backgroundColor: "#1a1a2e40",
-                              borderColor: selectedModule
-                                ? `${selectedModule.color}30`
-                                : "#2a2a4a",
-                            }
-                      }
-                    >
-                      {cell ? (
-                        <>
+                  row.map((cell, ci) => {
+                    const cellKey = `${ri}-${ci}`;
+                    const isFlashing = flashCell === cellKey;
+                    return (
+                      <button
+                        key={cellKey}
+                        onClick={() => handleCellClick(ri, ci)}
+                        className="relative aspect-square rounded-xl border-2 border-dashed transition-all flex flex-col items-center justify-center gap-1 text-xs font-mono cursor-pointer hover:scale-[1.03] active:scale-95"
+                        style={
+                          cell
+                            ? {
+                                backgroundColor: `${cell.color}20`,
+                                borderColor: `${cell.color}60`,
+                                borderStyle: "solid",
+                                boxShadow: `0 4px 15px ${cell.color}20, 0 0 20px ${cell.color}10`,
+                              }
+                            : {
+                                backgroundColor: "#1a1a2e40",
+                                borderColor: selectedModule
+                                  ? `${selectedModule.color}30`
+                                  : "#2a2a4a",
+                              }
+                        }
+                      >
+                        {/* Flash overlay on place */}
+                        {isFlashing && cell && (
                           <div
-                            className="h-4 w-4 rounded-md"
+                            className="absolute inset-0 rounded-xl pointer-events-none"
                             style={{
-                              backgroundColor: `${cell.color}40`,
-                              border: `1px solid ${cell.color}60`,
+                              backgroundColor: cell.color,
+                              animation: 'module-place-flash 0.4s ease-out forwards',
                             }}
                           />
-                          <span
-                            className="text-[10px] font-bold truncate max-w-full px-1"
-                            style={{ color: cell.color }}
-                          >
-                            {cell.name}
-                          </span>
-                        </>
-                      ) : (
-                        <span className="text-muted-foreground/30 text-[10px]">+</span>
-                      )}
-                    </button>
-                  ))
+                        )}
+                        {cell ? (
+                          <>
+                            <div
+                              className="h-4 w-4 rounded-md"
+                              style={{
+                                backgroundColor: `${cell.color}40`,
+                                border: `1px solid ${cell.color}60`,
+                              }}
+                            />
+                            <span
+                              className="text-[10px] font-bold truncate max-w-full px-1"
+                              style={{ color: cell.color }}
+                            >
+                              {cell.name}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-muted-foreground/30 text-[10px]">+</span>
+                        )}
+                      </button>
+                    );
+                  })
                 )}
               </div>
 
@@ -186,7 +207,7 @@ export function WallConfigurator() {
                     >
                       {mod.name}
                     </span>
-                    <span className="text-[9px] text-muted-foreground">
+                    <span className="text-[9px] text-muted-foreground tabular-price">
                       ${mod.price}
                     </span>
                   </button>
@@ -229,7 +250,7 @@ export function WallConfigurator() {
                         <span style={{ color: mod.color }}>
                           {mod.name} x{count}
                         </span>
-                        <span className="font-mono text-muted-foreground">
+                        <span className="font-mono text-muted-foreground tabular-price">
                           ${mod.price * count}
                         </span>
                       </div>
@@ -240,7 +261,7 @@ export function WallConfigurator() {
 
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-semibold">Total</span>
-                    <span className="text-xl font-bold font-mono text-teal">
+                    <span className="text-xl font-bold font-mono text-teal tabular-price">
                       ${totalPrice}
                     </span>
                   </div>

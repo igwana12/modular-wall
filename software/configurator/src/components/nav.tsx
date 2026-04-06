@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const NAV_ITEMS = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Modules", href: "#modules" },
+  { label: "Configurations", href: "#configurations" },
   { label: "Configurator", href: "#configurator" },
   { label: "Scenes", href: "#scenes" },
   { label: "Thesis", href: "#thesis" },
@@ -12,13 +13,47 @@ const NAV_ITEMS = [
 
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+
+      // Find active section
+      const sections = NAV_ITEMS.map((item) => item.href.replace("#", ""));
+      let current = "";
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 120) {
+            current = `#${id}`;
+          }
+        }
+      }
+      setActiveSection(current);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-[#0d0d1a]/80 backdrop-blur-xl">
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl transition-all duration-300"
+      style={{
+        backgroundColor: scrolled ? 'rgba(13, 13, 26, 0.9)' : 'rgba(13, 13, 26, 0.8)',
+        borderBottom: scrolled
+          ? '1px solid rgba(0, 212, 170, 0.15)'
+          : '1px solid rgba(42, 42, 74, 0.5)',
+        boxShadow: scrolled ? '0 1px 20px rgba(0, 212, 170, 0.05)' : 'none',
+      }}
+    >
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
         <a href="#" className="flex items-center gap-2 font-mono text-sm font-bold tracking-wider">
           <span className="inline-block h-3 w-3 rounded-sm bg-teal" />
-          <span className="text-foreground">[MODULAR]</span>
+          <span className="text-foreground">mosAIc</span>
         </a>
 
         {/* Desktop */}
@@ -27,9 +62,21 @@ export function Nav() {
             <a
               key={item.href}
               href={item.href}
-              className="text-sm text-muted-foreground transition-colors hover:text-teal"
+              className="relative text-sm transition-colors duration-200"
+              style={{
+                color: activeSection === item.href ? '#00D4AA' : '#8888aa',
+              }}
             >
               {item.label}
+              {activeSection === item.href && (
+                <span
+                  className="absolute -bottom-[19px] left-0 right-0 h-[2px] rounded-full"
+                  style={{
+                    background: 'linear-gradient(90deg, #00D4AA, #00D4AA80)',
+                    boxShadow: '0 0 8px #00D4AA40',
+                  }}
+                />
+              )}
             </a>
           ))}
           <a
@@ -63,7 +110,10 @@ export function Nav() {
             <a
               key={item.href}
               href={item.href}
-              className="block text-sm text-muted-foreground hover:text-teal"
+              className="block text-sm transition-colors"
+              style={{
+                color: activeSection === item.href ? '#00D4AA' : '#8888aa',
+              }}
               onClick={() => setOpen(false)}
             >
               {item.label}

@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
 const STEPS = [
   {
     number: "01",
@@ -25,13 +29,38 @@ const STEPS = [
   },
 ];
 
+function useInView(threshold = 0.15) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return { ref, visible };
+}
+
 export function HowItWorks() {
+  const { ref: sectionRef, visible } = useInView(0.1);
+
   return (
-    <section id="how-it-works" className="relative py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="how-it-works" className="relative py-24 md:py-32 noise-overlay">
+      <div className="mx-auto max-w-6xl px-6 relative z-[1]">
         {/* Section header */}
         <div className="text-center mb-16">
-          <span className="font-mono text-xs text-teal tracking-widest uppercase">Process</span>
+          <span className="font-mono text-xs text-teal tracking-widest uppercase section-label">Process</span>
           <h2 className="mt-3 text-3xl md:text-5xl font-bold tracking-tight">
             Three steps. Zero complexity.
           </h2>
@@ -40,12 +69,19 @@ export function HowItWorks() {
           </p>
         </div>
 
-        {/* Steps */}
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-          {STEPS.map((step) => (
+        {/* Steps with connectors */}
+        <div ref={sectionRef} className="grid md:grid-cols-3 gap-6 md:gap-8">
+          {STEPS.map((step, index) => (
             <div
               key={step.number}
-              className="group relative rounded-2xl border border-border/50 bg-surface-raised/50 p-8 transition-all hover:border-teal/30 hover:bg-surface-raised"
+              className={`group relative rounded-2xl border border-border/50 bg-surface-raised/50 p-8 transition-all hover:border-teal/30 hover:bg-surface-raised ${
+                index < STEPS.length - 1 ? 'step-connector' : ''
+              }`}
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? 'translateY(0)' : 'translateY(30px)',
+                transition: `opacity 0.6s ease-out ${index * 0.2}s, transform 0.6s ease-out ${index * 0.2}s`,
+              }}
             >
               {/* Step number */}
               <div
@@ -64,7 +100,7 @@ export function HowItWorks() {
                 <img
                   src={step.image}
                   alt={step.title}
-                  className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
 

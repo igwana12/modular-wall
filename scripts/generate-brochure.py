@@ -113,7 +113,7 @@ def build_brochure():
     pdf.set_font("Helvetica", "B", 48)
     pdf.set_text_color(*WHITE)
     pdf.set_xy(25, 140)
-    pdf.cell(0, 18, "[MODULAR]", ln=True)
+    pdf.cell(0, 18, "mosAIc", ln=True)
 
     pdf.set_font("Helvetica", "", 18)
     pdf.set_text_color(*TEAL)
@@ -406,7 +406,7 @@ def build_brochure():
         ("Tidbyt", "$180", "Pixel display", "Standalone, not modular"),
         ("Samsung The Wall", "$100K+", "MicroLED panels", "Insane price, only screens"),
         ("Hypervsn", "$3,200/unit", "Hologram fans", "Enterprise only, no AI"),
-        ("[MODULAR]", "$9-129", "Mixed media + AI", "All of the above, open hardware"),
+        ("mosAIc", "$9-129", "Mixed media + AI", "All of the above, open hardware"),
     ]
 
     ty = y + 25
@@ -421,7 +421,7 @@ def build_brochure():
     ty += 7
 
     for comp, price, does, lacks in competitors:
-        is_us = comp == "[MODULAR]"
+        is_us = comp == "mosAIc"
         pdf.set_font("Helvetica", "B" if is_us else "", 8)
         pdf.set_text_color(*(TEAL if is_us else WHITE))
         pdf.set_xy(25, ty)
@@ -560,7 +560,7 @@ def build_brochure():
     pdf.set_font("Helvetica", "B", 36)
     pdf.set_text_color(*WHITE)
     pdf.set_xy(0, 70)
-    pdf.cell(297, 15, "[MODULAR]", align='C', ln=True)
+    pdf.cell(297, 15, "mosAIc", align='C', ln=True)
 
     pdf.set_font("Helvetica", "", 14)
     pdf.set_text_color(*TEAL)

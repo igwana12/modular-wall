@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "[MODULAR] — Your Desktop. On Your Wall.",
+  title: "mosAIc — Your Desktop. On Your Wall.",
   description: "Modular smart wall system. Snap together screens, lights, sensors, and speakers. AI orchestrates the rest.",
 };
 

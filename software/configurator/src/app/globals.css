@@ -106,13 +106,19 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
   }
 }
 
-/* Smoke / Cyberpunk effects */
+/* ─── Keyframe Animations ─── */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
+}
+
+@keyframes float-reverse {
+  0%, 100% { transform: translateY(-10px); }
+  50% { transform: translateY(0px); }
 }
 
 @keyframes pulse-glow {
@@ -125,12 +131,59 @@
   100% { background-position: 0 40px; }
 }
 
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes particle-drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+}
+
+@keyframes border-glow-pulse {
+  0%, 100% { border-color: rgba(0, 212, 170, 0.1); }
+  50% { border-color: rgba(0, 212, 170, 0.3); }
+}
+
+@keyframes module-place-flash {
+  0% { opacity: 0.8; }
+  100% { opacity: 0; }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
 
+.animate-float-reverse {
+  animation: float-reverse 6s ease-in-out infinite;
+}
+
 .animate-pulse-glow {
   animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out both;
 }
 
 .smoke-bg {
@@ -147,7 +200,144 @@
   background-size: 40px 40px;
 }
 
-/* Scrollbar */
+/* ─── Hero gradient background ─── */
+.hero-gradient-bg {
+  background: linear-gradient(
+    135deg,
+    #0d0d1a 0%,
+    #0a1a1a 25%,
+    #0d0d1a 50%,
+    #120d1a 75%,
+    #0d0d1a 100%
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+/* ─── Scan-line overlay ─── */
+.scan-line-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 212, 170, 0.015) 2px,
+    rgba(0, 212, 170, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.scan-line-overlay::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 212, 170, 0.03) 0%,
+    transparent 100%
+  );
+  animation: scan-line 8s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── Floating particles (CSS-only) ─── */
+.particles-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #00D4AA;
+  border-radius: 50%;
+  animation: particle-drift linear infinite;
+  opacity: 0;
+}
+
+.particle:nth-child(1) { left: 10%; bottom: -5%; animation-duration: 18s; animation-delay: 0s; }
+.particle:nth-child(2) { left: 25%; bottom: -5%; animation-duration: 22s; animation-delay: 3s; width: 3px; height: 3px; background: #FFB347; }
+.particle:nth-child(3) { left: 40%; bottom: -5%; animation-duration: 16s; animation-delay: 6s; }
+.particle:nth-child(4) { left: 55%; bottom: -5%; animation-duration: 25s; animation-delay: 2s; width: 1px; height: 1px; }
+.particle:nth-child(5) { left: 70%; bottom: -5%; animation-duration: 20s; animation-delay: 8s; background: #FFB347; }
+.particle:nth-child(6) { left: 85%; bottom: -5%; animation-duration: 19s; animation-delay: 4s; }
+.particle:nth-child(7) { left: 15%; bottom: -5%; animation-duration: 23s; animation-delay: 10s; width: 3px; height: 3px; }
+.particle:nth-child(8) { left: 50%; bottom: -5%; animation-duration: 17s; animation-delay: 7s; background: #8888ff; }
+.particle:nth-child(9) { left: 35%; bottom: -5%; animation-duration: 21s; animation-delay: 1s; }
+.particle:nth-child(10) { left: 75%; bottom: -5%; animation-duration: 24s; animation-delay: 5s; width: 1px; height: 1px; background: #FFB347; }
+.particle:nth-child(11) { left: 5%; bottom: -5%; animation-duration: 26s; animation-delay: 9s; }
+.particle:nth-child(12) { left: 60%; bottom: -5%; animation-duration: 15s; animation-delay: 12s; background: #8888ff; width: 2px; height: 2px; }
+
+/* ─── Noise texture overlay ─── */
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ─── Configurator grid pattern ─── */
+.configurator-grid-bg {
+  background-image:
+    radial-gradient(circle at 1px 1px, #00D4AA08 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* ─── Step connectors for How It Works ─── */
+.step-connector {
+  position: relative;
+}
+
+.step-connector::after {
+  content: '';
+  position: absolute;
+  top: 36px;
+  right: -16px;
+  width: 32px;
+  height: 2px;
+  background: linear-gradient(90deg, #00D4AA40, #FFB34740);
+  z-index: 10;
+}
+
+.step-connector:last-child::after {
+  display: none;
+}
+
+/* ─── Scene transitions ─── */
+.scene-content-enter {
+  animation: fade-in-up 0.4s ease-out;
+}
+
+/* ─── Typography polish ─── */
+.section-label {
+  letter-spacing: 0.15em;
+}
+
+.tabular-price {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Scrollbar (teal themed) ─── */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -155,9 +345,16 @@
   background: #0d0d1a;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a2a4a;
+  background: linear-gradient(180deg, #00D4AA30, #00D4AA15);
   border-radius: 4px;
+  border: 1px solid #00D4AA10;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #00D4AA40;
+  background: linear-gradient(180deg, #00D4AA60, #00D4AA30);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #00D4AA30 #0d0d1a;
 }

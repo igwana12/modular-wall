@@ -2,6 +2,7 @@ import { Nav } from "@/components/nav";
 import { Hero } from "@/components/hero";
 import { HowItWorks } from "@/components/how-it-works";
 import { ModuleCatalog } from "@/components/module-catalog";
+import { Configurations } from "@/components/configurations";
 import { WallConfigurator } from "@/components/wall-configurator";
 import { Scenes } from "@/components/scenes";
 import { Thesis } from "@/components/thesis";
@@ -15,6 +16,7 @@ export default function Home() {
         <Hero />
         <HowItWorks />
         <ModuleCatalog />
+        <Configurations />
         <WallConfigurator />
         <Scenes />
         <Thesis />
