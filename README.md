@@ -1,6 +1,8 @@
-# The Modular Wall
+# mosAIc
 
-**A modular, AI-orchestrated, snap-together mixed-media wall computer you build yourself.**
+**Intelligence, Assembled**
+
+A modular, AI-orchestrated, snap-together mixed-media wall computer you build yourself.
 
 Each module is an app that escaped the phone and became physical again — but now it's programmable, connected, intelligent, and built by you.
 

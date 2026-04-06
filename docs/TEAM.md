@@ -1,6 +1,6 @@
 # Modular Wall — Team Structure
 
-**Project**: The Modular Wall
+**Project**: mosAIc (The Modular Wall)
 **Company**: Sacred Circuits
 **GitHub**: https://github.com/igwana12/modular-wall
 **Workspace**: `/Volumes/AI_WORKSPACE/modular-wall`

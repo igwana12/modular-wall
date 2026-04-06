@@ -16,7 +16,9 @@
 **Status**: TODO
 
 **Description**:
-Pick a product name to replace "The Modular Wall" placeholder. Consider:
+✅ **COMPLETED** — Product name selected: **mosAIc** (lowercase m, capital AI)
+
+Original task: Pick a product name to replace "The Modular Wall" placeholder. Consider:
 - Short, memorable (2-3 words max)
 - Implies building/assembly/modularity
 - Doesn't limit to "wall" if concept expands
@@ -42,7 +44,9 @@ Pick a product name to replace "The Modular Wall" placeholder. Consider:
 **Status**: TODO
 
 **Description**:
-Review 4 existing Blender style variants (Minimal, Rounded, Baroque, Wood) and select one for V1 launch. Council recommends cyberpunk/transparent aesthetic.
+✅ **COMPLETED** — Visual style selected: **Minimal (Cyberpunk)**
+
+Original task: Review 4 existing Blender style variants (Minimal, Rounded, Baroque, Wood) and select one for V1 launch. Council recommends cyberpunk/transparent aesthetic.
 
 **Subtasks**:
 - [ ] Athena: Document each of 4 styles with render screenshots
