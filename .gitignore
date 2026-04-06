@@ -1,0 +1,40 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+venv/
+.venv/
+
+# Node
+node_modules/
+.next/
+dist/
+
+# Build
+build/
+*.o
+*.elf
+*.bin
+*.hex
+
+# Blender backups
+*.blend1
+*.blend2
+
+# Secrets
+.env.local
+.env.production
+credentials.json
+*.pem
+*.key
