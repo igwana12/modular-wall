@@ -79,6 +79,20 @@ export function HowItWorks() {
           ))}
         </div>
 
+        {/* Scale reference */}
+        <div className="mt-12 flex flex-col items-center gap-4">
+          <div className="max-w-sm rounded-2xl overflow-hidden border border-border/50">
+            <img
+              src="/hero-scale.jpg"
+              alt="Hand holding a module showing palm-sized scale"
+              className="w-full h-48 object-cover"
+            />
+          </div>
+          <p className="text-xs font-mono text-muted-foreground text-center">
+            Each module fits in your palm. 85mm x 65mm — smaller than a phone.
+          </p>
+        </div>
+
         {/* Connector line (desktop only) */}
         <div className="hidden md:block relative h-px mt-8">
           <div className="absolute inset-x-0 h-px bg-gradient-to-r from-teal/0 via-teal/30 to-teal/0" />
