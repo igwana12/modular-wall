@@ -100,6 +100,16 @@ export const MODULES: ModuleType[] = [
     shortDesc: "Circular AMOLED + LED ring",
     image: "/module-round.jpg",
   },
+  {
+    id: "mirror",
+    name: "Mirror",
+    price: 129,
+    color: "#ff88dd",
+    icon: "ScanFace",
+    description: "5\" circular display + camera + ring light. Smart mirror, AR filters, exercise form checker, motion capture. Mirror, mirror on the wall.",
+    shortDesc: "Smart mirror + camera + AI",
+    image: "/module-mirror.jpg",
+  },
 ];
 
 export interface Scene {
