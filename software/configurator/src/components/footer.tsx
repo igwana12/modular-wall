@@ -6,9 +6,8 @@ export function Footer() {
 
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2 font-mono text-sm font-bold tracking-wider">
-            <span className="inline-block h-3 w-3 rounded-sm bg-teal" />
-            <span className="text-foreground">mosAIc</span>
+          <div className="flex items-center gap-2">
+            <img src="/mosaic-logo.jpg" alt="mosAIc" className="h-6 w-auto rounded-sm" />
           </div>
 
           <p className="text-sm text-muted-foreground font-mono italic">

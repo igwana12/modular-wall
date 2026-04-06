@@ -51,9 +51,8 @@ export function Nav() {
       }}
     >
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
-        <a href="#" className="flex items-center gap-2 font-mono text-sm font-bold tracking-wider">
-          <span className="inline-block h-3 w-3 rounded-sm bg-teal" />
-          <span className="text-foreground">mosAIc</span>
+        <a href="#" className="flex items-center gap-2">
+          <img src="/mosaic-logo.jpg" alt="mosAIc" className="h-7 w-auto rounded-sm" />
         </a>
 
         {/* Desktop */}
