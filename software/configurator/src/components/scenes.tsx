@@ -52,38 +52,37 @@ export function Scenes() {
         <div className="grid md:grid-cols-2 gap-8 items-center">
           {/* Scene visual */}
           <div
-            className="rounded-2xl border border-white/5 p-8 h-64 md:h-80 flex flex-col items-center justify-center transition-all duration-500"
+            className="rounded-2xl border border-white/5 overflow-hidden h-64 md:h-80 relative transition-all duration-500"
             style={{
-              backgroundColor: `${activeScene.color}08`,
               borderColor: `${activeScene.color}20`,
-              boxShadow: `inset 0 0 60px ${activeScene.color}08`,
+              boxShadow: `0 0 40px ${activeScene.color}10`,
             }}
           >
-            {/* Simulated wall state */}
-            <div className="grid grid-cols-3 gap-3 mb-6">
-              {activeScene.modules.map((modId, i) => {
+            <img
+              src="/hero-wall.jpg"
+              alt={`Wall in ${activeScene.name} mode`}
+              className="w-full h-full object-cover transition-all duration-700"
+              style={{ filter: `hue-rotate(${activeScene.id === 'morning' ? '30deg' : activeScene.id === 'focus' ? '160deg' : activeScene.id === 'movie' ? '220deg' : '320deg'}) brightness(${activeScene.id === 'sleep' ? '0.3' : '0.8'})` }}
+            />
+            <div className="absolute inset-0" style={{ backgroundColor: `${activeScene.color}15` }} />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d1a] via-transparent to-transparent" />
+            {/* Active module indicators */}
+            <div className="absolute bottom-4 left-4 flex gap-2">
+              {activeScene.modules.map((modId) => {
                 const mod = MODULES.find((m) => m.id === modId)!;
                 return (
                   <div
-                    key={`${modId}-${i}`}
-                    className="h-14 w-14 rounded-xl flex items-center justify-center transition-all duration-700"
+                    key={modId}
+                    className="h-8 w-8 rounded-lg flex items-center justify-center backdrop-blur-sm"
                     style={{
-                      backgroundColor: `${mod.color}20`,
-                      border: `1px solid ${mod.color}40`,
-                      boxShadow: `0 0 15px ${mod.color}20`,
-                      animationDelay: `${i * 200}ms`,
+                      backgroundColor: `${mod.color}30`,
+                      border: `1px solid ${mod.color}50`,
                     }}
                   >
-                    <div
-                      className="h-3 w-3 rounded-full animate-pulse"
-                      style={{ backgroundColor: mod.color }}
-                    />
+                    <div className="h-2 w-2 rounded-full animate-pulse" style={{ backgroundColor: mod.color }} />
                   </div>
                 );
               })}
-            </div>
-            <div className="text-xs font-mono text-muted-foreground/50">
-              [ scene visualization ]
             </div>
           </div>
 

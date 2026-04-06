@@ -5,6 +5,7 @@ const STEPS = [
     description: "Pick from screens, lights, sensors, speakers, and more. Each module is a single magnetic tile — same size, same connector, infinite arrangements.",
     color: "#00D4AA",
     detail: "Start with a Hub. Add what you need. Ignore what you don't.",
+    image: "/hero-unbox.jpg",
   },
   {
     number: "02",
@@ -12,6 +13,7 @@ const STEPS = [
     description: "Magnetic pogo-pin connectors. No wiring. No tools. No electrician. Click them onto any flat surface. The wall figures out the topology.",
     color: "#FFB347",
     detail: "Power cascades from Hub through contacts. Data rides BLE mesh.",
+    image: "/hero-snap.jpg",
   },
   {
     number: "03",
@@ -19,6 +21,7 @@ const STEPS = [
     description: "A local-first AI agent learns your patterns. It doesn't just follow rules — it anticipates. Your wall becomes context-aware, ambient, alive.",
     color: "#8888ff",
     detail: "On-device inference. Your data stays in your house.",
+    image: "/hero-wall.jpg",
   },
 ];
 
@@ -56,23 +59,13 @@ export function HowItWorks() {
                 {step.number}
               </div>
 
-              {/* Visual placeholder */}
-              <div
-                className="mb-6 h-32 rounded-xl border border-white/5 flex items-center justify-center"
-                style={{ backgroundColor: `${step.color}08` }}
-              >
-                <div className="flex gap-2">
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="h-8 w-8 rounded-md transition-transform group-hover:scale-110"
-                      style={{
-                        backgroundColor: `${step.color}${20 + i * 15}`,
-                        transitionDelay: `${i * 100}ms`,
-                      }}
-                    />
-                  ))}
-                </div>
+              {/* Step image */}
+              <div className="mb-6 h-36 rounded-xl overflow-hidden border border-white/5">
+                <img
+                  src={step.image}
+                  alt={step.title}
+                  className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                />
               </div>
 
               <h3 className="text-xl font-semibold mb-3">{step.title}</h3>

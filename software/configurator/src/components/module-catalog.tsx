@@ -27,22 +27,16 @@ export function ModuleCatalog() {
                 ${mod.price}
               </div>
 
-              {/* Module image placeholder */}
+              {/* Module image */}
               <div
-                className="mb-5 flex h-28 items-center justify-center rounded-xl border border-white/5 transition-all group-hover:scale-[1.02]"
-                style={{ backgroundColor: `${mod.color}10`, borderColor: `${mod.color}15` }}
+                className="mb-5 h-36 rounded-xl border border-white/5 overflow-hidden transition-all group-hover:scale-[1.02]"
+                style={{ borderColor: `${mod.color}15` }}
               >
-                <div className="flex flex-col items-center gap-2">
-                  <div
-                    className="h-10 w-10 rounded-lg flex items-center justify-center"
-                    style={{ backgroundColor: `${mod.color}20`, border: `1px solid ${mod.color}30` }}
-                  >
-                    <div className="h-3 w-3 rounded-full" style={{ backgroundColor: mod.color }} />
-                  </div>
-                  <span className="text-[10px] font-mono text-muted-foreground/50">
-                    [ {mod.shortDesc} ]
-                  </span>
-                </div>
+                <img
+                  src={mod.image}
+                  alt={`${mod.name} — ${mod.shortDesc}`}
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               {/* Info */}

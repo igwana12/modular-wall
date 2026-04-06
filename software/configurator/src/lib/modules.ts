@@ -6,6 +6,7 @@ export interface ModuleType {
   icon: string;
   description: string;
   shortDesc: string;
+  image: string;
 }
 
 export const MODULES: ModuleType[] = [
@@ -17,6 +18,7 @@ export const MODULES: ModuleType[] = [
     icon: "Monitor",
     description: "2.8\" LCD touchscreen. Widgets, dashboards, album art, weather — whatever your AI decides matters right now.",
     shortDesc: "2.8\" LCD touchscreen",
+    image: "/module-screen.jpg",
   },
   {
     id: "glow",
@@ -26,6 +28,7 @@ export const MODULES: ModuleType[] = [
     icon: "Sun",
     description: "Ambient LED diffusion panel. Circadian rhythms, mood lighting, notification halos. Light that thinks.",
     shortDesc: "Ambient LED panel",
+    image: "/module-glow.jpg",
   },
   {
     id: "pixel",
@@ -35,6 +38,7 @@ export const MODULES: ModuleType[] = [
     icon: "Grid3X3",
     description: "16x16 LED matrix. Pixel art, VU meters, scrolling text, retro visualizations. The wall's personality layer.",
     shortDesc: "LED matrix display",
+    image: "/module-pixel.jpg",
   },
   {
     id: "voice",
@@ -44,6 +48,7 @@ export const MODULES: ModuleType[] = [
     icon: "Mic",
     description: "Speaker + MEMS microphone. Talk to your wall. It talks back. Local wake word, far-field pickup.",
     shortDesc: "Speaker + microphone",
+    image: "/module-voice.jpg",
   },
   {
     id: "sense",
@@ -53,6 +58,7 @@ export const MODULES: ModuleType[] = [
     icon: "Eye",
     description: "mmWave presence detection. Knows you're there without cameras. Gesture zones. Privacy-first awareness.",
     shortDesc: "Presence detection",
+    image: "/module-sense.jpg",
   },
   {
     id: "brick",
@@ -62,6 +68,7 @@ export const MODULES: ModuleType[] = [
     icon: "Square",
     description: "Structural filler. Magnetic mount, cable passthrough. Every wall needs negative space.",
     shortDesc: "Structural filler",
+    image: "/module-brick.jpg",
   },
   {
     id: "hub",
@@ -71,6 +78,7 @@ export const MODULES: ModuleType[] = [
     icon: "Cpu",
     description: "ESP32-S3 brain. WiFi, BLE mesh, USB-C power distribution. One per wall. Required.",
     shortDesc: "Central brain (required)",
+    image: "/module-hub.jpg",
   },
   {
     id: "holo",
@@ -80,6 +88,7 @@ export const MODULES: ModuleType[] = [
     icon: "Sparkles",
     description: "Holographic fan display. Floating 3D visuals in mid-air. The module that makes people stop and stare.",
     shortDesc: "Hologram fan display",
+    image: "/module-holo.jpg",
   },
 ];
 

@@ -41,23 +41,18 @@ export function Hero() {
           Apps are escaping the phone. The wall is where they land.
         </p>
 
-        {/* Product hero placeholder */}
-        <div className="mx-auto mt-12 max-w-3xl animate-pulse-glow rounded-2xl border border-teal/20 bg-surface-raised p-1">
-          <div className="flex items-center justify-center rounded-xl bg-surface h-64 md:h-80 relative overflow-hidden">
-            {/* Fake module grid preview */}
-            <div className="grid grid-cols-4 gap-2 p-4">
-              {["#00D4AA", "#FFB347", "#ff4466", "#8888ff", "#555577", "#00D4AA", "#cc44ff", "#44ddff"].map((color, i) => (
-                <div
-                  key={i}
-                  className="h-14 w-14 md:h-16 md:w-16 rounded-lg border border-white/5 flex items-center justify-center text-xs font-mono opacity-60"
-                  style={{ backgroundColor: `${color}15`, borderColor: `${color}30` }}
-                >
-                  <div className="h-2 w-2 rounded-full" style={{ backgroundColor: color }} />
-                </div>
-              ))}
-            </div>
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs font-mono text-muted-foreground/50">
-              [ product render placeholder ]
+        {/* Product hero image */}
+        <div className="mx-auto mt-12 max-w-4xl animate-pulse-glow rounded-2xl border border-teal/20 bg-surface-raised p-1">
+          <div className="rounded-xl overflow-hidden relative">
+            <img
+              src="/hero-wall.jpg"
+              alt="A modular wall computer with mixed screens, ambient lights, and holographic displays in a modern living room"
+              className="w-full h-64 md:h-96 object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d1a] via-transparent to-transparent" />
+            <div className="absolute bottom-4 left-6 right-6 flex items-end justify-between">
+              <span className="text-xs font-mono text-teal/70">12 modules. One wall. Zero wires.</span>
+              <span className="text-xs font-mono text-muted-foreground/50">concept render</span>
             </div>
           </div>
         </div>
