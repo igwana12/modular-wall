@@ -90,6 +90,16 @@ export const MODULES: ModuleType[] = [
     shortDesc: "Hologram fan display",
     image: "/module-holo.jpg",
   },
+  {
+    id: "round",
+    name: "Round",
+    price: 69,
+    color: "#00ffcc",
+    icon: "Circle",
+    description: "1.43\" circular AMOLED with LED halo ring. Clocks, gauges, status indicators, notification orbits. The module that breaks the grid.",
+    shortDesc: "Circular AMOLED + LED ring",
+    image: "/module-round.jpg",
+  },
 ];
 
 export interface Scene {
