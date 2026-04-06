@@ -15,9 +15,12 @@ A snap-together system of mixed display modules — screens, hologram fans, LED 
 ```
 modular-wall/
 ├── docs/                          # All project documentation
-│   ├── ENHANCED-BRIEF.md          # Master document — start here
+│   ├── PAPERCLIP-CEO-BRIEF.md     # CEO executive brief (start here)
+│   ├── ENHANCED-BRIEF.md          # Master document — complete product spec
 │   ├── MASTER-PLAN.md             # 8-phase roadmap
 │   ├── MODULAR-WALL-TODOS.md      # Prioritized action items
+│   ├── TEAM.md                    # Team structure & assignments
+│   ├── TASKS.md                   # Task breakdown by phase
 │   ├── VISION.md                  # Original product vision
 │   ├── GLOBE-2.0-TREATMENT.md     # Globe sub-project treatment
 │   ├── PROJECT-ECOSYSTEM.md       # How projects relate
@@ -91,10 +94,18 @@ modular-wall/
 | Phase 1-3: Multi-module wall | ~$500-800 |
 | Full development through launch | ~$2,000-3,000 |
 
+## Quick Start
+
+1. **For CEOs/Managers**: Read [PAPERCLIP-CEO-BRIEF.md](docs/PAPERCLIP-CEO-BRIEF.md)
+2. **For Team Members**: Check [TEAM.md](docs/TEAM.md) for your role and [TASKS.md](docs/TASKS.md) for assignments
+3. **For Technical Details**: Read [ENHANCED-BRIEF.md](docs/ENHANCED-BRIEF.md) and [MASTER-PLAN.md](docs/MASTER-PLAN.md)
+
 ## Links
 
 - **Trello**: https://trello.com/b/gw9oUWSO/modular-wall
-- **Docs**: Start with [ENHANCED-BRIEF.md](docs/ENHANCED-BRIEF.md)
+- **Workspace**: `/Volumes/AI_WORKSPACE/modular-wall`
+- **Team**: See [TEAM.md](docs/TEAM.md)
+- **Tasks**: See [TASKS.md](docs/TASKS.md)
 
 ## Open Hardware
 
