@@ -31,6 +31,7 @@ import { Scenes } from "@/components/scenes";
 import { TheGuide } from "@/components/the-guide";
 import { HubTiers } from "@/components/hub-tiers";
 import { Thesis } from "@/components/thesis";
+import { Community } from "@/components/community";
 import { Footer } from "@/components/footer";
 
 export default function EnhancedHome() {
@@ -48,6 +49,7 @@ export default function EnhancedHome() {
         <TheGuide />
         <HubTiers />
         <Thesis />
+        <Community />
       </main>
       <Footer />
     </>

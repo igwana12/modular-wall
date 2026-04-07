@@ -3,7 +3,7 @@
 /**
  * 27 Animated Interface Scenes for the mosAIc Interface Gallery.
  * Each scene is a React Three Fiber component rendered at real module dimensions.
- * Uses patterns from Sacred Circuits Knowledge Pack code recipes.
+ * Uses patterns from the Knowledge Pack code recipes (Three.js, Web Audio, etc).
  */
 
 import { useRef, useMemo, useEffect } from "react";

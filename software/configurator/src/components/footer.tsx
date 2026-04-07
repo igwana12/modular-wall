@@ -36,7 +36,7 @@ export function Footer() {
 
         <div className="mt-8 text-center space-y-1">
           <p className="text-xs text-muted-foreground/60 font-mono">
-            A Sacred Circuits experiment
+            A Pantheon experiment
           </p>
           <p className="text-[10px] text-muted-foreground/40 font-mono">
             Local prototype. Not a product yet. Just an idea with magnets.
