@@ -77,8 +77,8 @@ export function EnhancedNav() {
     <>
       {/* Main Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-background/80 backdrop-blur-md border-b border-border/50 shadow-lg' 
+        isScrolled
+          ? 'glass-nav border-b border-white/[0.06] shadow-[0_1px_40px_rgba(0,0,0,0.3)]'
           : 'bg-transparent'
       }`}>
         {/* Scroll Progress Bar */}
