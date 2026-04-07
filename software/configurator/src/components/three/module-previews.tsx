@@ -622,9 +622,69 @@ function RingScene() {
   );
 }
 
+// ─── Screen-M: Larger LCD dashboard ────────────────────────────
+function ScreenMScene() {
+  const glowRef = useRef<THREE.PointLight>(null!);
+
+  useFrame(({ clock }) => {
+    if (glowRef.current) {
+      glowRef.current.intensity = 1.2 + Math.sin(clock.getElapsedTime() * 1.5) * 0.3;
+    }
+  });
+
+  return (
+    <group>
+      <mesh position={[0, 0, -0.05]}>
+        <boxGeometry args={[1.6, 1.0, 0.06]} />
+        <meshStandardMaterial color="#1a5c2a" roughness={0.7} metalness={0.3} />
+      </mesh>
+      <mesh position={[0, 0, 0.02]}>
+        <boxGeometry args={[1.4, 0.85, 0.04]} />
+        <meshStandardMaterial color="#001a14" emissive={TEAL} emissiveIntensity={0.35} roughness={0.1} metalness={0.8} />
+      </mesh>
+      {/* Dashboard grid lines */}
+      {[-0.3, 0, 0.3].map((x, i) => (
+        <mesh key={i} position={[x, 0, 0.045]}>
+          <boxGeometry args={[0.005, 0.7, 0.001]} />
+          <meshBasicMaterial color="#00D4AA" transparent opacity={0.15} />
+        </mesh>
+      ))}
+      <pointLight ref={glowRef} position={[0, 0, 0.5]} color="#00D4AA" intensity={1.2} distance={3} />
+      <ambientLight intensity={0.3} />
+    </group>
+  );
+}
+
+// ─── eInk: E-paper with dithered pattern ───────────────────────
+function EInkScene() {
+  return (
+    <group>
+      <mesh position={[0, 0, -0.02]}>
+        <boxGeometry args={[1.6, 1.1, 0.04]} />
+        <meshStandardMaterial color="#2a2a2a" roughness={0.9} />
+      </mesh>
+      {/* E-paper surface — warm white */}
+      <mesh position={[0, 0, 0.01]}>
+        <planeGeometry args={[1.45, 0.95]} />
+        <meshStandardMaterial color="#e8e0d0" roughness={0.95} metalness={0} />
+      </mesh>
+      {/* Dithered text lines */}
+      {[-0.25, -0.1, 0.05, 0.2].map((y, i) => (
+        <mesh key={i} position={[0, y, 0.015]}>
+          <boxGeometry args={[i % 2 === 0 ? 1.1 : 0.8, 0.03, 0.001]} />
+          <meshBasicMaterial color="#333333" transparent opacity={0.4} />
+        </mesh>
+      ))}
+      <ambientLight intensity={0.6} />
+      <directionalLight position={[1, 1, 1]} intensity={0.4} />
+    </group>
+  );
+}
+
 // ─── Scene Registry ────────────────────────────────────────────
 const MODULE_SCENES: Record<string, React.FC> = {
   "screen-s": ScreenSScene,
+  "screen-m": ScreenMScene,
   glow: GlowScene,
   pixel: PixelScene,
   hub: HubScene,
@@ -635,6 +695,7 @@ const MODULE_SCENES: Record<string, React.FC> = {
   sense: SenseScene,
   brick: BrickScene,
   ring: RingScene,
+  eink: EInkScene,
 };
 
 // ─── Main Preview Component ────────────────────────────────────

@@ -13,7 +13,7 @@ export function ModuleCatalog() {
             The building blocks
           </h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-            Every module is the same physical size. Same magnetic connector. Different superpower.
+            Different sizes, same magnetic connector. From tiny Sense (44mm) to wide Pixel (166mm).
           </p>
         </div>
 
@@ -64,11 +64,37 @@ export function ModuleCatalog() {
                 />
               </div>
 
-              {/* Info */}
-              <h3 className="text-lg font-semibold mb-1" style={{ color: mod.color }}>
-                {mod.name}
-              </h3>
-              <p className="text-xs text-muted-foreground/60 font-mono mb-3 section-label">{mod.shortDesc}</p>
+              {/* Info + shape outline */}
+              <div className="flex items-start gap-3 mb-3">
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold mb-1" style={{ color: mod.color }}>
+                    {mod.name}
+                  </h3>
+                  <p className="text-xs text-muted-foreground/60 font-mono section-label">{mod.shortDesc}</p>
+                </div>
+                {/* Shape silhouette at correct aspect ratio */}
+                {(() => {
+                  const maxDim = Math.max(mod.width_mm, mod.height_mm);
+                  const scale = 32 / maxDim;
+                  return (
+                    <div
+                      className="flex-shrink-0 border-2 flex items-center justify-center"
+                      style={{
+                        width: mod.width_mm * scale,
+                        height: mod.height_mm * scale,
+                        borderRadius: mod.shape === "circle" ? "50%" : 3,
+                        borderColor: `${mod.color}50`,
+                        backgroundColor: `${mod.color}10`,
+                      }}
+                      title={`${mod.width_mm}×${mod.height_mm}mm ${mod.shape}`}
+                    >
+                      <span className="text-[7px] font-mono opacity-60" style={{ color: mod.color }}>
+                        {mod.width_mm}×{mod.height_mm}
+                      </span>
+                    </div>
+                  );
+                })()}
+              </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {mod.description}
               </p>

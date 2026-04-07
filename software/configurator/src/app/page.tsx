@@ -12,6 +12,7 @@ import { EnhancedHero } from "@/components/enhanced-hero";
 import { HowItWorks } from "@/components/how-it-works";
 import { ModuleCatalog } from "@/components/module-catalog";
 import { Configurations } from "@/components/configurations";
+import { InterfaceGallery } from "@/components/interface-gallery";
 import { EnhancedWallConfigurator } from "@/components/enhanced-wall-configurator";
 import { Scenes } from "@/components/scenes";
 import { TheGuide } from "@/components/the-guide";
@@ -28,6 +29,7 @@ export default function EnhancedHome() {
         <HowItWorks />
         <ModuleCatalog />
         <Configurations />
+        <InterfaceGallery />
         <EnhancedWallConfigurator />
         <Scenes />
         <TheGuide />

@@ -17,6 +17,7 @@ const navigationItems = [
   { id: "how-it-works", label: "How It Works" },
   { id: "modules", label: "Modules" },
   { id: "configurations", label: "Configurations" },
+  { id: "interfaces", label: "Interfaces" },
   { id: "configurator", label: "Configurator" },
   { id: "scenes", label: "Scenes" },
   { id: "thesis", label: "Thesis" },

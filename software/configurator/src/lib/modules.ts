@@ -1,3 +1,5 @@
+export type ModuleShape = "rectangle" | "square" | "circle";
+
 export interface ModuleType {
   id: string;
   name: string;
@@ -7,7 +9,17 @@ export interface ModuleType {
   description: string;
   shortDesc: string;
   image: string;
+  /** Physical dimensions from master CSV */
+  width_mm: number;
+  height_mm: number;
+  depth_mm: number;
+  shape: ModuleShape;
+  /** Whether this module mounts on the wall (false = handheld/wearable) */
+  wallMount: boolean;
 }
+
+// 1 grid unit = 1mm for precision; display scale applied in UI
+// Sense (44x44) is the smallest wall module
 
 export const MODULES: ModuleType[] = [
   {
@@ -18,7 +30,27 @@ export const MODULES: ModuleType[] = [
     icon: "Monitor",
     description: "2.8\" LCD touchscreen. Widgets, dashboards, album art, weather — whatever your AI decides matters right now.",
     shortDesc: "2.8\" LCD touchscreen",
+    image: "/module-screen-s.jpg",
+    width_mm: 76,
+    height_mm: 116,
+    depth_mm: 20,
+    shape: "rectangle",
+    wallMount: true,
+  },
+  {
+    id: "screen-m",
+    name: "Screen-M",
+    price: 119,
+    color: "#00D4AA",
+    icon: "Monitor",
+    description: "5\" LCD touchscreen. Health dashboards, smart home control, media player. The module for data-rich interfaces.",
+    shortDesc: "5\" LCD touchscreen",
     image: "/module-screen.jpg",
+    width_mm: 144,
+    height_mm: 94,
+    depth_mm: 22,
+    shape: "rectangle",
+    wallMount: true,
   },
   {
     id: "glow",
@@ -29,6 +61,11 @@ export const MODULES: ModuleType[] = [
     description: "Ambient LED diffusion panel. Circadian rhythms, mood lighting, notification halos. Light that thinks.",
     shortDesc: "Ambient LED panel",
     image: "/module-glow.jpg",
+    width_mm: 71,
+    height_mm: 71,
+    depth_mm: 20,
+    shape: "square",
+    wallMount: true,
   },
   {
     id: "pixel",
@@ -36,9 +73,14 @@ export const MODULES: ModuleType[] = [
     price: 59,
     color: "#ff4466",
     icon: "Grid3X3",
-    description: "16x16 LED matrix. Pixel art, VU meters, scrolling text, retro visualizations. The wall's personality layer.",
-    shortDesc: "LED matrix display",
+    description: "64x32 HUB75 LED matrix. Pixel art, VU meters, scrolling text, retro visualizations. The wall's personality layer.",
+    shortDesc: "HUB75 LED matrix",
     image: "/module-pixel.jpg",
+    width_mm: 166,
+    height_mm: 86,
+    depth_mm: 23,
+    shape: "rectangle",
+    wallMount: true,
   },
   {
     id: "voice",
@@ -49,6 +91,11 @@ export const MODULES: ModuleType[] = [
     description: "Speaker + MEMS microphone. Talk to your wall. It talks back. Local wake word, far-field pickup.",
     shortDesc: "Speaker + microphone",
     image: "/module-voice.jpg",
+    width_mm: 71,
+    height_mm: 71,
+    depth_mm: 23,
+    shape: "square",
+    wallMount: true,
   },
   {
     id: "sense",
@@ -59,6 +106,11 @@ export const MODULES: ModuleType[] = [
     description: "mmWave presence detection. Knows you're there without cameras. Gesture zones. Privacy-first awareness.",
     shortDesc: "Presence detection",
     image: "/module-sense.jpg",
+    width_mm: 44,
+    height_mm: 44,
+    depth_mm: 16,
+    shape: "square",
+    wallMount: true,
   },
   {
     id: "brick",
@@ -69,6 +121,11 @@ export const MODULES: ModuleType[] = [
     description: "Structural filler. Magnetic mount, cable passthrough. Every wall needs negative space.",
     shortDesc: "Structural filler",
     image: "/module-brick.jpg",
+    width_mm: 71,
+    height_mm: 71,
+    depth_mm: 20,
+    shape: "square",
+    wallMount: true,
   },
   {
     id: "hub",
@@ -76,9 +133,14 @@ export const MODULES: ModuleType[] = [
     price: 49,
     color: "#00D4AA",
     icon: "Cpu",
-    description: "ESP32-S3 brain. WiFi, BLE mesh, USB-C power distribution. One per wall. Required.",
+    description: "Orange Pi brain. WiFi, BLE mesh, USB-C power distribution. One per wall. Required.",
     shortDesc: "Central brain (required)",
     image: "/module-hub.jpg",
+    width_mm: 91,
+    height_mm: 62,
+    depth_mm: 22,
+    shape: "rectangle",
+    wallMount: true,
   },
   {
     id: "holo",
@@ -89,6 +151,11 @@ export const MODULES: ModuleType[] = [
     description: "Holographic fan display. Floating 3D visuals in mid-air. The module that makes people stop and stare.",
     shortDesc: "Hologram fan display",
     image: "/module-holo.jpg",
+    width_mm: 140,
+    height_mm: 140,
+    depth_mm: 40,
+    shape: "square",
+    wallMount: true,
   },
   {
     id: "round",
@@ -99,6 +166,11 @@ export const MODULES: ModuleType[] = [
     description: "1.43\" circular AMOLED with LED halo ring. Clocks, gauges, status indicators, notification orbits. The module that breaks the grid.",
     shortDesc: "Circular AMOLED + LED ring",
     image: "/module-round.jpg",
+    width_mm: 91,
+    height_mm: 91,
+    depth_mm: 19,
+    shape: "circle",
+    wallMount: true,
   },
   {
     id: "mirror",
@@ -106,10 +178,34 @@ export const MODULES: ModuleType[] = [
     price: 129,
     color: "#ff88dd",
     icon: "ScanFace",
-    description: "5\" circular display + camera + ring light. Smart mirror, AR filters, exercise form checker, motion capture. Mirror, mirror on the wall.",
+    description: "5\" circular display + camera + ring light. Smart mirror, AR filters, exercise form checker. Mirror, mirror on the wall.",
     shortDesc: "Smart mirror + camera + AI",
     image: "/module-mirror.jpg",
+    width_mm: 120,
+    height_mm: 120,
+    depth_mm: 28,
+    shape: "circle",
+    wallMount: true,
   },
+  {
+    id: "eink",
+    name: "eInk",
+    price: 59,
+    color: "#888888",
+    icon: "FileText",
+    description: "7.5\" e-paper display. Always-on quotes, art, schedules. Content that stays without power.",
+    shortDesc: "E-paper display",
+    image: "/module-screen.jpg",
+    width_mm: 180,
+    height_mm: 120,
+    depth_mm: 15,
+    shape: "rectangle",
+    wallMount: true,
+  },
+];
+
+// Ring and Controller are NOT wall modules — excluded from configurator
+export const NON_WALL_MODULES: ModuleType[] = [
   {
     id: "ring",
     name: "Ring",
@@ -119,6 +215,26 @@ export const MODULES: ModuleType[] = [
     description: "3D-printed smart ring. Gesture mouse, voice input, motion capture, haptic feedback. The wall on your finger.",
     shortDesc: "Wearable gesture controller",
     image: "/module-ring.jpg",
+    width_mm: 20,
+    height_mm: 20,
+    depth_mm: 8,
+    shape: "circle",
+    wallMount: false,
+  },
+  {
+    id: "controller",
+    name: "Controller",
+    price: 79,
+    color: "#00D4AA",
+    icon: "CircleDot",
+    description: "Handheld rotary controller. Module selection, scene switching, dial control. The premium puck.",
+    shortDesc: "Handheld remote",
+    image: "/module-controller.jpg",
+    width_mm: 62,
+    height_mm: 62,
+    depth_mm: 18,
+    shape: "circle",
+    wallMount: false,
   },
 ];
 
@@ -166,7 +282,24 @@ export const SCENES: Scene[] = [
   },
 ];
 
+/** Placed module on the freeform canvas */
+export interface PlacedModule {
+  id: string;
+  module: ModuleType;
+  /** Position in mm from top-left of canvas */
+  x: number;
+  y: number;
+}
+
+// Canvas dimensions in mm — represents a 600x400mm wall section
+export const CANVAS_WIDTH_MM = 600;
+export const CANVAS_HEIGHT_MM = 400;
+
+// Snap grid size in mm (half the smallest module)
+export const SNAP_GRID_MM = 22;
+
 export type GridCell = ModuleType | null;
 
+// Legacy — kept for backward compat but configurator now uses freeform canvas
 export const GRID_ROWS = 4;
 export const GRID_COLS = 6;
