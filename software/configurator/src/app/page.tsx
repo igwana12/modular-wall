@@ -27,6 +27,7 @@ import { ModuleCatalog } from "@/components/module-catalog";
 import { Configurations } from "@/components/configurations";
 import { InterfaceGallery } from "@/components/interface-gallery";
 import { EnhancedWallConfigurator } from "@/components/enhanced-wall-configurator";
+import { Customization } from "@/components/customization";
 import { Scenes } from "@/components/scenes";
 import { TheGuide } from "@/components/the-guide";
 import { HubTiers } from "@/components/hub-tiers";
@@ -45,6 +46,7 @@ export default function EnhancedHome() {
         <Configurations />
         <InterfaceGallery />
         <EnhancedWallConfigurator />
+        <Customization />
         <Scenes />
         <TheGuide />
         <HubTiers />

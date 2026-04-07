@@ -19,6 +19,7 @@ const navigationItems = [
   { id: "configurations", label: "Configurations" },
   { id: "interfaces", label: "Interfaces" },
   { id: "configurator", label: "Configurator" },
+  { id: "customization", label: "Styles" },
   { id: "scenes", label: "Scenes" },
   { id: "thesis", label: "Thesis" },
 ];
