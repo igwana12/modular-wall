@@ -296,6 +296,8 @@ Plans:
 - [x] **Phase 14: Routing Foundation + Voice Identity** - Regex intent classifier, voice-role binding, parallel pre-warm, and conversation history re-keying (completed 2026-04-04)
 - [ ] **Phase 15: JARVIS Agentic Tools** - Build-intent detection, sandboxed file I/O, allowlisted shell commands, ADB frontend reload, and bounded agentic loop
 - [ ] **Phase 16: System Health Restoration** - Fix port conflicts, restore Mission Control / JARVIS web / Health Dashboard, canonicalize port registry
+- [ ] **Phase 17: R1 Face Integration & Contextual Assets** - Zeus/Athena face expressions, 62 scanned icon deployment, keyword-triggered contextual morphing, visual QA, R1 performance benchmark
+- [ ] **Phase 18: R1 Pipeline Control & Approval Portal** - Voice-triggered Sacred Circuits pipeline execution, real-time status monitoring on R1, approve/reject/redo outputs via voice, Smithers automation route for SC workflows
 
 ## Phase Details
 
@@ -311,8 +313,8 @@ Plans:
 **Plans:** 2/2 plans complete
 
 Plans:
-- [ ] 14-01-PLAN.md -- Re-key conversation_history to session-based + port 8400 auto-increment fix (ROUT-04)
-- [ ] 14-02-PLAN.md -- Regex intent classifier, voice-role binding, unified process_query dispatch (ROUT-01, ROUT-02, ROUT-03)
+- [x] 14-01-PLAN.md -- Re-key conversation_history to session-based + port 8400 auto-increment fix (ROUT-04)
+- [x] 14-02-PLAN.md -- Regex intent classifier, voice-role binding, unified process_query dispatch (ROUT-01, ROUT-02, ROUT-03)
 
 ### Phase 15: JARVIS Agentic Tools
 **Goal**: Users can speak a UI change request and JARVIS reads, edits, reloads, and confirms -- voice to working code on the R1 device
@@ -336,10 +338,39 @@ Plans:
   3. Health Dashboard at :6001 shows accurate up/down status for all registered services including the three restored in this phase
 **Plans**: TBD
 
+### Phase 17: R1 Face Integration & Contextual Assets
+**Goal**: The R1 shows expressive deity faces driven by conversation mood, morphs contextual 3D wireframes triggered by keywords in speech, and runs all visual systems at stable framerate
+**Depends on**: Phase 14 (voice routing provides deity identity and mood_tag)
+**Requirements**: FACE-01, FACE-02, ASSET-01, ASSET-02, POLISH-01, PERF-01
+**Success Criteria** (what must be TRUE):
+  1. When Zeus speaks and Claude returns mood_tag "angry", the Zeus head displays BrowFurrow + EyesSquint shape keys with smooth 300ms lerp transition — not just jaw displacement
+  2. Athena has her own head GLB that activates when Athena voice is speaking, with the same expression system as Zeus
+  3. Saying "tell me about the rocket ship" during conversation triggers the rocket-ship-retro wireframe to morph in via the point-cloud transformation engine
+  4. All 62 scanned icons + 12 sacred animals + existing catalog entries are in wireframe-catalog.json with keyword triggers, and the morph engine selects contextually during speech
+  5. All 12 sacred animal wireframes render correctly centered in Wire, DOF Lines, and DOF Constellation modes — verified by visual QA
+  6. R1 hardware maintains 30+ FPS with face + morph + particles + rings + constellation all active simultaneously
+**Plans:** 3 plans
+
+Plans:
+- [ ] 17-01-PLAN.md -- Deploy 62 scanned icon GLBs + merge wireframe catalog + extend keyword trigger map (ASSET-01, ASSET-02)
+- [ ] 17-02-PLAN.md -- Face expression engine + mood_tag bridge wiring + Athena head infrastructure (FACE-01, FACE-02)
+- [ ] 17-03-PLAN.md -- FPS benchmark harness + visual QA automation + R1 hardware verification (POLISH-01, PERF-01)
+
+### Phase 18: R1 Pipeline Control & Approval Portal
+**Goal**: The R1 becomes a voice-driven command center for Sacred Circuits content pipelines — trigger generation, monitor progress, review outputs, and approve/reject/redo from the palm of your hand
+**Depends on**: Phase 15 (agentic tools provide shell execution + file I/O), Phase 14 (routing classifies pipeline intents)
+**Requirements**: PIPE-01, PIPE-02, PIPE-03, PIPE-04
+**Success Criteria** (what must be TRUE):
+  1. Saying "Start a Sacred Circuits pipeline for Apollo" triggers the SC automation scripts on Smithers and JARVIS voices "Apollo pipeline started — generating 3 assets"
+  2. Saying "show me the status" displays pipeline progress on R1 (queued/generating/complete/failed) with voice summary
+  3. When assets complete, R1 shows preview images behind the orb and JARVIS describes each — user says "approve the first two, redo the third with more gold" and pipeline continues
+  4. Pipeline outputs are saved to Obsidian and posted to the configured Slack channel with approval status
+**Plans**: TBD
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order. Phase 16 is independent and could run in parallel with 14-15.
+Phases execute in numeric order. Phase 16 is independent and could run in parallel with 14-15. Phase 17 can run in parallel with 15-16. Phase 18 depends on Phase 15.
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -347,6 +378,8 @@ Phases execute in numeric order. Phase 16 is independent and could run in parall
 | 11. Security & Routing Hardening | v1.1 | 1/1 | Complete | 2026-04-02 |
 | 12. Session Mobility | v1.1 | 1/1 | Complete | 2026-04-03 |
 | 13. Visual QA Hook | v1.1 | 2/2 | Complete | 2026-04-03 |
-| 14. Routing Foundation + Voice Identity | v1.2 | 0/2 | Complete    | 2026-04-04 |
+| 14. Routing Foundation + Voice Identity | v1.2 | 2/2 | Complete | 2026-04-04 |
 | 15. JARVIS Agentic Tools | v1.2 | 0/0 | Not started | - |
 | 16. System Health Restoration | v1.2 | 0/0 | Not started | - |
+| 17. R1 Face Integration & Contextual Assets | v1.2 | 0/3 | Planned | - |
+| 18. R1 Pipeline Control & Approval Portal | v1.2 | 0/0 | Not started | - |

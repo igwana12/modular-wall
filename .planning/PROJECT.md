@@ -84,17 +84,14 @@ Each card activates a personalized AI oracle experience — mythology meets tech
 | Self-printed cards for v1 | Validate before investing in professional manufacturing | -- Pending |
 | Builder does hardware himself | Learning investment, full control, deeper product understanding | -- Pending |
 
-## Current Milestone: v1.1 Claude Code Infrastructure Upgrades
+## Current Milestone: v1.2 Smithers-First Architecture + JARVIS Agentic Tools
 
-**Goal:** Upgrade the existing Smithers-controlled system with 6 tactical improvements that enhance session mobility, automation, visual QA, and security.
+**Goal:** Make Smithers the single conversation entry point with clear voice-role identity, and give JARVIS the ability to modify its own interface via voice commands.
 
 **Target features:**
-- Activate 5 existing scheduled tasks (morning-briefing, api-health-check, wispr-daily-sync, weekly-improvement, daily-obsidian-note)
-- Configure teleport/remote control for cross-device session mobility
-- Add visual QA hook for JARVIS frontend work (Playwright-based screenshot + compare)
-- Activate `/loop` polling for orb-backend health, Trello, and log monitoring
-- Tighten approval boundaries in `gsd-prompt-guard.js` (Slack channel restrictions, main branch protection, secret file guards)
-- Add context profiles to Smithers routing policy (task-type → directory mapping)
+- Smithers-First Routing + Voice Identity: every R1 and JARVIS web query hits Smithers first; Smithers classifies intent and dispatches to the right handler and voice (Smithers=architect, JARVIS=general assistant, Goddess=mythology gateway)
+- JARVIS Agentic Tools: 4 bridge tools (read_file, write_file, exec_shell, reload_frontend) + BUILD_INTENT detection + Anthropic tool_use agentic loop; voice → code change → ADB reload → voice confirm; sandboxed to r1-frontend/
+- System Health: fix orb-backend port conflict (8000 vs 8300), restore Mission Control (:4000), JARVIS web (:5556), Health Dashboard (:6001)
 
 ## Evolution
 
@@ -114,4 +111,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-01 after milestone v1.1 start*
+*Last updated: 2026-04-04 after milestone v1.2 start*

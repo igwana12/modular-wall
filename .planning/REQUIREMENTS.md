@@ -1,4 +1,4 @@
-# Claude Code Infrastructure Upgrades — Requirements
+# Claude Code Infrastructure Upgrades -- Requirements
 
 **Defined:** 2026-04-01
 **Core Value:** Upgrade the existing Smithers-controlled system with tactical improvements that enhance session mobility, automation, visual QA, and security.
@@ -43,13 +43,41 @@ Requirements for infrastructure upgrade milestone. Each maps to roadmap phases.
 - [x] **CTXP-02**: Smithers routing applies the correct context profile based on task classification
 - [x] **CTXP-03**: Unnecessary directories are excluded from sessions to reduce context pollution
 
+## v1.2 Requirements
+
+**Milestone:** Smithers-First Architecture + JARVIS Agentic Tools
+**Defined:** 2026-04-04
+**Core value:** Make Smithers the single conversation entry point with clear voice-role identity, and give JARVIS the ability to modify its own interface via voice commands.
+
+### Routing & Voice Identity
+
+- [ ] **ROUT-01**: Every query from R1 and JARVIS web is classified by a regex intent classifier before reaching the LLM path -- routing to smithers, jarvis, or goddess route
+- [ ] **ROUT-02**: Each route is bound to the correct ElevenLabs voice -- Smithers voice for tasks/orchestration, JARVIS voice for general conversation, Goddess voice for mythology/storytelling
+- [ ] **ROUT-03**: The classifier runs in parallel with the fast path (not as a sequential gate) so total voice latency stays under 300ms
+- [ ] **ROUT-04**: The conversation_history dict is re-keyed so routing changes cannot silently write context into the wrong voice bucket
+
+### Agentic Tools
+
+- [ ] **AGEN-01**: User can say a build-intent command ("make the orb pulse faster", "change the color") and JARVIS reads the relevant frontend file and writes the change
+- [ ] **AGEN-02**: File reads and writes are sandboxed to r1-frontend/ via Path.resolve() assertion -- paths outside the sandbox return an error to the LLM
+- [ ] **AGEN-03**: exec_shell accepts only an explicit allowlist of commands (npm run build, git status, git diff) -- any other command is refused with an error string
+- [ ] **AGEN-04**: reload_frontend uses ADB + Chrome DevTools Protocol Page.reload to refresh the R1 browser after a code change, confirmed within 100ms
+- [ ] **AGEN-05**: The agentic loop is capped at 5 iterations -- on cap hit, JARVIS speaks a failure summary rather than looping indefinitely
+
+### System Health
+
+- [ ] **HLTH-01**: orb-backend starts cleanly with no port conflicts -- root cause diagnosed and fixed (port 8400 Chrome Helper race + env var canonicalization)
+- [ ] **HLTH-02**: Mission Control (:4000) is running and responding to health checks
+- [ ] **HLTH-03**: JARVIS web (:5556) is running and accessible
+- [ ] **HLTH-04**: Health Dashboard (:6001) is running and showing accurate service status
+
 ## v2 Requirements
 
 Deferred to future milestone. Tracked but not in current roadmap.
 
 ### Advanced Automation
 
-- **AUTO-01**: Webhook-triggered scheduled tasks (external event → Claude Code action)
+- **AUTO-01**: Webhook-triggered scheduled tasks (external event -> Claude Code action)
 - **AUTO-02**: Cross-session state sharing via shared memory files
 - **AUTO-03**: Automatic skill activation based on file type detection
 
@@ -60,7 +88,7 @@ Deferred to future milestone. Tracked but not in current roadmap.
 | New skills creation | 565+ skills already exist, focus on infrastructure not content |
 | Smithers model routing changes | Cost-optimized routing already at $12-20/month, don't touch |
 | Hook rewrite | 8 hooks already work, only extending gsd-prompt-guard |
-| Agent SDK integration | Future milestone — evaluate after infrastructure is solid |
+| Agent SDK integration | Future milestone -- evaluate after infrastructure is solid |
 | MCP server additions | Current MCP config sufficient for this milestone |
 
 ## Traceability
@@ -87,12 +115,56 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VISQA-01 | Phase 13 | Complete |
 | VISQA-02 | Phase 13 | Complete |
 | VISQA-03 | Phase 13 | Complete |
+| ROUT-01 | Phase 14 | Pending |
+| ROUT-02 | Phase 14 | Pending |
+| ROUT-03 | Phase 14 | Pending |
+| ROUT-04 | Phase 14 | Pending |
+| AGEN-01 | Phase 15 | Pending |
+| AGEN-02 | Phase 15 | Pending |
+| AGEN-03 | Phase 15 | Pending |
+| AGEN-04 | Phase 15 | Pending |
+| AGEN-05 | Phase 15 | Pending |
+| HLTH-01 | Phase 16 | Pending |
+| HLTH-02 | Phase 16 | Pending |
+| HLTH-03 | Phase 16 | Pending |
+| HLTH-04 | Phase 16 | Pending |
+
+### R1 Face Integration & Contextual Assets
+
+- [ ] **FACE-01**: Zeus face displays emotion expressions (BrowFurrow, BrowRaise, EyesSquint, MouthOpen) driven by Claude mood_tag during speech, with smooth lerp transitions
+- [ ] **FACE-02**: Athena goddess face GLB generated from existing Blender displacement mask, integrated into R1 frontend with same jaw/expression system as Zeus
+- [ ] **ASSET-01**: All 62 scanned 2D→3D icon GLBs (IMG_7036–7099) deployed to R1 frontend models/ directory and merged into wireframe-catalog.json
+- [ ] **ASSET-02**: Keyword trigger map built — conversation text matched to GLB models, triggering contextual morph via existing point-cloud transformation engine during speech
+- [ ] **POLISH-01**: Wireframe outline emphasis and visual QA completed for all 12 sacred animals + 62 scanned icons in all render modes
+- [ ] **PERF-01**: FPS benchmark measured on actual R1 hardware with all systems active (morph + particles + face + rings + constellation lines)
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| FACE-01 | Phase 17 | Pending |
+| FACE-02 | Phase 17 | Pending |
+| ASSET-01 | Phase 17 | Pending |
+| ASSET-02 | Phase 17 | Pending |
+| POLISH-01 | Phase 17 | Pending |
+| PERF-01 | Phase 17 | Pending |
+
+### R1 Pipeline Control & Approval
+
+- [ ] **PIPE-01**: Voice command "Start SC pipeline for [deity]" triggers Sacred Circuits automation scripts via Smithers shell execution and returns voice confirmation with asset count
+- [ ] **PIPE-02**: Pipeline status query returns real-time progress (queued/generating/complete/failed) displayed on R1 with voice summary
+- [ ] **PIPE-03**: Completed assets display as preview images on R1 behind the orb, with voice-driven approve/reject/redo workflow that feeds back into the pipeline
+- [ ] **PIPE-04**: Approved outputs auto-save to Obsidian vault and post to configured Slack channel with approval metadata
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| PIPE-01 | Phase 18 | Pending |
+| PIPE-02 | Phase 18 | Pending |
+| PIPE-03 | Phase 18 | Pending |
+| PIPE-04 | Phase 18 | Pending |
 
 **Coverage:**
-- v1.1 requirements: 18 total
-- Mapped to phases: 18
-- Unmapped: 0
+- v1.1 requirements: 18 total, mapped to phases: 18, unmapped: 0
+- v1.2 requirements: 19 total, mapped to phases: 19, unmapped: 0
 
 ---
-*Requirements defined: 2026-04-01*
-*Last updated: 2026-04-01 after roadmap creation*
+*Requirements defined: 2026-04-01 (v1.1), 2026-04-04 (v1.2, v1.2+face)*
+*Last updated: 2026-04-04 after Phase 17 scope definition*
