@@ -30,33 +30,37 @@ export function EnhancedNav() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
+    let rafId = 0;
+
     const handleScroll = () => {
-      // Calculate scroll progress
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (scrollTop / docHeight) * 100;
-      setScrollProgress(progress);
+      // Throttle via rAF — runs at most once per frame (~16ms)
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        setScrollProgress((scrollTop / docHeight) * 100);
+        setIsScrolled(scrollTop > 20);
 
-      // Update scroll state for background blur
-      setIsScrolled(scrollTop > 20);
-
-      // Find active section
-      const sections = navigationItems.map(item => document.getElementById(item.id));
-      const currentSection = sections.find(section => {
-        if (!section) return false;
-        const rect = section.getBoundingClientRect();
-        return rect.top <= 100 && rect.bottom >= 100;
+        const sections = navigationItems.map(item => document.getElementById(item.id));
+        const currentSection = sections.find(section => {
+          if (!section) return false;
+          const rect = section.getBoundingClientRect();
+          return rect.top <= 100 && rect.bottom >= 100;
+        });
+        if (currentSection) {
+          setActiveSection(currentSection.id);
+        }
       });
-
-      if (currentSection) {
-        setActiveSection(currentSection.id);
-      }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial call
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const scrollToSection = (id: string) => {
