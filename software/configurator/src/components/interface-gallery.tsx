@@ -205,7 +205,8 @@ export function InterfaceGallery() {
           <h2 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">mosAIc Interfaces</h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Your wall runs apps. Anyone can build them. Share with the community.
-            <br /><span className="text-foreground font-medium">Every module is a platform.</span>{" "}Every interface is open source.
+            <br /><span className="text-foreground font-medium">Every module is a platform.</span>{" "}Every interface is open source.{" "}
+            <a href="https://omma.build" target="_blank" rel="noopener noreferrer" className="text-teal hover:underline">Build your own with Omma →</a>
           </p>
         </div>
 

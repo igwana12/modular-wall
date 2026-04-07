@@ -137,6 +137,43 @@ export function Community() {
           </p>
         </div>
 
+        {/* Omma — Interface Creation Tool (featured) */}
+        <a
+          href="https://omma.build"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group mb-8 block rounded-2xl border border-teal/30 bg-gradient-to-r from-teal/5 via-surface-raised/50 to-amber/5 p-6 transition-all duration-300 hover:border-teal/50 hover:shadow-[0_0_40px_rgba(0,212,170,0.12)]"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? "translateY(0)" : "translateY(20px)",
+            transition: "opacity 0.5s ease-out, transform 0.5s ease-out, border-color 0.3s, box-shadow 0.3s",
+          }}
+        >
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+            <div className="flex-shrink-0 rounded-2xl bg-teal/10 border border-teal/20 p-4 transition-transform duration-300 group-hover:scale-105">
+              <svg viewBox="0 0 40 40" className="h-10 w-10" fill="none">
+                <rect x="2" y="2" width="36" height="36" rx="10" stroke="#00D4AA" strokeWidth="2.5" fill="#00D4AA" fillOpacity="0.08" />
+                <text x="20" y="27" textAnchor="middle" fill="#00D4AA" fontSize="20" fontWeight="bold" fontFamily="system-ui">O</text>
+              </svg>
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-1">
+                <h3 className="text-lg font-bold text-teal">Create Interfaces with Omma</h3>
+                <span className="rounded-full px-2 py-0.5 text-[10px] font-mono bg-teal/10 text-teal border border-teal/20">
+                  by Spline
+                </span>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Build your own mosAIc widget with Omma. Describe what you want, AI builds it as an interactive Three.js experience.{" "}
+                <span className="text-foreground font-medium">No code required.</span>
+              </p>
+            </div>
+            <div className="flex-shrink-0 text-teal font-mono text-sm opacity-60 group-hover:opacity-100 transition-opacity">
+              omma.build →
+            </div>
+          </div>
+        </a>
+
         {/* Platform Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {PLATFORMS.map((platform, index) => {
