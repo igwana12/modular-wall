@@ -24,8 +24,8 @@ const nextConfig: NextConfig = {
               "worker-src 'self' blob:",
               // Media: self
               "media-src 'self'",
-              // Frame: omma.build for interactive 3D demo
-              "frame-src 'self' https://omma.build",
+              // Frame: none (Omma opens in new tab, not iframe)
+              "frame-src 'none'",
               // Object: none
               "object-src 'none'",
               // Base: self
