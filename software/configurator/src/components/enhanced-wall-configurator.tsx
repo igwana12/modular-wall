@@ -212,31 +212,68 @@ export function EnhancedWallConfigurator() {
     return { totalPrice: total, moduleCounts: counts, recommendations: recs };
   }, [placed]);
 
+  // Place a module at a pixel position on the canvas
+  const placeModuleAt = useCallback(
+    (mod: ModuleType, clientX: number, clientY: number) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      const canvasW = rect.width;
+      const clickX = clientX - rect.left;
+      const clickY = clientY - rect.top;
+      const mmX = snapToGrid(pxToMm(clickX, canvasW) - mod.width_mm / 2);
+      const mmY = snapToGrid(pxToMm(clickY, canvasW) - mod.height_mm / 2);
+      const x = Math.max(0, Math.min(CANVAS_WIDTH_MM - mod.width_mm, mmX));
+      const y = Math.max(0, Math.min(CANVAS_HEIGHT_MM - mod.height_mm, mmY));
+      setPlaced((prev) => [
+        ...prev,
+        { id: `mod-${nextId++}`, module: mod, x, y },
+      ]);
+    },
+    []
+  );
+
+  // Click-to-place (fallback)
   const handleCanvasClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (!selectedModule || isErasing) return;
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-
-      const rect = canvas.getBoundingClientRect();
-      const canvasW = rect.width;
-      const clickX = e.clientX - rect.left;
-      const clickY = e.clientY - rect.top;
-
-      // Convert to mm, center the module on click point, snap
-      const mmX = snapToGrid(pxToMm(clickX, canvasW) - selectedModule.width_mm / 2);
-      const mmY = snapToGrid(pxToMm(clickY, canvasW) - selectedModule.height_mm / 2);
-
-      // Clamp within canvas bounds
-      const x = Math.max(0, Math.min(CANVAS_WIDTH_MM - selectedModule.width_mm, mmX));
-      const y = Math.max(0, Math.min(CANVAS_HEIGHT_MM - selectedModule.height_mm, mmY));
-
-      setPlaced((prev) => [
-        ...prev,
-        { id: `mod-${nextId++}`, module: selectedModule, x, y },
-      ]);
+      placeModuleAt(selectedModule, e.clientX, e.clientY);
     },
-    [selectedModule, isErasing]
+    [selectedModule, isErasing, placeModuleAt]
+  );
+
+  // Drag-and-drop: allow drop on canvas
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "copy";
+    // Show ghost at drag position
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const dragModuleId = e.dataTransfer.types.includes("text/plain") ? "pending" : null;
+    if (!dragModuleId) return;
+    const rect = canvas.getBoundingClientRect();
+    const canvasW = rect.width;
+    // We can't read dataTransfer during dragOver, so show ghost based on selectedModule
+    if (selectedModule) {
+      const mmX = snapToGrid(pxToMm(e.clientX - rect.left, canvasW) - selectedModule.width_mm / 2);
+      const mmY = snapToGrid(pxToMm(e.clientY - rect.top, canvasW) - selectedModule.height_mm / 2);
+      setGhostPos({
+        x: Math.max(0, Math.min(CANVAS_WIDTH_MM - selectedModule.width_mm, mmX)),
+        y: Math.max(0, Math.min(CANVAS_HEIGHT_MM - selectedModule.height_mm, mmY)),
+      });
+    }
+  }, [selectedModule]);
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      setGhostPos(null);
+      const moduleId = e.dataTransfer.getData("text/plain");
+      const mod = MODULES.find((m) => m.id === moduleId);
+      if (!mod) return;
+      placeModuleAt(mod, e.clientX, e.clientY);
+    },
+    [placeModuleAt]
   );
 
   const handleCanvasMouseMove = useCallback(
@@ -315,8 +352,8 @@ export function EnhancedWallConfigurator() {
             Build your wall
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-            Real module dimensions, real scale. Select a module and click the
-            canvas to place it. Click a placed module to remove.
+            Real module dimensions, real scale. Drag modules from the sidebar
+            onto the canvas — or click to place. Click a placed module to remove.
           </p>
 
           {/* Presets */}
@@ -386,6 +423,9 @@ export function EnhancedWallConfigurator() {
                 onClick={handleCanvasClick}
                 onMouseMove={handleCanvasMouseMove}
                 onMouseLeave={() => setGhostPos(null)}
+                onDragOver={handleDragOver}
+                onDragLeave={() => setGhostPos(null)}
+                onDrop={handleDrop}
               >
                 {/* Absolute positioned inner container */}
                 <div className="absolute inset-0">
@@ -470,11 +510,18 @@ export function EnhancedWallConfigurator() {
                   return (
                     <button
                       key={mod.id}
+                      draggable
+                      onDragStart={(e) => {
+                        e.dataTransfer.setData("text/plain", mod.id);
+                        e.dataTransfer.effectAllowed = "copy";
+                        setSelectedModule(mod);
+                        setIsErasing(false);
+                      }}
                       onClick={() => {
                         setIsErasing(false);
                         setSelectedModule(isSelected ? null : mod);
                       }}
-                      className="flex flex-col items-center gap-1.5 rounded-xl p-2 border-2 transition-all text-xs hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-teal/30"
+                      className="flex flex-col items-center gap-1.5 rounded-xl p-2 border-2 transition-all text-xs hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-teal/30 cursor-grab active:cursor-grabbing"
                       style={
                         isSelected
                           ? {

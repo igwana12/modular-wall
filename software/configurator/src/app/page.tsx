@@ -1,11 +1,24 @@
-/**
- * Enhanced Main Page - Redesigned mosAIc Website
- * Improvements implemented:
- * - Enhanced hero with better performance and accessibility
- * - Improved navigation with mobile support
- * - Better wall configurator with presets and guidance
- * - Optimized animations and loading performance
- */
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "mosAIc — Your Desktop. On Your Wall.",
+  description:
+    "Open source modular wall computer. 12 magnetic modules. AI-powered. Build your wall.",
+  openGraph: {
+    title: "mosAIc — Your Desktop. On Your Wall.",
+    description:
+      "Open source modular wall computer. 12 magnetic modules. AI-powered. Build your wall.",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "mosAIc — Your Desktop. On Your Wall.",
+    description:
+      "Open source modular wall computer. 12 magnetic modules. AI-powered. Build your wall.",
+    images: ["/og-image.jpg"],
+  },
+};
 
 import { EnhancedNav } from "@/components/enhanced-nav";
 import { EnhancedHero } from "@/components/enhanced-hero";
