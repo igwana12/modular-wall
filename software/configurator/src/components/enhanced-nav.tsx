@@ -14,6 +14,7 @@ import { useState, useEffect } from "react";
 import { Menu, X, ExternalLink, Zap } from "lucide-react";
 
 const navigationItems = [
+  { id: "demo", label: "Demo" },
   { id: "how-it-works", label: "How It Works" },
   { id: "modules", label: "Modules" },
   { id: "configurations", label: "Configurations" },

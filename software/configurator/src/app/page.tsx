@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 
 import { EnhancedNav } from "@/components/enhanced-nav";
 import { EnhancedHero } from "@/components/enhanced-hero";
+import { InteractiveDemo } from "@/components/interactive-demo";
 import { HowItWorks } from "@/components/how-it-works";
 import { ModuleCatalog } from "@/components/module-catalog";
 import { Configurations } from "@/components/configurations";
@@ -41,6 +42,7 @@ export default function EnhancedHome() {
       <EnhancedNav />
       <main className="flex-1">
         <EnhancedHero />
+        <InteractiveDemo />
         <HowItWorks />
         <ModuleCatalog />
         <Configurations />
