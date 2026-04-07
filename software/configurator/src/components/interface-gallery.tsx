@@ -64,15 +64,16 @@ function WeekViewPreview() {
 }
 
 function CircadianPreview() {
+  const gradId = "circadian-glow";
   return (
     <svg viewBox="0 0 71 71" fill="none" className="w-full h-full">
       <defs>
-        <radialGradient id="cg">
+        <radialGradient id={gradId}>
           <stop offset="0%" stopColor="#FFB347" stopOpacity={0.4} />
           <stop offset="100%" stopColor="#FFB347" stopOpacity={0} />
         </radialGradient>
       </defs>
-      <rect x="5" y="5" width="61" height="61" rx="6" fill="url(#cg)" />
+      <rect x="5" y="5" width="61" height="61" rx="6" fill={`url(#${gradId})`} />
       {[20, 35, 50].map((y) =>
         [20, 35, 50].map((x) => (
           <circle key={`${x}-${y}`} cx={x} cy={y} r="2" fill="#FFB347" opacity={0.2 + Math.sin(x * 0.1) * 0.3} />
@@ -442,7 +443,7 @@ export function InterfaceGallery() {
   const filtered = activeTab === "all" ? INTERFACES : INTERFACES.filter((a) => a.moduleId === activeTab);
 
   return (
-    <section id="interfaces" className="relative py-24 md:py-32" ref={ref}>
+    <section id="interfaces" className="relative py-24 md:py-32" ref={ref} aria-label="mosAIc Interface Gallery">
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 rounded-full border border-amber/20 bg-amber/5 px-4 py-2 text-sm font-mono text-amber mb-4">

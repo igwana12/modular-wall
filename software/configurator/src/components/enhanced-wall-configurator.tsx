@@ -6,7 +6,7 @@
 
 "use client";
 
-import { useState, useCallback, useRef, useMemo, lazy, Suspense } from "react";
+import { useState, useCallback, useRef, useMemo, useEffect, lazy, Suspense } from "react";
 import {
   MODULES,
   CANVAS_WIDTH_MM,
@@ -66,13 +66,14 @@ function ModuleOutline({
 }) {
   const w = mmToPx(mod.width_mm, canvasWidth);
   const h = mmToPx(mod.height_mm, canvasWidth);
+  // mmToPx scale is uniform (same px/mm in both axes) because canvas preserves aspect ratio
   const left = mmToPx(x, canvasWidth);
-  const top = mmToPx(y, canvasWidth) * (CANVAS_WIDTH_MM / CANVAS_HEIGHT_MM);
+  const top = mmToPx(y, canvasWidth);
 
   const baseStyle: React.CSSProperties = {
     position: "absolute",
     left,
-    top: mmToPx(y, canvasWidth),
+    top,
     width: w,
     height: h,
     borderRadius: mod.shape === "circle" ? "50%" : 6,
@@ -121,7 +122,7 @@ function ModuleOutline({
 const PRESETS: Record<string, { label: string; price: string; color: string; modules: PlacedModule[] }> = {
   starter: {
     label: "Starter",
-    price: "$206",
+    price: "$215",
     color: "#00D4AA",
     modules: [
       { id: "p1", module: MODULES.find((m) => m.id === "hub")!, x: 44, y: 0 },
@@ -133,7 +134,7 @@ const PRESETS: Record<string, { label: string; price: string; color: string; mod
   },
   media: {
     label: "Media Center",
-    price: "$453",
+    price: "$432",
     color: "#FFB347",
     modules: [
       { id: "m1", module: MODULES.find((m) => m.id === "pixel")!, x: 0, y: 0 },
@@ -148,7 +149,7 @@ const PRESETS: Record<string, { label: string; price: string; color: string; mod
   },
   premium: {
     label: "Premium",
-    price: "$701",
+    price: "$729",
     color: "#cc44ff",
     modules: [
       { id: "x1", module: MODULES.find((m) => m.id === "holo")!, x: 0, y: 0 },
@@ -175,7 +176,19 @@ export function EnhancedWallConfigurator() {
   const [selectedPlacedId, setSelectedPlacedId] = useState<string | null>(null);
   const [isErasing, setIsErasing] = useState(false);
   const [ghostPos, setGhostPos] = useState<{ x: number; y: number } | null>(null);
+  const [canvasWidth, setCanvasWidth] = useState(600);
   const canvasRef = useRef<HTMLDivElement>(null);
+
+  // Track canvas pixel width via ResizeObserver (avoids per-element getBoundingClientRect)
+  useEffect(() => {
+    const el = canvasRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      if (entry) setCanvasWidth(entry.contentRect.width);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   // Memoized calculations
   const { totalPrice, moduleCounts, recommendations } = useMemo(() => {
@@ -290,7 +303,7 @@ export function EnhancedWallConfigurator() {
   const aspectRatio = CANVAS_HEIGHT_MM / CANVAS_WIDTH_MM;
 
   return (
-    <section id="configurator" className="relative py-24 md:py-32">
+    <section id="configurator" className="relative py-24 md:py-32" aria-label="Wall Configurator">
       <div className="mx-auto max-w-7xl px-6">
         {/* Section Header */}
         <div className="text-center mb-12">
@@ -382,7 +395,7 @@ export function EnhancedWallConfigurator() {
                       mod={selectedModule}
                       x={ghostPos.x}
                       y={ghostPos.y}
-                      canvasWidth={canvasRef.current?.getBoundingClientRect().width ?? 600}
+                      canvasWidth={canvasWidth}
                       isGhost
                     />
                   )}
@@ -394,7 +407,7 @@ export function EnhancedWallConfigurator() {
                       mod={p.module}
                       x={p.x}
                       y={p.y}
-                      canvasWidth={canvasRef.current?.getBoundingClientRect().width ?? 600}
+                      canvasWidth={canvasWidth}
                       isSelected={selectedPlacedId === p.id}
                       onClick={(e) => {
                         e?.stopPropagation?.();

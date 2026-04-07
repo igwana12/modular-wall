@@ -13,28 +13,30 @@ interface LayoutModule {
 const CONFIGS = [
   {
     name: "Starter",
-    price: 206,
+    price: 215,
     description:
-      "The essentials. A Hub, a screen, ambient light, and presence detection. Enough to prove the concept and fall in love.",
+      "The essentials. A Hub, a screen, ambient light, presence detection, and a structural brick. Enough to prove the concept and fall in love.",
     color: "#00D4AA",
     modules: [
       { name: "Hub", count: 1 },
       { name: "Screen-S", count: 1 },
       { name: "Glow", count: 1 },
       { name: "Sense", count: 1 },
+      { name: "Brick", count: 1 },
     ],
     layout: [
       { id: "hub", x: 44, y: 0 },
       { id: "screen-s", x: 157, y: 0 },
       { id: "glow", x: 0, y: 84 },
       { id: "sense", x: 93, y: 84 },
+      { id: "brick", x: 159, y: 128 },
     ] as LayoutModule[],
     canvasW: 260,
-    canvasH: 180,
+    canvasH: 220,
   },
   {
     name: "Media Center",
-    price: 453,
+    price: 432,
     description:
       "Entertainment-grade. Wide Pixel display, dual screens, voice control, ambient sync. Movie nights will never be the same.",
     color: "#FFB347",
@@ -61,7 +63,7 @@ const CONFIGS = [
   },
   {
     name: "Premium",
-    price: 701,
+    price: 729,
     description:
       "The full experience. Holographic display, circular AMOLED, smart mirror, e-ink. Your wall becomes a living entity.",
     color: "#cc44ff",
