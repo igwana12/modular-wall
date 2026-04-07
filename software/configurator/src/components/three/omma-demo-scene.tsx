@@ -38,7 +38,10 @@ const CASINGS = [
 ];
 
 function useWidgetTexture(widgetType: string, w: number, h: number) {
-  const canvasRef = useRef(document.createElement("canvas"));
+  const canvasRef = useRef<HTMLCanvasElement>(null!);
+  if (!canvasRef.current && typeof document !== "undefined") {
+    canvasRef.current = document.createElement("canvas");
+  }
   const textureRef = useRef<THREE.CanvasTexture>(null!);
 
   useMemo(() => {
