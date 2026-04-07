@@ -44,10 +44,10 @@ render "$BLEND_SS" "$TEXTURES/screen-s-weather-station.png" "$OUTPUT/screen-s-we
 render "$BLEND_SS" "$TEXTURES/screen-s-now-playing.png" "$OUTPUT/screen-s-now-playing.png"
 render "$BLEND_SS" "$TEXTURES/screen-s-week-view.png" "$OUTPUT/screen-s-week-view.png"
 
-# Screen-M (basic)
+# Screen-M (refined)
 echo ""
 echo "─── Screen-M (3 interfaces) ───"
-BLEND_SM="$BASIC/screen-m.blend"
+BLEND_SM="$REFINED/screen-m.blend"
 render "$BLEND_SM" "$TEXTURES/screen-m-health-dashboard.png" "$OUTPUT/screen-m-health-dashboard.png"
 render "$BLEND_SM" "$TEXTURES/screen-m-smart-home.png" "$OUTPUT/screen-m-smart-home.png"
 render "$BLEND_SM" "$TEXTURES/screen-m-media-player.png" "$OUTPUT/screen-m-media-player.png"
@@ -84,50 +84,50 @@ render "$BLEND_HB" "$TEXTURES/hub-net-topology.png" "$OUTPUT/hub-net-topology.pn
 render "$BLEND_HB" "$TEXTURES/hub-system-monitor.png" "$OUTPUT/hub-system-monitor.png"
 render "$BLEND_HB" "$TEXTURES/hub-scene-control.png" "$OUTPUT/hub-scene-control.png"
 
-# Voice (basic)
+# Voice (refined)
 echo ""
 echo "─── Voice (3 interfaces) ───"
-BLEND_VO="$BASIC/voice.blend"
+BLEND_VO="$REFINED/voice.blend"
 render "$BLEND_VO" "$TEXTURES/voice-waveform-live.png" "$OUTPUT/voice-waveform-live.png"
 render "$BLEND_VO" "$TEXTURES/voice-voice-assistant.png" "$OUTPUT/voice-voice-assistant.png"
 render "$BLEND_VO" "$TEXTURES/voice-intercom.png" "$OUTPUT/voice-intercom.png"
 
-# Mirror (basic)
+# Mirror (refined)
 echo ""
 echo "─── Mirror (3 interfaces) ───"
-BLEND_MR="$BASIC/mirror.blend"
+BLEND_MR="$REFINED/mirror.blend"
 render "$BLEND_MR" "$TEXTURES/mirror-deity-oracle.png" "$OUTPUT/mirror-deity-oracle.png"
 render "$BLEND_MR" "$TEXTURES/mirror-form-check.png" "$OUTPUT/mirror-form-check.png"
 render "$BLEND_MR" "$TEXTURES/mirror-glam-filter.png" "$OUTPUT/mirror-glam-filter.png"
 
-# Holo (basic — use holo-fan.blend)
+# Holo (refined)
 echo ""
 echo "─── Holo (3 interfaces) ───"
-BLEND_HO="$BASIC/holo-fan.blend"
+BLEND_HO="$REFINED/holo.blend"
 render "$BLEND_HO" "$TEXTURES/holo-sacred-forms.png" "$OUTPUT/holo-sacred-forms.png"
 render "$BLEND_HO" "$TEXTURES/holo-3d-viewer.png" "$OUTPUT/holo-3d-viewer.png"
 render "$BLEND_HO" "$TEXTURES/holo-alert-beacon.png" "$OUTPUT/holo-alert-beacon.png"
 
-# Sense (basic)
+# Sense (refined)
 echo ""
 echo "─── Sense (3 states) ───"
-BLEND_SE="$BASIC/sense.blend"
+BLEND_SE="$REFINED/sense.blend"
 render "$BLEND_SE" "$TEXTURES/sense-radar-active.png" "$OUTPUT/sense-radar-active.png"
 render "$BLEND_SE" "$TEXTURES/sense-motion-map.png" "$OUTPUT/sense-motion-map.png"
 render "$BLEND_SE" "$TEXTURES/sense-gesture-zone.png" "$OUTPUT/sense-gesture-zone.png"
 
-# Brick (basic)
+# Brick (refined)
 echo ""
 echo "─── Brick (3 variants) ───"
-BLEND_BR="$BASIC/brick.blend"
+BLEND_BR="$REFINED/brick.blend"
 render "$BLEND_BR" "$TEXTURES/brick-default.png" "$OUTPUT/brick-default.png"
 render "$BLEND_BR" "$TEXTURES/brick-cable-route.png" "$OUTPUT/brick-cable-route.png"
 render "$BLEND_BR" "$TEXTURES/brick-mounted.png" "$OUTPUT/brick-mounted.png"
 
-# eInk (basic)
+# eInk (refined)
 echo ""
 echo "─── eInk (3 interfaces) ───"
-BLEND_EI="$BASIC/eink.blend"
+BLEND_EI="$REFINED/eink.blend"
 render "$BLEND_EI" "$TEXTURES/eink-daily-quote.png" "$OUTPUT/eink-daily-quote.png"
 render "$BLEND_EI" "$TEXTURES/eink-art-display.png" "$OUTPUT/eink-art-display.png"
 render "$BLEND_EI" "$TEXTURES/eink-schedule.png" "$OUTPUT/eink-schedule.png"
