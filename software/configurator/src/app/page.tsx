@@ -35,6 +35,7 @@ import { HubTiers } from "@/components/hub-tiers";
 import { Thesis } from "@/components/thesis";
 import { Community } from "@/components/community";
 import { Footer } from "@/components/footer";
+import { AnimatedSection, SectionDivider } from "@/components/section-wrapper";
 
 export default function EnhancedHome() {
   return (
@@ -43,16 +44,26 @@ export default function EnhancedHome() {
       <main className="flex-1">
         <EnhancedHero />
         <InteractiveDemo />
-        <HowItWorks />
+        <SectionDivider />
+        <AnimatedSection><HowItWorks /></AnimatedSection>
+        <SectionDivider />
         <ModuleCatalog />
-        <Configurations />
+        <SectionDivider />
+        <AnimatedSection><Configurations /></AnimatedSection>
+        <SectionDivider />
         <InterfaceGallery />
+        <SectionDivider />
         <EnhancedWallConfigurator />
         <Customization />
-        <Scenes />
-        <TheGuide />
-        <HubTiers />
-        <Thesis />
+        <SectionDivider />
+        <AnimatedSection><Scenes /></AnimatedSection>
+        <SectionDivider />
+        <AnimatedSection><TheGuide /></AnimatedSection>
+        <SectionDivider />
+        <AnimatedSection><HubTiers /></AnimatedSection>
+        <SectionDivider />
+        <AnimatedSection><Thesis /></AnimatedSection>
+        <SectionDivider />
         <Community />
       </main>
       <Footer />
