@@ -1,16 +1,42 @@
-# macOS resource forks
+# macOS
 ._*
 .DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
 
 # Python
 __pycache__/
 *.py[cod]
+*$py.class
+.env
+venv/
 .venv/
 *.egg-info/
 
-# Environment
-.env
+# Node
+node_modules/
+.next/
+dist/
 
-# Editor
-.vscode/
-.idea/
+# Build
+build/
+*.o
+*.elf
+*.bin
+*.hex
+
+# Blender backups
+*.blend1
+*.blend2
+
+# Secrets
+.env.local
+.env.production
+credentials.json
+*.pem
+*.key

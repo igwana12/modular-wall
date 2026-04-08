@@ -1,4 +1,4 @@
-# Modular Wall — Paperclip Project Structure
+# mosAIc — Paperclip Project Structure
 
 **Created**: 2026-04-06
 **CEO**: Niko
@@ -15,7 +15,7 @@
 
 **Mission**: Build a modular, AI-orchestrated, snap-together mixed-media wall computer. Open hardware, proprietary software. TARGET: Kickstarter Q4 2026.
 
-**Constraint**: LOCAL EXPERIMENT — virtual development only, use placeholder "[MODULAR]" for branding, no public launches.
+**Constraint**: LOCAL EXPERIMENT — virtual development only, use placeholder "mosAIc" for branding, no public launches.
 
 ---
 
@@ -79,7 +79,7 @@ Create Next.js 15 + Tailwind 4 + shadcn/ui website.
 **Priority**: High | **Status**: Todo | **Owner**: Calliope
 Write compelling copy for: landing page hero, value propositions, how it works, module descriptions (all 8 types), FAQ.
 **Brand voice**: Technical poetry, mythological depth.
-**Placeholder**: Use "[MODULAR]" for product name.
+**Placeholder**: Use "mosAIc" for product name.
 
 #### SACA-62: Design Wall Controller API spec (FastAPI)
 **Priority**: Critical | **Status**: Todo | **Owner**: Prometheus
