@@ -46,6 +46,9 @@ apps/oracle/public/print-assets/
 
 !.gitignore
 
+# Runtime logs
+**/*.log
+
 # Exclude venvs and caches from tracked dirs
 **/.venv/
 **/__pycache__/

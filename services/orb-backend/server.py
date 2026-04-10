@@ -1,10 +1,31 @@
 """Orb Backend -- FastAPI service for Oracle Card readings and Spirit Sphere at :8300."""
 from __future__ import annotations
 
+import asyncio
 import logging
 import os
+import sys
+import time
 from contextlib import asynccontextmanager
 from pathlib import Path
+
+IDLE_TIMEOUT_SECS = int(os.getenv("IDLE_TIMEOUT_SECS", "300"))  # 5 minutes
+_last_activity: float = time.monotonic()
+
+
+def record_activity() -> None:
+    global _last_activity
+    _last_activity = time.monotonic()
+
+
+async def _idle_watchdog() -> None:
+    """Shut down the process if no oracle reads in IDLE_TIMEOUT_SECS seconds."""
+    while True:
+        await asyncio.sleep(60)
+        idle = time.monotonic() - _last_activity
+        if idle >= IDLE_TIMEOUT_SECS:
+            logger.info(f"Idle for {idle:.0f}s — shutting down to save resources")
+            sys.exit(0)
 
 from dotenv import load_dotenv
 
@@ -89,6 +110,7 @@ async def lifespan(app: FastAPI):
         }
 
     logger.info(f"orb-backend ready on :8300 | services: {app.state.service_status}")
+    asyncio.create_task(_idle_watchdog())
     yield
     logger.info("orb-backend shutting down")
 
@@ -224,6 +246,8 @@ async def oracle_reading(deity_id: str, intent: str = "", request: Request = Non
 
     if not intent or len(intent.strip()) < 3:
         raise HTTPException(status_code=400, detail="Intent must be at least 3 characters")
+
+    record_activity()
 
     async def event_generator():
         async for event in stream_reading(deity_config, intent):

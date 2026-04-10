@@ -1,9 +1,8 @@
 """Core reading pipeline orchestration.
 
-Three-tier LLM fallback:
-1. Streaming mode (primary): yields token-by-token from Anthropic Claude
-2. Full mode (secondary): complete text via LLM Router
-3. Ollama mode (offline): local Ollama instance when cloud is unreachable
+Two-tier LLM stack (local-first, no cloud billing):
+1. Streaming mode (primary): yields token-by-token from local Ollama
+2. Full mode (secondary): complete text via LLM Router (local tier only)
 """
 from __future__ import annotations
 
@@ -12,17 +11,15 @@ import logging
 import os
 from typing import AsyncGenerator
 
-import anthropic
 import httpx
 
 logger = logging.getLogger("orb-backend.pipeline")
 
 LLM_ROUTER_URL = os.getenv("LLM_ROUTER_URL", "http://localhost:8100")
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gemma3:12b")
 
 # Reading generation parameters
-READING_MODEL = "claude-sonnet-4-20250514"
 READING_MAX_TOKENS = 1024
 
 
@@ -102,10 +99,7 @@ async def check_ollama() -> bool:
 async def execute_reading_stream(
     deity_config: dict, intent: str, rag_context: str
 ) -> AsyncGenerator[str, None]:
-    """Stream oracle reading tokens with cascading fallback.
-
-    Primary: Anthropic Claude streaming API
-    Fallback: Local Ollama instance (when Anthropic is unreachable)
+    """Stream oracle reading tokens from local Ollama (no cloud billing).
 
     Args:
         deity_config: Full deity JSON config dict
@@ -117,30 +111,12 @@ async def execute_reading_stream(
     """
     full_system, user_message = _build_prompts(deity_config, intent, rag_context)
 
-    client = anthropic.AsyncAnthropic()  # Uses ANTHROPIC_API_KEY env var
-
-    try:
-        async with client.messages.stream(
-            model=READING_MODEL,
-            max_tokens=READING_MAX_TOKENS,
-            system=full_system,
-            messages=[{"role": "user", "content": user_message}],
-        ) as stream:
-            async for text in stream.text_stream:
-                yield text
-        return  # Success -- no fallback needed
-    except (anthropic.APIError, anthropic.APIConnectionError) as e:
-        logger.warning(f"Anthropic unavailable, falling back to Ollama: {e}")
-    except Exception as e:
-        logger.error(f"Unexpected Anthropic error, falling back to Ollama: {e}")
-
-    # Ollama fallback
     try:
         async for token in _ollama_stream(full_system, user_message):
             yield token
     except Exception as e:
-        logger.error(f"Ollama fallback also failed: {e}")
-        yield "The oracle is silent at this time. Both cloud and local models are unreachable."
+        logger.error(f"Ollama stream failed: {e}")
+        yield "The oracle is silent at this time. Local model is unreachable."
 
 
 async def execute_reading_full(
@@ -164,7 +140,7 @@ async def execute_reading_full(
                 json={
                     "message": user_message,
                     "system": full_system,
-                    "tier": "pro",
+                    "tier": "local",
                     "max_tokens": READING_MAX_TOKENS,
                 },
             )
