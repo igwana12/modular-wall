@@ -4,7 +4,8 @@
 
 - [x] **v1.0 The Orb** - Phases 1-8 (shipped 2026-03-31)
 - [x] **v1.1 Claude Code Infrastructure Upgrades** - Phases 10-13 (shipped 2026-04-03)
-- [ ] **v1.2 Smithers-First Architecture + JARVIS Agentic Tools** - Phases 14-16 (in progress)
+- [ ] **v1.2 Smithers-First Architecture + JARVIS Agentic Tools** - Phases 14-18 (in progress)
+- [ ] **v1.3 Stack Upgrade — AI Creator Wiki Implementation** - Phases 19-23 (planned)
 
 ## Phases
 
@@ -299,6 +300,16 @@ Plans:
 - [ ] **Phase 17: R1 Face Integration & Contextual Assets** - Zeus/Athena face expressions, 62 scanned icon deployment, keyword-triggered contextual morphing, visual QA, R1 performance benchmark
 - [ ] **Phase 18: R1 Pipeline Control & Approval Portal** - Voice-triggered Sacred Circuits pipeline execution, real-time status monitoring on R1, approve/reject/redo outputs via voice, Smithers automation route for SC workflows
 
+### v1.3 Stack Upgrade — AI Creator Wiki Implementation (Planned)
+
+**Milestone Goal:** Transform the stack from AI-assisted to AI-native across Smithers, JARVIS, Obsidian, and Sacred Circuits — implementing the 10 highest-impact techniques observed across 19 AI creator workflows.
+
+- [ ] **Phase 19: Token Audit + Stack Hardening** - Surface top token killers, implement context trimming, validate supergemma4 free-tier routing, write SOUL.md, activate morning briefing cron
+- [ ] **Phase 20: God Personas + Oracle Skill + Adviser Routing** - Create 21 god persona files, build Oracle Reading Skill, wire adviser/executor pattern (Opus for readings, fast path untouched)
+- [ ] **Phase 21: Obsidian Write-Back Schema + Oracle Memory** - Define enforced output schema for all agent writes, implement post-reading vault entries
+- [ ] **Phase 22: Oracle Pipeline AI-Native Redesign** - Remove human bottleneck from reading generation, deliver complete reading in <30s via parallel agents
+- [ ] **Phase 23: Parallel Agents + Content Research + Video Pipeline** - Smithers parallel dispatch on Mac Mini, Firecrawl weekly content brief, ElevenLabs/Nano Banana video pipeline
+
 ## Phase Details
 
 ### Phase 14: Routing Foundation + Voice Identity
@@ -326,7 +337,11 @@ Plans:
   3. Attempting to run a shell command not on the allowlist (e.g., `rm -rf`) is refused -- JARVIS voices the rejection rather than executing
   4. If the agentic loop hits 5 iterations without completing, JARVIS speaks a failure summary and exits cleanly (no silent hang, no runaway credit burn)
   5. User hears a voice acknowledgement ("Working on it") before the first tool executes -- silence during a 10-40 second loop is not acceptable
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 15-01-PLAN.md -- Agentic build loop: _BUILD_PATTERN, run_build_loop(), 4 sandboxed tools, ADB reload (AGEN-01, AGEN-02, AGEN-03, AGEN-04, AGEN-05)
+- [ ] 15-02-PLAN.md -- Security boundary unit tests + R1 hardware verification checkpoint (AGEN-02, AGEN-03, AGEN-05)
 
 ### Phase 16: System Health Restoration
 **Goal**: All core services run cleanly with no port conflicts, and their status is visible from a single dashboard
@@ -343,11 +358,11 @@ Plans:
 **Depends on**: Phase 14 (voice routing provides deity identity and mood_tag)
 **Requirements**: FACE-01, FACE-02, ASSET-01, ASSET-02, POLISH-01, PERF-01
 **Success Criteria** (what must be TRUE):
-  1. When Zeus speaks and Claude returns mood_tag "angry", the Zeus head displays BrowFurrow + EyesSquint shape keys with smooth 300ms lerp transition — not just jaw displacement
+  1. When Zeus speaks and Claude returns mood_tag "angry", the Zeus head displays BrowFurrow + EyesSquint shape keys with smooth 300ms lerp transition -- not just jaw displacement
   2. Athena has her own head GLB that activates when Athena voice is speaking, with the same expression system as Zeus
   3. Saying "tell me about the rocket ship" during conversation triggers the rocket-ship-retro wireframe to morph in via the point-cloud transformation engine
   4. All 62 scanned icons + 12 sacred animals + existing catalog entries are in wireframe-catalog.json with keyword triggers, and the morph engine selects contextually during speech
-  5. All 12 sacred animal wireframes render correctly centered in Wire, DOF Lines, and DOF Constellation modes — verified by visual QA
+  5. All 12 sacred animal wireframes render correctly centered in Wire, DOF Lines, and DOF Constellation modes -- verified by visual QA
   6. R1 hardware maintains 30+ FPS with face + morph + particles + rings + constellation all active simultaneously
 **Plans:** 3 plans
 
@@ -357,20 +372,78 @@ Plans:
 - [ ] 17-03-PLAN.md -- FPS benchmark harness + visual QA automation + R1 hardware verification (POLISH-01, PERF-01)
 
 ### Phase 18: R1 Pipeline Control & Approval Portal
-**Goal**: The R1 becomes a voice-driven command center for Sacred Circuits content pipelines — trigger generation, monitor progress, review outputs, and approve/reject/redo from the palm of your hand
+**Goal**: The R1 becomes a voice-driven command center for Sacred Circuits content pipelines -- trigger generation, monitor progress, review outputs, and approve/reject/redo from the palm of your hand
 **Depends on**: Phase 15 (agentic tools provide shell execution + file I/O), Phase 14 (routing classifies pipeline intents)
 **Requirements**: PIPE-01, PIPE-02, PIPE-03, PIPE-04
 **Success Criteria** (what must be TRUE):
-  1. Saying "Start a Sacred Circuits pipeline for Apollo" triggers the SC automation scripts on Smithers and JARVIS voices "Apollo pipeline started — generating 3 assets"
+  1. Saying "Start a Sacred Circuits pipeline for Apollo" triggers the SC automation scripts on Smithers and JARVIS voices "Apollo pipeline started -- generating 3 assets"
   2. Saying "show me the status" displays pipeline progress on R1 (queued/generating/complete/failed) with voice summary
-  3. When assets complete, R1 shows preview images behind the orb and JARVIS describes each — user says "approve the first two, redo the third with more gold" and pipeline continues
+  3. When assets complete, R1 shows preview images behind the orb and JARVIS describes each -- user says "approve the first two, redo the third with more gold" and pipeline continues
   4. Pipeline outputs are saved to Obsidian and posted to the configured Slack channel with approval status
+**Plans**: TBD
+
+---
+
+### Phase 19: Token Audit + Stack Hardening
+**Goal**: Token costs are measured and trimmed, supergemma4 is the free-tier default, and the agent stack has a behavioral spine — SOUL.md and morning briefing active
+**Depends on**: Nothing (first phase of v1.3, independent infrastructure work)
+**Requirements**: COST-01, COST-02, COST-04, BEHAV-01, BEHAV-04
+**Success Criteria** (what must be TRUE):
+  1. A report identifies the top 3 token killers across JARVIS/Smithers from the last 7 days, with per-request averages and total cost attribution
+  2. Context trimming is applied to the top killers — measurable reduction in tokens per request verified by before/after log comparison
+  3. supergemma4-26b-mlx routes CODING, REASONING, GENERAL, and DATA tasks via port 8080 — confirmed by Smithers routing log
+  4. `~/.claude/SOUL.md` exists with behavioral specs for JARVIS voice persona, Smithers orchestration principles, and Sacred Circuits reading tone
+  5. At 7AM Smithers cron fires, compiles overnight outputs, and writes a formatted briefing to `niko-obsidian-vault/AGENT_OUTPUT_SHELF/morning-briefing/` — verified by file timestamp
+**Plans**: TBD
+
+### Phase 20: God Personas + Oracle Skill + Adviser Routing
+**Goal**: Every god has a voice and a SKILL.md makes the full Oracle reading chain callable — with Opus doing the heavy lifting and the fast path completely untouched
+**Depends on**: Phase 19 (SOUL.md defines the behavioral frame that god personas extend)
+**Requirements**: BEHAV-02, BEHAV-03, COST-03
+**Success Criteria** (what must be TRUE):
+  1. 21 persona files exist at `niko-obsidian-vault/sacred-circuits/souls/[god-name].md` — each specifies rhetorical style, mythological frame, and at least 3 forbidden responses
+  2. `~/.claude/skills/oracle-reading/SKILL.md` exists and is callable by JARVIS — executing it runs the full Sacred Circuits reading chain and returns a structured result with god, querent theme, and narrative
+  3. Opus routes for Oracle readings and complex multi-step tasks — confirmed by router log showing model selection per request type
+  4. Haiku fast path response time is unchanged — before/after latency comparison shows zero regression (target: <2.5s)
+**Plans**: TBD
+
+### Phase 21: Obsidian Write-Back Schema + Oracle Memory
+**Goal**: Every Oracle reading writes a structured vault entry — schema enforced, unstructured dumps blocked
+**Depends on**: Phase 20 (Oracle Skill provides the structured output to write back)
+**Requirements**: MEM-01, MEM-02
+**Success Criteria** (what must be TRUE):
+  1. After an Oracle reading completes, a structured entry appears in `niko-obsidian-vault/sacred-circuits/readings/` containing god name, querent theme, key insight, and date — written by JARVIS without manual intervention
+  2. The output schema is defined and enforced for all agent write-back operations — attempting to write an unstructured vault entry is rejected with a logged error
+  3. Schema validation can be run as a standalone check against any existing vault entry in the readings/ directory
+**Plans**: TBD
+
+### Phase 22: Oracle Pipeline AI-Native Redesign
+**Goal**: A complete Oracle reading assembles in under 30 seconds — AI handles the full draft, human blesses only
+**Depends on**: Phase 20 (Oracle Skill), Phase 21 (write-back schema — readings must persist correctly after redesign)
+**Requirements**: PIPE-05, PIPE-06
+**Success Criteria** (what must be TRUE):
+  1. QR scan → querent data → god selection → parallel agents → assembled reading completes in under 30 seconds, measured end-to-end on production infrastructure
+  2. Human is not in the generation loop — AI produces a complete reading draft without requiring manual input or approval before delivery
+  3. Human review-and-bless step exists as an optional post-generation action — not a gate on delivery
+  4. Fallback path exists: if parallel agents fail, reading degrades gracefully to single-agent sequential (no silent hang)
+**Plans**: TBD
+
+### Phase 23: Parallel Agents + Content Research + Video Pipeline
+**Goal**: Smithers runs two agents in parallel, weekly content intelligence flows into Obsidian, and Sacred Circuits shorts are generated end-to-end
+**Depends on**: Phase 22 (parallel agent pattern proved in Oracle pipeline), Phase 21 (write-back schema governs content brief storage)
+**Requirements**: PIPE-07, PIPE-08, MEM-03
+**Success Criteria** (what must be TRUE):
+  1. Smithers dispatches research agent + writing agent concurrently on Mac Mini — both run simultaneously, confirmed by overlapping timestamps in task logs
+  2. Weekly Firecrawl pipeline scrapes mythology/AI content from YouTube, X, and Reddit — outputs `content-brief.md` to `niko-obsidian-vault/sacred-circuits/content-briefs/` by end of each week
+  3. Sacred Circuits video pipeline produces a review-ready clip from script → ElevenLabs god voice → Nano Banana visual → assembled short — no manual audio or video stitching required
+  4. Parallel agent execution does not exceed Mac Mini resource limits — CPU and memory stay within acceptable bounds during concurrent dispatch
 **Plans**: TBD
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order. Phase 16 is independent and could run in parallel with 14-15. Phase 17 can run in parallel with 15-16. Phase 18 depends on Phase 15.
+v1.2: Phase 16 is independent and can run parallel to 14-15. Phase 17 can run parallel to 15-16. Phase 18 depends on Phase 15.
+v1.3: Phases 19-21 are sequential (each depends on prior). Phase 22 depends on 20+21. Phase 23 depends on 22+21.
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -379,7 +452,12 @@ Phases execute in numeric order. Phase 16 is independent and could run in parall
 | 12. Session Mobility | v1.1 | 1/1 | Complete | 2026-04-03 |
 | 13. Visual QA Hook | v1.1 | 2/2 | Complete | 2026-04-03 |
 | 14. Routing Foundation + Voice Identity | v1.2 | 2/2 | Complete | 2026-04-04 |
-| 15. JARVIS Agentic Tools | v1.2 | 0/0 | Not started | - |
+| 15. JARVIS Agentic Tools | v1.2 | 0/2 | Planned | - |
 | 16. System Health Restoration | v1.2 | 0/0 | Not started | - |
 | 17. R1 Face Integration & Contextual Assets | v1.2 | 0/3 | Planned | - |
 | 18. R1 Pipeline Control & Approval Portal | v1.2 | 0/0 | Not started | - |
+| 19. Token Audit + Stack Hardening | v1.3 | 0/0 | Not started | - |
+| 20. God Personas + Oracle Skill + Adviser Routing | v1.3 | 0/0 | Not started | - |
+| 21. Obsidian Write-Back Schema + Oracle Memory | v1.3 | 0/0 | Not started | - |
+| 22. Oracle Pipeline AI-Native Redesign | v1.3 | 0/0 | Not started | - |
+| 23. Parallel Agents + Content Research + Video Pipeline | v1.3 | 0/0 | Not started | - |
