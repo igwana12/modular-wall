@@ -1,58 +1,42 @@
-# Only track project files
-*
+# macOS
+._*
+.DS_Store
+Thumbs.db
 
-# Planning directory
-!.planning/
-!.planning/**
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
 
-# Oracle Cards web app
-!apps/
-!apps/oracle/
-!apps/oracle/**
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+venv/
+.venv/
+*.egg-info/
 
-# Orb backend service
-!services/
-!services/orb-backend/
-!services/orb-backend/**
+# Node
+node_modules/
+.next/
+dist/
 
-# Launchd plist
-!Library/
-!Library/LaunchAgents/
-!Library/LaunchAgents/com.claw.orb-backend.plist
+# Build
+build/
+*.o
+*.elf
+*.bin
+*.hex
 
-!package.json
+# Blender backups
+*.blend1
+*.blend2
 
-# QR code generation scripts
-!scripts/
-!scripts/**
-
-# Campaign materials (manufacturing, shipping, video)
-!campaign/
-!campaign/**
-
-# POV Globe firmware
-!firmware/
-!firmware/**
-
-# Generated assets (QR codes, print files)
-!assets/
-!assets/**
-
-# Exclude large generated card PNGs (regenerate with scripts/generate-card-designs.ts)
-assets/card-designs/*.png
-
-# Exclude print-assets staging images
-apps/oracle/public/print-assets/
-
-!.gitignore
-
-# Runtime logs
-**/*.log
-
-# Exclude venvs and caches from tracked dirs
-**/.venv/
-**/__pycache__/
-**/*.pyc
-**/node_modules/
-**/.env
-firmware/pov-globe/image_data_preview.png
+# Secrets
+.env.local
+.env.production
+credentials.json
+*.pem
+*.key

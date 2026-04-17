@@ -1,0 +1,867 @@
+openapi: 3.0.3
+info:
+  title: mosAIc Wall Controller Agent API
+  description: |
+    REST API for coordinating mosAIc modular wall modules.
+    Handles module discovery, content routing, scene management, and real-time updates.
+  version: 1.0.0
+  contact:
+    name: Sacred Circuits
+    url: https://github.com/igwana12/modular-wall
+
+servers:
+  - url: http://hub.local:8200/api/wall
+    description: Local development server
+  - url: http://localhost:8200/api/wall
+    description: Localhost
+
+tags:
+  - name: modules
+    description: Module discovery, registration, and management
+  - name: content
+    description: Content routing to modules
+  - name: scenes
+    description: Scene and preset management
+  - name: widgets
+    description: Three.js widget serving
+  - name: data
+    description: Data sources (weather, time, notifications, etc.)
+  - name: websocket
+    description: Real-time WebSocket subscriptions
+  - name: system
+    description: System health and configuration
+
+paths:
+  /modules:
+    get:
+      tags: [modules]
+      summary: List all modules
+      operationId: listModules
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [Screen-S, Screen-M, Glow, Pixel, Voice, Round, Mirror, Holo, Hub, Controller, eInk]
+          description: Filter by module type
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, idle, error, offline]
+          description: Filter by status
+      responses:
+        '200':
+          description: List of modules
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  modules:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Module'
+                  totalModules:
+                    type: integer
+                  activeModules:
+                    type: integer
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /modules/{moduleId}:
+    get:
+      tags: [modules]
+      summary: Get module details
+      operationId: getModule
+      parameters:
+        - name: moduleId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Module identifier (e.g., screen-s-01)
+      responses:
+        '200':
+          description: Module details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleDetailed'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /modules/{moduleId}/position:
+    put:
+      tags: [modules]
+      summary: Update module position
+      operationId: updateModulePosition
+      parameters:
+        - name: moduleId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                x:
+                  type: integer
+                y:
+                  type: integer
+              required: [x, y]
+      responses:
+        '200':
+          description: Position updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  position:
+                    $ref: '#/components/schemas/Position'
+                  updated:
+                    type: string
+                    format: date-time
+
+  /modules/{moduleId}/reboot:
+    post:
+      tags: [modules]
+      summary: Reboot a module
+      operationId: rebootModule
+      parameters:
+        - name: moduleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '202':
+          description: Reboot command sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  estimatedDowntime:
+                    type: integer
+                    description: Estimated downtime in seconds
+
+  /modules/{moduleId}/content:
+    post:
+      tags: [content]
+      summary: Push content to a module
+      operationId: pushContent
+      parameters:
+        - name: moduleId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModuleContent'
+      responses:
+        '200':
+          description: Content updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  moduleId:
+                    type: string
+                  contentType:
+                    type: string
+                  timestamp:
+                    type: string
+                    format: date-time
+    delete:
+      tags: [content]
+      summary: Clear module content
+      operationId: clearContent
+      parameters:
+        - name: moduleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Content cleared
+
+  /scenes:
+    get:
+      tags: [scenes]
+      summary: List all scenes
+      operationId: listScenes
+      responses:
+        '200':
+          description: List of scenes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scenes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Scene'
+                  activeScene:
+                    type: string
+                  timestamp:
+                    type: string
+                    format: date-time
+    post:
+      tags: [scenes]
+      summary: Create a new scene
+      operationId: createScene
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SceneCreate'
+      responses:
+        '201':
+          description: Scene created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+
+  /scenes/{sceneId}:
+    get:
+      tags: [scenes]
+      summary: Get scene details
+      operationId: getScene
+      parameters:
+        - name: sceneId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Scene details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SceneDetailed'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags: [scenes]
+      summary: Update a scene
+      operationId: updateScene
+      parameters:
+        - name: sceneId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SceneUpdate'
+      responses:
+        '200':
+          description: Scene updated
+    delete:
+      tags: [scenes]
+      summary: Delete a scene
+      operationId: deleteScene
+      parameters:
+        - name: sceneId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Scene deleted
+
+  /scenes/{sceneId}/activate:
+    post:
+      tags: [scenes]
+      summary: Activate a scene
+      operationId: activateScene
+      parameters:
+        - name: sceneId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: transition
+          in: query
+          schema:
+            type: number
+            default: 2.0
+          description: Transition duration in seconds
+      responses:
+        '200':
+          description: Scene activated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  sceneId:
+                    type: string
+                  affectedModules:
+                    type: array
+                    items:
+                      type: string
+                  transition:
+                    type: number
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /widgets/{widgetName}:
+    get:
+      tags: [widgets]
+      summary: Serve a Three.js widget
+      operationId: serveWidget
+      parameters:
+        - name: widgetName
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Widget filename (e.g., weather.html)
+      responses:
+        '200':
+          description: Widget HTML content
+          content:
+            text/html:
+              schema:
+                type: string
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /widgets/{widgetName}/preview:
+    get:
+      tags: [widgets]
+      summary: Get widget preview image
+      operationId: getWidgetPreview
+      parameters:
+        - name: widgetName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Widget preview image
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+
+  /weather/current:
+    get:
+      tags: [data]
+      summary: Get current weather data
+      operationId: getCurrentWeather
+      responses:
+        '200':
+          description: Weather data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Weather'
+
+  /time:
+    get:
+      tags: [data]
+      summary: Get current time data
+      operationId: getCurrentTime
+      responses:
+        '200':
+          description: Time data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Time'
+
+  /notifications:
+    get:
+      tags: [data]
+      summary: Get active notifications
+      operationId: getNotifications
+      responses:
+        '200':
+          description: Notifications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notifications'
+
+  /audio/stream:
+    get:
+      tags: [data]
+      summary: Get audio stream URL
+      operationId: getAudioStream
+      responses:
+        '200':
+          description: Audio stream info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  streamUrl:
+                    type: string
+                  format:
+                    type: string
+                  sampleRate:
+                    type: integer
+                  channels:
+                    type: integer
+
+  /health/stats:
+    get:
+      tags: [data]
+      summary: Get health/fitness stats
+      operationId: getHealthStats
+      responses:
+        '200':
+          description: Health stats
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthStats'
+
+  /health:
+    get:
+      tags: [system]
+      summary: Get system health status
+      operationId: getSystemHealth
+      responses:
+        '200':
+          description: System health
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemHealth'
+
+  /logs:
+    get:
+      tags: [system]
+      summary: Get recent system logs
+      operationId: getLogs
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 100
+            maximum: 1000
+        - name: level
+          in: query
+          schema:
+            type: string
+            enum: [debug, info, warning, error]
+        - name: moduleId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: System logs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LogEntry'
+                  totalLogs:
+                    type: integer
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /config:
+    get:
+      tags: [system]
+      summary: Get Wall Controller configuration
+      operationId: getConfig
+      responses:
+        '200':
+          description: Configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Config'
+    put:
+      tags: [system]
+      summary: Update configuration
+      operationId: updateConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Config'
+      responses:
+        '200':
+          description: Configuration updated
+
+components:
+  schemas:
+    Module:
+      type: object
+      properties:
+        id:
+          type: string
+          example: screen-s-01
+        type:
+          type: string
+          enum: [Screen-S, Screen-M, Glow, Pixel, Voice, Round, Mirror, Holo, Hub, Controller, eInk]
+        status:
+          type: string
+          enum: [active, idle, error, offline]
+        position:
+          $ref: '#/components/schemas/Position'
+        ip:
+          type: string
+        firmware:
+          type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+        currentContent:
+          type: string
+        lastSeen:
+          type: string
+          format: date-time
+
+    ModuleDetailed:
+      allOf:
+        - $ref: '#/components/schemas/Module'
+        - type: object
+          properties:
+            mac:
+              type: string
+            hardware:
+              type: object
+            stats:
+              type: object
+              properties:
+                uptime:
+                  type: integer
+                temperature:
+                  type: number
+                freeHeap:
+                  type: integer
+                wifiRssi:
+                  type: integer
+                frameRate:
+                  type: integer
+            config:
+              type: object
+              properties:
+                brightness:
+                  type: integer
+                sleepTimeout:
+                  type: integer
+                orientation:
+                  type: integer
+
+    Position:
+      type: object
+      properties:
+        x:
+          type: integer
+        y:
+          type: integer
+      required: [x, y]
+
+    ModuleContent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [widget, pattern, visualizer, static]
+        url:
+          type: string
+        pattern:
+          type: string
+        params:
+          type: object
+          additionalProperties: true
+        refreshRate:
+          type: integer
+        brightness:
+          type: integer
+          minimum: 0
+          maximum: 100
+
+    Scene:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        modules:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+        lastUsed:
+          type: string
+          format: date-time
+        usageCount:
+          type: integer
+
+    SceneDetailed:
+      allOf:
+        - $ref: '#/components/schemas/Scene'
+        - type: object
+          properties:
+            config:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/ModuleContent'
+            triggers:
+              type: array
+              items:
+                type: object
+            transition:
+              type: object
+              properties:
+                duration:
+                  type: number
+                easing:
+                  type: string
+
+    SceneCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        config:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ModuleContent'
+      required: [name, config]
+
+    SceneUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        config:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/ModuleContent'
+
+    Weather:
+      type: object
+      properties:
+        temp:
+          type: number
+        tempUnit:
+          type: string
+        condition:
+          type: string
+        icon:
+          type: string
+        location:
+          type: string
+        humidity:
+          type: number
+        windSpeed:
+          type: number
+        windDirection:
+          type: string
+        forecast:
+          type: array
+          items:
+            type: object
+        lastUpdated:
+          type: string
+          format: date-time
+
+    Time:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        timezone:
+          type: string
+        localTime:
+          type: string
+        date:
+          type: string
+        dayOfWeek:
+          type: string
+        epoch:
+          type: integer
+
+    Notifications:
+      type: object
+      properties:
+        notifications:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              type:
+                type: string
+              title:
+                type: string
+              body:
+                type: string
+              icon:
+                type: string
+              timestamp:
+                type: string
+                format: date-time
+              priority:
+                type: string
+        unreadCount:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+
+    HealthStats:
+      type: object
+      properties:
+        steps:
+          type: integer
+        stepGoal:
+          type: integer
+        calories:
+          type: integer
+        activeMinutes:
+          type: integer
+        heartRate:
+          type: integer
+        heartRateZone:
+          type: string
+        sleep:
+          type: object
+        lastSync:
+          type: string
+          format: date-time
+
+    SystemHealth:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+        version:
+          type: string
+        uptime:
+          type: integer
+        modules:
+          type: object
+        system:
+          type: object
+        services:
+          type: object
+        timestamp:
+          type: string
+          format: date-time
+
+    LogEntry:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        level:
+          type: string
+          enum: [debug, info, warning, error]
+        moduleId:
+          type: string
+        message:
+          type: string
+        metadata:
+          type: object
+
+    Config:
+      type: object
+      properties:
+        discovery:
+          type: object
+        scenes:
+          type: object
+        modules:
+          type: object
+        network:
+          type: object
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            timestamp:
+              type: string
+              format: date-time
+
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error:
+              code: MODULE_NOT_FOUND
+              message: Module with ID 'screen-s-99' does not exist
+              timestamp: '2026-04-06T10:00:00Z'

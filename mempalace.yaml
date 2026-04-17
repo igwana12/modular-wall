@@ -1,0 +1,35 @@
+wing: modular_wall
+rooms:
+- name: documentation
+  description: Files from docs/
+  keywords:
+  - documentation
+  - docs
+- name: software
+  description: Files from software/
+  keywords:
+  - software
+  - software
+- name: prototypes
+  description: Files from prototypes/
+  keywords:
+  - prototypes
+  - prototypes
+- name: scripts
+  description: Files from scripts/
+  keywords:
+  - scripts
+  - scripts
+- name: design
+  description: Files from assets/
+  keywords:
+  - design
+  - assets
+- name: research
+  description: Files from research/
+  keywords:
+  - research
+  - research
+- name: general
+  description: Files that don't fit other rooms
+  keywords: []

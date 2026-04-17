@@ -1,0 +1,557 @@
+name,title,url,category,subcategory,parent_class,related_apis,example_count,has_examples,project_tags,production_ready,learning_value,blender_dep,priority_score,domain_tags,notes
+Audio,Audio,https://threejs.org/docs/#api/en/audio/Audio,Reference,Audio,,AudioListener|AudioAnalyser|PositionalAudio,4,true,Pantheon,1.0,1.0,0.1,0.98,audio,
+AudioListener,Audio Listener,https://threejs.org/docs/#api/en/audio/AudioListener,Reference,Audio,,,4,true,Pantheon,1.0,1.0,0.1,0.98,audio,
+PerspectiveCamera,Perspective Camera,https://threejs.org/docs/#api/en/cameras/PerspectiveCamera,Reference,Cameras,Camera,OrthographicCamera|CubeCamera|Camera,6,true,Constellation,1.0,1.0,0.1,0.98,rendering,
+BufferGeometry,Buffer Geometry,https://threejs.org/docs/#api/en/core/BufferGeometry,Reference,Core,,BufferAttribute|Mesh|Material,12,true,Orbs,1.0,1.0,0.1,0.98,geometry,
+Object3D,Object3 D,https://threejs.org/docs/#api/en/core/Object3D,Reference,Core,,Scene|Mesh|Group,18,true,Orbs,1.0,1.0,0.1,0.98,loading,
+Raycaster,Raycaster,https://threejs.org/docs/#api/en/core/Raycaster,Reference,Core,,Object3D|Camera|Vector2,11,true,Ritual,1.0,1.0,0.1,0.98,interaction|math,
+BoxGeometry,Box Geometry,https://threejs.org/docs/#api/en/geometries/BoxGeometry,Reference,Geometries,BufferGeometry,,18,true,Orbs,1.0,1.0,0.1,0.98,geometry,
+PlaneGeometry,Plane Geometry,https://threejs.org/docs/#api/en/geometries/PlaneGeometry,Reference,Geometries,BufferGeometry,,18,true,Constellation,1.0,1.0,0.1,0.98,geometry|math,
+SphereGeometry,Sphere Geometry,https://threejs.org/docs/#api/en/geometries/SphereGeometry,Reference,Geometries,BufferGeometry,,18,true,Orbs,1.0,1.0,0.1,0.98,geometry|math,
+AmbientLight,Ambient Light,https://threejs.org/docs/#api/en/lights/AmbientLight,Reference,Lights,Light,DirectionalLight|HemisphereLight,21,true,Orbs,1.0,1.0,0.1,0.98,lighting,
+DirectionalLight,Directional Light,https://threejs.org/docs/#api/en/lights/DirectionalLight,Reference,Lights,Light,DirectionalLightShadow|AmbientLight|PointLight,21,true,Orbs,1.0,1.0,0.1,0.98,lighting,
+PointLight,Point Light,https://threejs.org/docs/#api/en/lights/PointLight,Reference,Lights,Light,PointLightShadow|DirectionalLight|SpotLight,21,true,Orbs,1.0,1.0,0.1,0.98,lighting,
+SpotLight,Spot Light,https://threejs.org/docs/#api/en/lights/SpotLight,Reference,Lights,Light,SpotLightShadow|PointLight|DirectionalLight,21,true,Orbs,1.0,1.0,0.1,0.98,lighting,
+TextureLoader,Texture Loader,https://threejs.org/docs/#api/en/loaders/TextureLoader,Reference,Loaders,Loader,,1,true,Wall,1.0,1.0,0.1,0.98,loading|textures,
+MeshPhysicalMaterial,Mesh Physical Material,https://threejs.org/docs/#api/en/materials/MeshPhysicalMaterial,Reference,Materials,MeshStandardMaterial,MeshStandardMaterial|Texture|PMREMGenerator,22,true,Orbs,1.0,1.0,0.1,0.98,geometry|materials,
+MeshStandardMaterial,Mesh Standard Material,https://threejs.org/docs/#api/en/materials/MeshStandardMaterial,Reference,Materials,Material,MeshPhysicalMaterial|MeshBasicMaterial|Texture,22,true,Orbs|Ritual,1.0,1.0,0.1,0.98,geometry|materials|xr,
+PointsMaterial,Points Material,https://threejs.org/docs/#api/en/materials/PointsMaterial,Reference,Materials,Material,,22,true,Constellation|Orbs,1.0,1.0,0.1,0.98,lighting|materials|particles,
+ShaderMaterial,Shader Material,https://threejs.org/docs/#api/en/materials/ShaderMaterial,Reference,Materials,Material,RawShaderMaterial|Material|WebGLRenderer,22,true,Orbs,1.0,1.0,0.1,0.98,materials|rendering,
+Color,Color,https://threejs.org/docs/#api/en/math/Color,Reference,Math,,Material|Light|Vector3,0,false,Orbs,1.0,1.0,0.1,0.98,math,
+Vector3,Vector3,https://threejs.org/docs/#api/en/math/Vector3,Reference,Math,,Vector2|Vector4|Matrix4,0,false,Orbs,1.0,1.0,0.1,0.98,math,
+InstancedMesh,Instanced Mesh,https://threejs.org/docs/#api/en/objects/InstancedMesh,Reference,Objects,Mesh,Mesh|BatchedMesh|BufferGeometry,14,true,Orbs,1.0,1.0,0.1,0.98,geometry,
+Line,Line,https://threejs.org/docs/#api/en/objects/Line,Reference,Objects,Object3D,LineBasicMaterial|LineSegments|BufferGeometry,8,true,Constellation,1.0,1.0,0.1,0.98,geometry,
+Mesh,Mesh,https://threejs.org/docs/#api/en/objects/Mesh,Reference,Objects,Object3D,BufferGeometry|Material|Object3D,18,true,Orbs,1.0,1.0,0.1,0.98,geometry,
+Points,Points,https://threejs.org/docs/#api/en/objects/Points,Reference,Objects,Object3D,PointsMaterial|BufferGeometry|Sprite,8,true,Constellation|Orbs,1.0,1.0,0.1,0.98,geometry|lighting|particles,
+Sprite,Sprite,https://threejs.org/docs/#api/en/objects/Sprite,Reference,Objects,Object3D,SpriteMaterial|Points|Object3D,5,true,Orbs,1.0,1.0,0.1,0.98,geometry|particles,
+Scene,Scene,https://threejs.org/docs/#api/en/scenes/Scene,Reference,Scenes,Object3D,Object3D|Fog|FogExp2,18,true,Orbs,1.0,1.0,0.1,0.98,rendering,
+PostProcessing,Post Processing,https://threejs.org/docs/#api/en/renderers/common/PostProcessing,Reference,Renderers,,EffectComposer|BloomNode|GTAONode,19,true,Orbs,1.0,1.0,0.1,0.98,postprocessing|rendering,
+WebGLRenderer,Web G L Renderer,https://threejs.org/docs/#api/en/renderers/WebGLRenderer,Reference,Renderers,Renderer,WebGPURenderer|Scene|Camera,18,true,Orbs,1.0,1.0,0.1,0.98,rendering,
+WebGPURenderer,Web G P U Renderer,https://threejs.org/docs/#api/en/renderers/WebGPURenderer,Reference,Renderers,Renderer,WebGLRenderer|Scene|Camera,18,true,Orbs,1.0,1.0,0.1,0.98,rendering,WebGPU API - experimental
+OrbitControls,Orbit Controls,https://threejs.org/docs/#examples/en/controls/OrbitControls,Addons,Controls,Controls,MapControls|TrackballControls|Camera,8,true,Ritual,1.0,1.0,0.1,0.98,interaction,Addon/Example class
+EffectComposer,Effect Composer,https://threejs.org/docs/#examples/en/postprocessing/EffectComposer,Addons,Postprocessing,,RenderPass|ShaderPass|PostProcessing,19,true,Orbs,1.0,1.0,0.1,0.98,postprocessing,Addon/Example class
+UnrealBloomPass,Unreal Bloom Pass,https://threejs.org/docs/#examples/en/postprocessing/UnrealBloomPass,Addons,Postprocessing,Pass,EffectComposer|RenderPass|BloomNode,19,true,Orbs,1.0,1.0,0.1,0.98,postprocessing,Addon/Example class
+KeyframeTrack,Keyframe Track,https://threejs.org/docs/#api/en/animation/KeyframeTrack,Reference,Animation,,,16,true,Pantheon,1.0,0.7,0.1,0.89,animation,
+Camera,Camera,https://threejs.org/docs/#api/en/cameras/Camera,Reference,Cameras,,,6,true,Constellation,1.0,0.7,0.1,0.89,rendering,
+OrthographicCamera,Orthographic Camera,https://threejs.org/docs/#api/en/cameras/OrthographicCamera,Reference,Cameras,Camera,PerspectiveCamera|Camera,6,true,Constellation,1.0,0.7,0.1,0.89,rendering,
+BufferAttribute,Buffer Attribute,https://threejs.org/docs/#api/en/core/BufferAttribute,Reference,Core,,,12,true,Orbs,1.0,0.7,0.1,0.89,geometry,
+CylinderGeometry,Cylinder Geometry,https://threejs.org/docs/#api/en/geometries/CylinderGeometry,Reference,Geometries,BufferGeometry,,18,true,Orbs,1.0,0.7,0.1,0.89,geometry,
+HemisphereLight,Hemisphere Light,https://threejs.org/docs/#api/en/lights/HemisphereLight,Reference,Lights,Light,,21,true,Orbs,1.0,0.7,0.1,0.89,lighting|math,
+Light,Light,https://threejs.org/docs/#api/en/lights/Light,Reference,Lights,Object3D,,21,true,Orbs,1.0,0.7,0.1,0.89,lighting,
+RectAreaLight,Rect Area Light,https://threejs.org/docs/#api/en/lights/RectAreaLight,Reference,Lights,Light,,21,true,Ritual,1.0,0.7,0.1,0.89,lighting|xr,
+Loader,Loader,https://threejs.org/docs/#api/en/loaders/Loader,Reference,Loaders,,,1,true,Orbs,1.0,0.7,0.1,0.89,loading,
+LineBasicMaterial,Line Basic Material,https://threejs.org/docs/#api/en/materials/LineBasicMaterial,Reference,Materials,Material,,22,true,Constellation|Orbs,1.0,0.7,0.1,0.89,materials,
+Material,Material,https://threejs.org/docs/#api/en/materials/Material,Reference,Materials,,,22,true,Orbs,1.0,0.7,0.1,0.89,materials,
+MeshBasicMaterial,Mesh Basic Material,https://threejs.org/docs/#api/en/materials/MeshBasicMaterial,Reference,Materials,Material,,22,true,Orbs,1.0,0.7,0.1,0.89,geometry|materials,
+MeshLambertMaterial,Mesh Lambert Material,https://threejs.org/docs/#api/en/materials/MeshLambertMaterial,Reference,Materials,Material,,22,true,Orbs,1.0,0.7,0.1,0.89,geometry|materials,
+MeshMatcapMaterial,Mesh Matcap Material,https://threejs.org/docs/#api/en/materials/MeshMatcapMaterial,Reference,Materials,Material,,22,true,Orbs,1.0,0.7,0.1,0.89,geometry|materials,
+MeshPhongMaterial,Mesh Phong Material,https://threejs.org/docs/#api/en/materials/MeshPhongMaterial,Reference,Materials,Material,,22,true,Orbs,1.0,0.7,0.1,0.89,geometry|materials,
+MeshToonMaterial,Mesh Toon Material,https://threejs.org/docs/#api/en/materials/MeshToonMaterial,Reference,Materials,Material,,22,true,Orbs,1.0,0.7,0.1,0.89,geometry|materials,
+ShadowMaterial,Shadow Material,https://threejs.org/docs/#api/en/materials/ShadowMaterial,Reference,Materials,Material,,22,true,Orbs,1.0,0.7,0.1,0.89,lighting|materials,
+SpriteMaterial,Sprite Material,https://threejs.org/docs/#api/en/materials/SpriteMaterial,Reference,Materials,Material,,22,true,Orbs,1.0,0.7,0.1,0.89,materials|particles,
+BatchedMesh,Batched Mesh,https://threejs.org/docs/#api/en/objects/BatchedMesh,Reference,Objects,Mesh,InstancedMesh|Mesh|BufferGeometry,2,true,Orbs,1.0,0.7,0.1,0.89,geometry,
+LineSegments,Line Segments,https://threejs.org/docs/#api/en/objects/LineSegments,Reference,Objects,Line,,8,true,Constellation,1.0,0.7,0.1,0.89,geometry,
+Fog,Fog,https://threejs.org/docs/#api/en/scenes/Fog,Reference,Scenes,,,5,true,Orbs,1.0,0.7,0.1,0.89,rendering,
+FogExp2,Fog Exp2,https://threejs.org/docs/#api/en/scenes/FogExp2,Reference,Scenes,Fog,,5,true,Orbs,1.0,0.7,0.1,0.89,rendering,
+CubeTexture,Cube Texture,https://threejs.org/docs/#api/en/textures/CubeTexture,Reference,Textures,Texture,,12,true,Wall,1.0,0.7,0.1,0.89,textures,
+DataTexture,Data Texture,https://threejs.org/docs/#api/en/textures/DataTexture,Reference,Textures,Texture,,13,true,Wall,1.0,0.7,0.1,0.89,textures,
+DepthTexture,Depth Texture,https://threejs.org/docs/#api/en/textures/DepthTexture,Reference,Textures,Texture,,13,true,Wall,1.0,0.7,0.1,0.89,materials|textures,
+Texture,Texture,https://threejs.org/docs/#api/en/textures/Texture,Reference,Textures,,TextureLoader|Material|DataTexture,13,true,Wall,1.0,0.7,0.1,0.89,textures,
+VideoTexture,Video Texture,https://threejs.org/docs/#api/en/textures/VideoTexture,Reference,Textures,Texture,,13,true,Wall,1.0,0.7,0.1,0.89,textures,
+RenderPass,Render Pass,https://threejs.org/docs/#examples/en/postprocessing/RenderPass,Addons,Postprocessing,Pass,,19,true,Orbs,1.0,0.7,0.1,0.89,postprocessing|rendering,Addon/Example class
+SSAOPass,S S A O Pass,https://threejs.org/docs/#examples/en/postprocessing/SSAOPass,Addons,Postprocessing,Pass,,19,true,Orbs,1.0,0.7,0.1,0.89,postprocessing,Addon/Example class
+FXAAPass,F X A A Pass,https://threejs.org/docs/#examples/en/postprocessing/FXAAPass,Addons,Postprocessing,Pass,,19,true,Orbs,1.0,0.7,0.1,0.89,postprocessing,Addon/Example class
+CSS3DRenderer,C S S3 D Renderer,https://threejs.org/docs/#examples/en/renderers/CSS3DRenderer,Addons,Renderers,,CSS3DObject|CSS2DRenderer|WebGLRenderer,7,true,Wall,0.7,1.0,0.1,0.86,css3d|rendering,Addon/Example class
+BloomNode,Bloom Node,https://threejs.org/docs/#examples/en/tsl/BloomNode,Addons,TSL,,PostProcessing|UnrealBloomPass|GaussianBlurNode,19,true,Orbs,0.7,1.0,0.1,0.86,postprocessing,Three.js Shader Language node
+BufferGeometryUtils,BufferGeometryUtils,https://threejs.org/docs/#examples/en/utils/BufferGeometryUtils,Addons,Utils,,,0,false,Pantheon|Orbs|Constellation,0.9,0.7,0.1,0.85,utils,Merge/optimize/transform BufferGeometry instances
+AnimationMixer,Animation Mixer,https://threejs.org/docs/#api/en/animation/AnimationMixer,Reference,Animation,,AnimationClip|AnimationAction|Object3D,16,true,Pantheon,1.0,1.0,0.8,0.84,animation,
+GLTFLoader,G L T F Loader,https://threejs.org/docs/#examples/en/loaders/GLTFLoader,Addons,Loaders,Loader,DRACOLoader|KTX2Loader|GLTFExporter,12,true,Pantheon,1.0,1.0,0.8,0.84,loading,Addon/Example class
+ImprovedNoise,ImprovedNoise,https://threejs.org/docs/#examples/en/math/ImprovedNoise,Addons,Math,,,0,false,Orbs|Constellation,0.8,0.7,0.1,0.81,math,Improved Perlin noise implementation
+Clock,Clock,https://threejs.org/docs/#api/en/core/Clock,Reference,Core,,,0,false,Orbs,1.0,0.4,0.1,0.8,rendering,
+EventDispatcher,Event Dispatcher,https://threejs.org/docs/#api/en/core/EventDispatcher,Reference,Core,,,0,false,Orbs,1.0,0.4,0.1,0.8,rendering,
+Layers,Layers,https://threejs.org/docs/#api/en/core/Layers,Reference,Core,,,0,false,Orbs,1.0,0.4,0.1,0.8,rendering,
+Timer,Timer,https://threejs.org/docs/#api/en/core/Timer,Reference,Core,,,0,false,Orbs,1.0,0.4,0.1,0.8,rendering,
+Uniform,Uniform,https://threejs.org/docs/#api/en/core/Uniform,Reference,Core,,,0,false,Orbs,1.0,0.4,0.1,0.8,rendering,
+PMREMGenerator,P M R E M Generator,https://threejs.org/docs/#api/en/extras/PMREMGenerator,Reference,Extras,,,0,false,Orbs,1.0,0.4,0.1,0.8,textures,
+LoadingManager,Loading Manager,https://threejs.org/docs/#api/en/loaders/LoadingManager,Reference,Loaders,,,0,false,Orbs,1.0,0.4,0.1,0.8,loading,
+Matrix4,Matrix4,https://threejs.org/docs/#api/en/math/Matrix4,Reference,Math,,Vector3|Quaternion|Euler,0,false,Orbs,1.0,0.4,0.1,0.8,math,
+Quaternion,Quaternion,https://threejs.org/docs/#api/en/math/Quaternion,Reference,Math,,Euler|Matrix4|Vector3,0,false,Orbs,1.0,0.4,0.1,0.8,math,
+Group,Group,https://threejs.org/docs/#api/en/objects/Group,Reference,Objects,Object3D,,0,false,Orbs,1.0,0.4,0.1,0.8,geometry,
+UniformsUtils,UniformsUtils,https://threejs.org/docs/#api/en/renderers/shaders/UniformsUtils,Renderers,Shaders,,,0,false,Orbs,0.8,0.6,0.1,0.78,shaders,Utility for cloning and merging shader uniforms
+WebGL,WebGL,https://threejs.org/docs/#examples/en/capabilities/WebGL,Addons,Capabilities,,,0,false,Orbs,0.8,0.6,0.1,0.78,capabilities,WebGL feature detection and capability checking
+Font,Font,https://threejs.org/docs/#examples/en/loaders/Font,Addons,Loaders,,,0,false,Wall|Pantheon,0.8,0.6,0.1,0.78,loaders,Font data class for TextGeometry
+AnimationObjectGroup,Animation Object Group,https://threejs.org/docs/#api/en/animation/AnimationObjectGroup,Reference,Animation,,,16,true,Pantheon,0.7,0.7,0.1,0.77,animation|loading,
+AnimationUtils,Animation Utils,https://threejs.org/docs/#api/en/animation/AnimationUtils,Reference,Animation,,,16,true,Pantheon,0.7,0.7,0.1,0.77,animation,
+BooleanKeyframeTrack,Boolean Keyframe Track,https://threejs.org/docs/#api/en/animation/tracks/BooleanKeyframeTrack,Reference,Animation,KeyframeTrack,,16,true,Pantheon,0.7,0.7,0.1,0.77,animation,
+ColorKeyframeTrack,Color Keyframe Track,https://threejs.org/docs/#api/en/animation/tracks/ColorKeyframeTrack,Reference,Animation,KeyframeTrack,,16,true,Pantheon,0.7,0.7,0.1,0.77,animation|math,
+NumberKeyframeTrack,Number Keyframe Track,https://threejs.org/docs/#api/en/animation/tracks/NumberKeyframeTrack,Reference,Animation,KeyframeTrack,,16,true,Pantheon,0.7,0.7,0.1,0.77,animation,
+PropertyBinding,Property Binding,https://threejs.org/docs/#api/en/animation/PropertyBinding,Reference,Animation,,,16,true,Orbs,0.7,0.7,0.1,0.77,animation,
+PropertyMixer,Property Mixer,https://threejs.org/docs/#api/en/animation/PropertyMixer,Reference,Animation,,,16,true,Pantheon,0.7,0.7,0.1,0.77,animation,
+QuaternionKeyframeTrack,Quaternion Keyframe Track,https://threejs.org/docs/#api/en/animation/tracks/QuaternionKeyframeTrack,Reference,Animation,KeyframeTrack,,16,true,Pantheon,0.7,0.7,0.1,0.77,animation|math,
+StringKeyframeTrack,String Keyframe Track,https://threejs.org/docs/#api/en/animation/tracks/StringKeyframeTrack,Reference,Animation,KeyframeTrack,,16,true,Pantheon,0.7,0.7,0.1,0.77,animation,
+VectorKeyframeTrack,Vector Keyframe Track,https://threejs.org/docs/#api/en/animation/tracks/VectorKeyframeTrack,Reference,Animation,KeyframeTrack,,16,true,Pantheon,0.7,0.7,0.1,0.77,animation|math,
+AudioAnalyser,Audio Analyser,https://threejs.org/docs/#api/en/audio/AudioAnalyser,Reference,Audio,,,4,true,Pantheon,0.7,0.7,0.1,0.77,audio,
+AudioContext,Audio Context,https://threejs.org/docs/#api/en/audio/AudioContext,Reference,Audio,,,4,true,Pantheon|Wall,0.7,0.7,0.1,0.77,audio,
+PositionalAudio,Positional Audio,https://threejs.org/docs/#api/en/audio/PositionalAudio,Reference,Audio,,Audio|AudioListener|Object3D,4,true,Pantheon,0.7,0.7,0.1,0.77,audio,
+ArrayCamera,Array Camera,https://threejs.org/docs/#api/en/cameras/ArrayCamera,Reference,Cameras,PerspectiveCamera,,6,true,Constellation|Ritual,0.7,0.7,0.1,0.77,math|xr,
+CubeCamera,Cube Camera,https://threejs.org/docs/#api/en/cameras/CubeCamera,Reference,Cameras,Object3D,,6,true,Constellation,0.7,0.7,0.1,0.77,rendering,
+StereoCamera,Stereo Camera,https://threejs.org/docs/#api/en/cameras/StereoCamera,Reference,Cameras,Camera,,6,true,Constellation,0.7,0.7,0.1,0.77,rendering,
+InstancedBufferGeometry,Instanced Buffer Geometry,https://threejs.org/docs/#api/en/core/InstancedBufferGeometry,Reference,Core,BufferGeometry,,2,true,Orbs,0.7,0.7,0.1,0.77,geometry,
+CapsuleGeometry,Capsule Geometry,https://threejs.org/docs/#api/en/geometries/CapsuleGeometry,Reference,Geometries,BufferGeometry,,18,true,Orbs,0.7,0.7,0.1,0.77,geometry|math,
+CircleGeometry,Circle Geometry,https://threejs.org/docs/#api/en/geometries/CircleGeometry,Reference,Geometries,BufferGeometry,,18,true,Orbs,0.7,0.7,0.1,0.77,geometry,
+ConeGeometry,Cone Geometry,https://threejs.org/docs/#api/en/geometries/ConeGeometry,Reference,Geometries,CylinderGeometry,,18,true,Orbs,0.7,0.7,0.1,0.77,geometry,
+DodecahedronGeometry,Dodecahedron Geometry,https://threejs.org/docs/#api/en/geometries/DodecahedronGeometry,Reference,Geometries,PolyhedronGeometry,,18,true,Orbs,0.7,0.7,0.1,0.77,geometry,
+EdgesGeometry,Edges Geometry,https://threejs.org/docs/#api/en/geometries/EdgesGeometry,Reference,Geometries,BufferGeometry,,18,true,Constellation,0.7,0.7,0.1,0.77,geometry,
+IcosahedronGeometry,Icosahedron Geometry,https://threejs.org/docs/#api/en/geometries/IcosahedronGeometry,Reference,Geometries,PolyhedronGeometry,,18,true,Orbs,0.7,0.7,0.1,0.77,geometry,
+OctahedronGeometry,Octahedron Geometry,https://threejs.org/docs/#api/en/geometries/OctahedronGeometry,Reference,Geometries,PolyhedronGeometry,,18,true,Orbs,0.7,0.7,0.1,0.77,geometry,
+PolyhedronGeometry,Polyhedron Geometry,https://threejs.org/docs/#api/en/geometries/PolyhedronGeometry,Reference,Geometries,BufferGeometry,,18,true,Orbs,0.7,0.7,0.1,0.77,geometry,
+RingGeometry,Ring Geometry,https://threejs.org/docs/#api/en/geometries/RingGeometry,Reference,Geometries,BufferGeometry,,18,true,Orbs,0.7,0.7,0.1,0.77,geometry,
+TetrahedronGeometry,Tetrahedron Geometry,https://threejs.org/docs/#api/en/geometries/TetrahedronGeometry,Reference,Geometries,PolyhedronGeometry,,18,true,Orbs,0.7,0.7,0.1,0.77,geometry,
+TorusGeometry,Torus Geometry,https://threejs.org/docs/#api/en/geometries/TorusGeometry,Reference,Geometries,BufferGeometry,,18,true,Orbs,0.7,0.7,0.1,0.77,geometry,
+TorusKnotGeometry,Torus Knot Geometry,https://threejs.org/docs/#api/en/geometries/TorusKnotGeometry,Reference,Geometries,BufferGeometry,,18,true,Orbs,0.7,0.7,0.1,0.77,geometry,
+WireframeGeometry,Wireframe Geometry,https://threejs.org/docs/#api/en/geometries/WireframeGeometry,Reference,Geometries,BufferGeometry,,18,true,Constellation,0.7,0.7,0.1,0.77,geometry,
+DirectionalLightShadow,Directional Light Shadow,https://threejs.org/docs/#api/en/lights/shadows/DirectionalLightShadow,Reference,Lights,LightShadow,,15,true,Orbs,0.7,0.7,0.1,0.77,lighting|materials,
+LightProbe,Light Probe,https://threejs.org/docs/#api/en/lights/LightProbe,Reference,Lights,Light,,21,true,Orbs,0.7,0.7,0.1,0.77,lighting,
+LightShadow,Light Shadow,https://threejs.org/docs/#api/en/lights/shadows/LightShadow,Reference,Lights,,,15,true,Orbs,0.7,0.7,0.1,0.77,lighting|materials,
+PointLightShadow,Point Light Shadow,https://threejs.org/docs/#api/en/lights/shadows/PointLightShadow,Reference,Lights,LightShadow,,15,true,Orbs,0.7,0.7,0.1,0.77,lighting|materials,
+SpotLightShadow,Spot Light Shadow,https://threejs.org/docs/#api/en/lights/shadows/SpotLightShadow,Reference,Lights,LightShadow,,15,true,Orbs,0.7,0.7,0.1,0.77,lighting|materials,
+LineDashedMaterial,Line Dashed Material,https://threejs.org/docs/#api/en/materials/LineDashedMaterial,Reference,Materials,LineBasicMaterial,,22,true,Constellation|Orbs,0.7,0.7,0.1,0.77,materials,
+MeshDepthMaterial,Mesh Depth Material,https://threejs.org/docs/#api/en/materials/MeshDepthMaterial,Reference,Materials,Material,,22,true,Orbs,0.7,0.7,0.1,0.77,geometry|materials|textures,
+MeshDistanceMaterial,Mesh Distance Material,https://threejs.org/docs/#api/en/materials/MeshDistanceMaterial,Reference,Materials,Material,,22,true,Orbs,0.7,0.7,0.1,0.77,geometry|materials,
+MeshNormalMaterial,Mesh Normal Material,https://threejs.org/docs/#api/en/materials/MeshNormalMaterial,Reference,Materials,Material,,22,true,Orbs,0.7,0.7,0.1,0.77,geometry|materials,
+RawShaderMaterial,Raw Shader Material,https://threejs.org/docs/#api/en/materials/RawShaderMaterial,Reference,Materials,ShaderMaterial,,22,true,Orbs,0.7,0.7,0.1,0.77,materials|rendering,
+CanvasTexture,Canvas Texture,https://threejs.org/docs/#api/en/textures/CanvasTexture,Reference,Textures,Texture,,13,true,Wall,0.7,0.7,0.1,0.77,rendering|textures,
+CompressedTexture,Compressed Texture,https://threejs.org/docs/#api/en/textures/CompressedTexture,Reference,Textures,Texture,,13,true,Wall,0.7,0.7,0.1,0.77,textures,
+Data3DTexture,Data3 D Texture,https://threejs.org/docs/#api/en/textures/Data3DTexture,Reference,Textures,Texture,,7,true,Wall,0.7,0.7,0.1,0.77,textures,
+DataArrayTexture,Data Array Texture,https://threejs.org/docs/#api/en/textures/DataArrayTexture,Reference,Textures,Texture,,13,true,Ritual|Wall,0.7,0.7,0.1,0.77,math|postprocessing|textures|xr,
+FramebufferTexture,Framebuffer Texture,https://threejs.org/docs/#api/en/textures/FramebufferTexture,Reference,Textures,Texture,,13,true,Wall,0.7,0.7,0.1,0.77,geometry|textures,
+WebXRManager,Web X R Manager,https://threejs.org/docs/#api/en/renderers/webxr/WebXRManager,Reference,Renderers,,,19,true,Ritual,0.7,0.7,0.1,0.77,rendering|xr,
+XRManager,X R Manager,https://threejs.org/docs/#api/en/renderers/webxr/XRManager,Reference,Renderers,,,19,true,Ritual,0.7,0.7,0.1,0.77,rendering|xr,
+ArcballControls,Arcball Controls,https://threejs.org/docs/#examples/en/controls/ArcballControls,Addons,Controls,Controls,,8,true,Ritual,0.7,0.7,0.1,0.77,interaction|xr,Addon/Example class
+DragControls,Drag Controls,https://threejs.org/docs/#examples/en/controls/DragControls,Addons,Controls,Controls,,8,true,Ritual,0.7,0.7,0.1,0.77,interaction,Addon/Example class
+FirstPersonControls,First Person Controls,https://threejs.org/docs/#examples/en/controls/FirstPersonControls,Addons,Controls,Controls,,8,true,Ritual,0.7,0.7,0.1,0.77,interaction,Addon/Example class
+FlyControls,Fly Controls,https://threejs.org/docs/#examples/en/controls/FlyControls,Addons,Controls,Controls,,8,true,Ritual,0.7,0.7,0.1,0.77,interaction,Addon/Example class
+MapControls,Map Controls,https://threejs.org/docs/#examples/en/controls/MapControls,Addons,Controls,OrbitControls,,8,true,Ritual,0.7,0.7,0.1,0.77,interaction,Addon/Example class
+PointerLockControls,Pointer Lock Controls,https://threejs.org/docs/#examples/en/controls/PointerLockControls,Addons,Controls,Controls,,8,true,Ritual,0.7,0.7,0.1,0.77,interaction|lighting,Addon/Example class
+TrackballControls,Trackball Controls,https://threejs.org/docs/#examples/en/controls/TrackballControls,Addons,Controls,Controls,,8,true,Ritual,0.7,0.7,0.1,0.77,interaction,Addon/Example class
+TransformControls,Transform Controls,https://threejs.org/docs/#examples/en/controls/TransformControls,Addons,Controls,Controls,,8,true,Ritual,0.7,0.7,0.1,0.77,interaction,Addon/Example class
+RoundedBoxGeometry,Rounded Box Geometry,https://threejs.org/docs/#examples/en/geometries/RoundedBoxGeometry,Addons,Geometries,BufferGeometry,,2,true,Orbs,0.7,0.7,0.1,0.77,geometry,Addon/Example class
+Line2,Line2,https://threejs.org/docs/#examples/en/lines/Line2,Addons,Lines,LineSegments2,LineMaterial|LineGeometry|LineSegments2,8,true,Constellation,0.7,0.7,0.1,0.77,rendering,Addon/Example class
+LineGeometry,Line Geometry,https://threejs.org/docs/#examples/en/lines/LineGeometry,Addons,Lines,,,8,true,Constellation,0.7,0.7,0.1,0.77,geometry,Addon/Example class
+LineMaterial,Line Material,https://threejs.org/docs/#examples/en/lines/LineMaterial,Addons,Lines,ShaderMaterial,,8,true,Constellation|Orbs,0.7,0.7,0.1,0.77,materials,Addon/Example class
+Wireframe,Wireframe,https://threejs.org/docs/#examples/en/lines/Wireframe,Addons,Lines,Mesh,WireframeGeometry2|EdgesGeometry|LineSegments,8,true,Constellation,0.7,0.7,0.1,0.77,rendering,Addon/Example class
+SVGLoader,S V G Loader,https://threejs.org/docs/#examples/en/loaders/SVGLoader,Addons,Loaders,Loader,,3,true,Wall,0.7,0.7,0.1,0.77,loading,Addon/Example class
+KTX2Loader,K T X2 Loader,https://threejs.org/docs/#examples/en/loaders/KTX2Loader,Addons,Loaders,Loader,,12,true,Orbs,0.7,0.7,0.1,0.77,loading,Addon/Example class
+EXRLoader,E X R Loader,https://threejs.org/docs/#examples/en/loaders/EXRLoader,Addons,Loaders,Loader,,12,true,Ritual,0.7,0.7,0.1,0.77,loading|xr,Addon/Example class
+HDRLoader,H D R Loader,https://threejs.org/docs/#examples/en/loaders/HDRLoader,Addons,Loaders,Loader,,12,true,Orbs,0.7,0.7,0.1,0.77,loading,Addon/Example class
+GPUComputationRenderer,G P U Computation Renderer,https://threejs.org/docs/#examples/en/misc/GPUComputationRenderer,Addons,Misc,,,14,true,Orbs,0.7,0.7,0.1,0.77,rendering,Addon/Example class
+Lensflare,Lensflare,https://threejs.org/docs/#examples/en/objects/Lensflare,Addons,Objects,Mesh,,21,true,Ritual,0.7,0.7,0.1,0.77,geometry|lighting|xr,Addon/Example class
+MarchingCubes,Marching Cubes,https://threejs.org/docs/#examples/en/objects/MarchingCubes,Addons,Objects,Mesh,,7,true,Ritual,0.7,0.7,0.1,0.77,geometry|xr,Addon/Example class
+Reflector,Reflector,https://threejs.org/docs/#examples/en/objects/Reflector,Addons,Objects,Mesh,Refractor|Water|Mesh,5,true,Orbs,0.7,0.7,0.1,0.77,geometry,Addon/Example class
+Sky,Sky,https://threejs.org/docs/#examples/en/objects/Sky,Addons,Objects,Mesh,SkyMesh|ShaderMaterial|DirectionalLight,2,true,Orbs,0.7,0.7,0.1,0.77,geometry,Addon/Example class
+SkyMesh,Sky Mesh,https://threejs.org/docs/#examples/en/objects/SkyMesh,Addons,Objects,Mesh,,2,true,Orbs,0.7,0.7,0.1,0.77,geometry,Addon/Example class
+Water,Water,https://threejs.org/docs/#examples/en/objects/Water,Addons,Objects,Mesh,WaterMesh|Reflector|ShaderMaterial,7,true,Orbs,0.7,0.7,0.1,0.77,geometry,Addon/Example class
+WaterMesh,Water Mesh,https://threejs.org/docs/#examples/en/objects/WaterMesh,Addons,Objects,Mesh,,7,true,Orbs,0.7,0.7,0.1,0.77,geometry,Addon/Example class
+AmmoPhysics,Ammo Physics,https://threejs.org/docs/#examples/en/physics/AmmoPhysics,Addons,Physics,,,13,true,Orbs,0.7,0.7,0.1,0.77,physics,Addon/Example class
+JoltPhysics,Jolt Physics,https://threejs.org/docs/#examples/en/physics/JoltPhysics,Addons,Physics,,,13,true,Orbs,0.7,0.7,0.1,0.77,physics,Addon/Example class
+RapierPhysics,Rapier Physics,https://threejs.org/docs/#examples/en/physics/RapierPhysics,Addons,Physics,,,13,true,Orbs,0.7,0.7,0.1,0.77,physics,Addon/Example class
+ShaderPass,Shader Pass,https://threejs.org/docs/#examples/en/postprocessing/ShaderPass,Addons,Postprocessing,Pass,,19,true,Orbs,0.7,0.7,0.1,0.77,materials|postprocessing|rendering,Addon/Example class
+SMAAPass,S M A A Pass,https://threejs.org/docs/#examples/en/postprocessing/SMAAPass,Addons,Postprocessing,Pass,,19,true,Orbs,0.7,0.7,0.1,0.77,postprocessing,Addon/Example class
+GTAOPass,G T A O Pass,https://threejs.org/docs/#examples/en/postprocessing/GTAOPass,Addons,Postprocessing,Pass,,19,true,Orbs,0.7,0.7,0.1,0.77,postprocessing,Addon/Example class
+BokehPass,Bokeh Pass,https://threejs.org/docs/#examples/en/postprocessing/BokehPass,Addons,Postprocessing,Pass,,19,true,Orbs,0.7,0.7,0.1,0.77,postprocessing,Addon/Example class
+OutlinePass,Outline Pass,https://threejs.org/docs/#examples/en/postprocessing/OutlinePass,Addons,Postprocessing,Pass,,19,true,Constellation|Orbs,0.7,0.7,0.1,0.77,postprocessing,Addon/Example class
+SSRPass,S S R Pass,https://threejs.org/docs/#examples/en/postprocessing/SSRPass,Addons,Postprocessing,Pass,,19,true,Orbs,0.7,0.7,0.1,0.77,postprocessing,Addon/Example class
+OutputPass,Output Pass,https://threejs.org/docs/#examples/en/postprocessing/OutputPass,Addons,Postprocessing,Pass,,2,true,Orbs,0.7,0.7,0.1,0.77,postprocessing,Addon/Example class
+CSS2DObject,C S S2 D Object,https://threejs.org/docs/#examples/en/renderers/CSS2DObject,Addons,Renderers,Object3D,,1,true,Wall,0.7,0.7,0.1,0.77,css3d|loading|rendering,Addon/Example class
+CSS2DRenderer,C S S2 D Renderer,https://threejs.org/docs/#examples/en/renderers/CSS2DRenderer,Addons,Renderers,,CSS2DObject|CSS3DRenderer|WebGLRenderer,1,true,Wall,0.7,0.7,0.1,0.77,css3d|rendering,Addon/Example class
+CSS3DObject,C S S3 D Object,https://threejs.org/docs/#examples/en/renderers/CSS3DObject,Addons,Renderers,Object3D,,7,true,Wall,0.7,0.7,0.1,0.77,css3d|loading|rendering,Addon/Example class
+FXAANode,F X A A Node,https://threejs.org/docs/#examples/en/tsl/FXAANode,Addons,TSL,,,19,true,Orbs,0.7,0.7,0.1,0.77,postprocessing,Three.js Shader Language node
+GTAONode,G T A O Node,https://threejs.org/docs/#examples/en/tsl/GTAONode,Addons,TSL,,,19,true,Orbs,0.7,0.7,0.1,0.77,postprocessing,Three.js Shader Language node
+GaussianBlurNode,Gaussian Blur Node,https://threejs.org/docs/#examples/en/tsl/GaussianBlurNode,Addons,TSL,,,19,true,Orbs,0.7,0.7,0.1,0.77,postprocessing,Three.js Shader Language node
+SSRNode,S S R Node,https://threejs.org/docs/#examples/en/tsl/SSRNode,Addons,TSL,,,19,true,Orbs,0.7,0.7,0.1,0.77,postprocessing,Three.js Shader Language node
+ARButton,A R Button,https://threejs.org/docs/#examples/en/webxr/ARButton,Addons,Webxr,,,19,true,Ritual,0.7,0.7,0.1,0.77,xr,Addon/Example class
+VRButton,V R Button,https://threejs.org/docs/#examples/en/webxr/VRButton,Addons,Webxr,,,19,true,Ritual,0.7,0.7,0.1,0.77,xr,Addon/Example class
+XRButton,X R Button,https://threejs.org/docs/#examples/en/webxr/XRButton,Addons,Webxr,,,19,true,Ritual,0.7,0.7,0.1,0.77,xr,Addon/Example class
+NodeMaterial,NodeMaterial,https://threejs.org/docs/#api/en/materials/NodeMaterial,Materials,Node,,,0,false,Orbs,0.7,0.7,0.1,0.77,node,Base class for node-based shader materials
+AnimationAction,Animation Action,https://threejs.org/docs/#api/en/animation/AnimationAction,Reference,Animation,,,16,true,Pantheon,1.0,0.7,0.8,0.75,animation,
+AnimationClip,Animation Clip,https://threejs.org/docs/#api/en/animation/AnimationClip,Reference,Animation,,AnimationMixer|KeyframeTrack|AnimationAction,16,true,Pantheon,1.0,0.7,0.8,0.75,animation,
+Bone,Bone,https://threejs.org/docs/#api/en/objects/Bone,Reference,Objects,Object3D,,7,true,Pantheon,1.0,0.7,0.8,0.75,animation|geometry,
+LOD,L O D,https://threejs.org/docs/#api/en/objects/LOD,Reference,Objects,Object3D,Mesh|Object3D|Camera,2,true,Orbs,1.0,0.7,0.8,0.75,geometry,
+Skeleton,Skeleton,https://threejs.org/docs/#api/en/objects/Skeleton,Reference,Objects,,,7,true,Constellation|Pantheon,1.0,0.7,0.8,0.75,animation|geometry,
+SkinnedMesh,Skinned Mesh,https://threejs.org/docs/#api/en/objects/SkinnedMesh,Reference,Objects,Mesh,Skeleton|Bone|AnimationMixer,7,true,Orbs,1.0,0.7,0.8,0.75,geometry,
+DRACOLoader,D R A C O Loader,https://threejs.org/docs/#examples/en/loaders/DRACOLoader,Addons,Loaders,Loader,,12,true,Orbs,1.0,0.7,0.8,0.75,loading,Addon/Example class
+FBXLoader,F B X Loader,https://threejs.org/docs/#examples/en/loaders/FBXLoader,Addons,Loaders,Loader,GLTFLoader|OBJLoader|AnimationMixer,12,true,Pantheon,1.0,0.7,0.8,0.75,loading,Addon/Example class
+Line2NodeMaterial,Line2NodeMaterial,https://threejs.org/docs/#api/en/materials/Line2NodeMaterial,Materials,Line,,,0,false,Constellation,0.7,0.6,0.1,0.74,line,Node material for wide lines with Line2 addon
+RenderTransitionPass,RenderTransitionPass,https://threejs.org/docs/#examples/en/postprocessing/RenderTransitionPass,Addons,Postprocessing,,,0,false,Pantheon|Orbs,0.7,0.6,0.1,0.74,postprocessing,Transition effect between two scenes
+WebGPU,WebGPU,https://threejs.org/docs/#examples/en/capabilities/WebGPU,Addons,Capabilities,,,0,false,Orbs,0.7,0.6,0.1,0.74,capabilities,WebGPU feature detection and capability checking
+DirectionalLightHelper,Directional Light Helper,https://threejs.org/docs/#api/en/helpers/DirectionalLightHelper,Reference,Helpers,Object3D,,2,true,Constellation,0.6,0.7,0.1,0.73,lighting,
+HemisphereLightHelper,Hemisphere Light Helper,https://threejs.org/docs/#api/en/helpers/HemisphereLightHelper,Reference,Helpers,Object3D,,2,true,Constellation|Orbs,0.6,0.7,0.1,0.73,lighting|math,
+PointLightHelper,Point Light Helper,https://threejs.org/docs/#api/en/helpers/PointLightHelper,Reference,Helpers,Mesh,,2,true,Constellation,0.6,0.7,0.1,0.73,lighting,
+SpotLightHelper,Spot Light Helper,https://threejs.org/docs/#api/en/helpers/SpotLightHelper,Reference,Helpers,Object3D,,2,true,Constellation,0.6,0.7,0.1,0.73,lighting,
+LightProbeHelper,Light Probe Helper,https://threejs.org/docs/#examples/en/helpers/LightProbeHelper,Addons,Helpers,,,2,true,Constellation,0.6,0.7,0.1,0.73,lighting,Addon/Example class
+RectAreaLightHelper,Rect Area Light Helper,https://threejs.org/docs/#examples/en/helpers/RectAreaLightHelper,Addons,Helpers,,,2,true,Constellation|Ritual,0.6,0.7,0.1,0.73,lighting|xr,Addon/Example class
+SSGINode,S S G I Node,https://threejs.org/docs/#examples/en/tsl/SSGINode,Addons,TSL,,,19,true,Orbs,0.6,0.7,0.1,0.73,postprocessing,Three.js Shader Language node
+SSSNode,S S S Node,https://threejs.org/docs/#examples/en/tsl/SSSNode,Addons,TSL,,,19,true,Orbs,0.6,0.7,0.1,0.73,postprocessing,Three.js Shader Language node
+DepthOfFieldNode,Depth Of Field Node,https://threejs.org/docs/#examples/en/tsl/DepthOfFieldNode,Addons,TSL,,,19,true,Orbs,0.6,0.7,0.1,0.73,materials|postprocessing|textures,Three.js Shader Language node
+GodraysNode,Godrays Node,https://threejs.org/docs/#examples/en/tsl/GodraysNode,Addons,TSL,,,19,true,Orbs,0.6,0.7,0.1,0.73,math|postprocessing,Three.js Shader Language node
+AfterImageNode,After Image Node,https://threejs.org/docs/#examples/en/tsl/AfterImageNode,Addons,TSL,,,19,true,Orbs,0.6,0.7,0.1,0.73,postprocessing,Three.js Shader Language node
+AnamorphicNode,Anamorphic Node,https://threejs.org/docs/#examples/en/tsl/AnamorphicNode,Addons,TSL,,,2,true,Orbs|Pantheon,0.6,0.7,0.1,0.73,animation|postprocessing,Three.js Shader Language node
+ChromaticAberrationNode,Chromatic Aberration Node,https://threejs.org/docs/#examples/en/tsl/ChromaticAberrationNode,Addons,TSL,,,2,true,Orbs,0.6,0.7,0.1,0.73,postprocessing,Three.js Shader Language node
+LensflareNode,Lensflare Node,https://threejs.org/docs/#examples/en/tsl/LensflareNode,Addons,TSL,,,2,true,Ritual,0.6,0.7,0.1,0.73,lighting|postprocessing|xr,Three.js Shader Language node
+OutlineNode,Outline Node,https://threejs.org/docs/#examples/en/tsl/OutlineNode,Addons,TSL,,,2,true,Constellation,0.6,0.7,0.1,0.73,postprocessing,Three.js Shader Language node
+SobelOperatorNode,Sobel Operator Node,https://threejs.org/docs/#examples/en/tsl/SobelOperatorNode,Addons,TSL,,,2,true,Orbs,0.6,0.7,0.1,0.73,postprocessing,Three.js Shader Language node
+TRAANode,T R A A Node,https://threejs.org/docs/#examples/en/tsl/TRAANode,Addons,TSL,,,2,true,Orbs,0.6,0.7,0.1,0.73,postprocessing,Three.js Shader Language node
+SMAANode,S M A A Node,https://threejs.org/docs/#examples/en/tsl/SMAANode,Addons,TSL,,,2,true,Orbs,0.6,0.7,0.1,0.73,postprocessing,Three.js Shader Language node
+Interpolations,Interpolations,https://threejs.org/docs/#api/en/extras/Interpolations,Extras,Utilities,,,0,false,Constellation|Orbs,0.7,0.5,0.1,0.71,utilities,Bezier and Catmull-Rom interpolation functions
+DotScreenPass,DotScreenPass,https://threejs.org/docs/#examples/en/postprocessing/DotScreenPass,Addons,Postprocessing,,,0,false,Orbs|Wall,0.7,0.5,0.1,0.71,postprocessing,Halftone dot screen effect
+MaskPass,MaskPass,https://threejs.org/docs/#examples/en/postprocessing/MaskPass,Addons,Postprocessing,,,0,false,Orbs,0.7,0.5,0.1,0.71,postprocessing,Applies stencil mask from a scene
+FullScreenQuad,FullScreenQuad,https://threejs.org/docs/#examples/en/postprocessing/FullScreenQuad,Addons,Postprocessing,,,0,false,Orbs,0.7,0.5,0.1,0.71,postprocessing,Helper for rendering full-screen quads in passes
+AnimationPathHelper,AnimationPathHelper,https://threejs.org/docs/#examples/en/helpers/AnimationPathHelper,Addons,Helpers,,,0,false,Pantheon|Constellation,0.7,0.5,0.1,0.71,helpers,Visualizes animation motion paths
+Capsule,Capsule,https://threejs.org/docs/#examples/en/math/Capsule,Addons,Math,,,0,false,Ritual,0.7,0.5,0.1,0.71,math,Capsule primitive for collision testing
+ColorConverter,ColorConverter,https://threejs.org/docs/#examples/en/math/ColorConverter,Addons,Math,,,0,false,Orbs|Wall,0.7,0.5,0.1,0.71,math,Converts between color spaces (HSL/HSV/RGB)
+LensflareMesh,LensflareMesh,https://threejs.org/docs/#examples/en/objects/LensflareMesh,Addons,Objects,,,0,false,Orbs,0.7,0.5,0.1,0.71,objects,Mesh-based lens flare with node material
+XRPlanes,XRPlanes,https://threejs.org/docs/#examples/en/webxr/XRPlanes,Addons,WebXR,,,0,false,Ritual,0.7,0.5,0.1,0.71,webxr,Detects and visualizes real-world planes in AR
+SceneUtils,SceneUtils,https://threejs.org/docs/#examples/en/utils/SceneUtils,Addons,Utils,,,0,false,Pantheon|Orbs,0.7,0.5,0.1,0.71,utils,Utility functions for scene manipulation
+GeometryUtils,GeometryUtils,https://threejs.org/docs/#examples/en/utils/GeometryUtils,Addons,Utils,,,0,false,Constellation,0.7,0.5,0.1,0.71,utils,Geometry utility functions for hilbert curves etc
+CameraUtils,CameraUtils,https://threejs.org/docs/#examples/en/utils/CameraUtils,Addons,Utils,,,0,false,Wall,0.7,0.5,0.1,0.71,utils,Camera frame and projection utilities
+ExtrudeGeometry,Extrude Geometry,https://threejs.org/docs/#api/en/geometries/ExtrudeGeometry,Reference,Geometries,BufferGeometry,,18,true,Orbs,0.7,0.7,0.5,0.69,geometry,
+LatheGeometry,Lathe Geometry,https://threejs.org/docs/#api/en/geometries/LatheGeometry,Reference,Geometries,BufferGeometry,,18,true,Orbs,0.7,0.7,0.5,0.69,geometry,
+ShapeGeometry,Shape Geometry,https://threejs.org/docs/#api/en/geometries/ShapeGeometry,Reference,Geometries,BufferGeometry,,18,true,Orbs,0.7,0.7,0.5,0.69,geometry,
+TubeGeometry,Tube Geometry,https://threejs.org/docs/#api/en/geometries/TubeGeometry,Reference,Geometries,BufferGeometry,,18,true,Orbs,0.7,0.7,0.5,0.69,geometry,
+BoxLineGeometry,Box Line Geometry,https://threejs.org/docs/#examples/en/geometries/BoxLineGeometry,Addons,Geometries,BufferGeometry,,2,true,Constellation,0.5,0.7,0.1,0.69,geometry,Addon/Example class
+ConvexGeometry,Convex Geometry,https://threejs.org/docs/#examples/en/geometries/ConvexGeometry,Addons,Geometries,BufferGeometry,,2,true,Orbs,0.7,0.7,0.5,0.69,geometry,Addon/Example class
+TextGeometry,Text Geometry,https://threejs.org/docs/#examples/en/geometries/TextGeometry,Addons,Geometries,ExtrudeGeometry,FontLoader|ExtrudeGeometry|Font,2,true,Wall,0.7,0.7,0.5,0.69,geometry,Addon/Example class
+LightProbeGenerator,Light Probe Generator,https://threejs.org/docs/#examples/en/lights/LightProbeGenerator,Addons,Lights,,,2,true,Orbs,0.5,0.7,0.1,0.69,lighting,Addon/Example class
+RectAreaLightTexturesLib,Rect Area Light Textures Lib,https://threejs.org/docs/#examples/en/lights/RectAreaLightTexturesLib,Addons,Lights,,,2,true,Ritual|Wall,0.5,0.7,0.1,0.69,lighting|textures|xr,Addon/Example class
+RectAreaLightUniformsLib,Rect Area Light Uniforms Lib,https://threejs.org/docs/#examples/en/lights/RectAreaLightUniformsLib,Addons,Lights,,,2,true,Ritual,0.5,0.7,0.1,0.69,lighting|xr,Addon/Example class
+LineSegments2,Line Segments2,https://threejs.org/docs/#examples/en/lines/LineSegments2,Addons,Lines,Mesh,,8,true,Constellation,0.5,0.7,0.1,0.69,rendering,Addon/Example class
+LineSegmentsGeometry,Line Segments Geometry,https://threejs.org/docs/#examples/en/lines/LineSegmentsGeometry,Addons,Lines,,,8,true,Constellation,0.5,0.7,0.1,0.69,geometry,Addon/Example class
+WireframeGeometry2,Wireframe Geometry2,https://threejs.org/docs/#examples/en/lines/WireframeGeometry2,Addons,Lines,,,8,true,Constellation,0.5,0.7,0.1,0.69,geometry,Addon/Example class
+FontLoader,Font Loader,https://threejs.org/docs/#examples/en/loaders/FontLoader,Addons,Loaders,Loader,,1,true,Wall,0.7,0.7,0.5,0.69,loading,Addon/Example class
+LottieLoader,Lottie Loader,https://threejs.org/docs/#examples/en/loaders/LottieLoader,Addons,Loaders,Loader,,1,true,Orbs,0.5,0.7,0.1,0.69,loading,Addon/Example class
+TTFLoader,T T F Loader,https://threejs.org/docs/#examples/en/loaders/TTFLoader,Addons,Loaders,Loader,,1,true,Orbs,0.5,0.7,0.1,0.69,loading,Addon/Example class
+MaterialXLoader,Material X Loader,https://threejs.org/docs/#examples/en/loaders/MaterialXLoader,Addons,Loaders,Loader,,2,true,Orbs,0.5,0.7,0.1,0.69,loading|materials,Addon/Example class
+NRRDLoader,N R R D Loader,https://threejs.org/docs/#examples/en/loaders/NRRDLoader,Addons,Loaders,Loader,,1,true,Orbs,0.5,0.7,0.1,0.69,loading,Addon/Example class
+VTKLoader,V T K Loader,https://threejs.org/docs/#examples/en/loaders/VTKLoader,Addons,Loaders,Loader,,1,true,Orbs,0.5,0.7,0.1,0.69,loading,Addon/Example class
+XYZLoader,X Y Z Loader,https://threejs.org/docs/#examples/en/loaders/XYZLoader,Addons,Loaders,Loader,,1,true,Orbs,0.5,0.7,0.1,0.69,loading,Addon/Example class
+Volume,Volume,https://threejs.org/docs/#examples/en/misc/Volume,Addons,Misc,,,7,true,Orbs,0.5,0.7,0.1,0.69,rendering,Addon/Example class
+VolumeSlice,Volume Slice,https://threejs.org/docs/#examples/en/misc/VolumeSlice,Addons,Misc,,,7,true,Orbs,0.5,0.7,0.1,0.69,rendering,Addon/Example class
+Refractor,Refractor,https://threejs.org/docs/#examples/en/objects/Refractor,Addons,Objects,Mesh,,5,true,Orbs,0.5,0.7,0.1,0.69,geometry,Addon/Example class
+ShadowMesh,Shadow Mesh,https://threejs.org/docs/#examples/en/objects/ShadowMesh,Addons,Objects,Mesh,,2,true,Orbs,0.5,0.7,0.1,0.69,geometry|lighting|materials,Addon/Example class
+SAOPass,S A O Pass,https://threejs.org/docs/#examples/en/postprocessing/SAOPass,Addons,Postprocessing,Pass,,19,true,Orbs,0.5,0.7,0.1,0.69,postprocessing,Addon/Example class
+AfterimagePass,Afterimage Pass,https://threejs.org/docs/#examples/en/postprocessing/AfterimagePass,Addons,Postprocessing,Pass,,2,true,Orbs,0.5,0.7,0.1,0.69,postprocessing,Addon/Example class
+BloomPass,Bloom Pass,https://threejs.org/docs/#examples/en/postprocessing/BloomPass,Addons,Postprocessing,Pass,,19,true,Orbs,0.5,0.7,0.1,0.69,postprocessing,Addon/Example class
+FilmPass,Film Pass,https://threejs.org/docs/#examples/en/postprocessing/FilmPass,Addons,Postprocessing,Pass,,19,true,Orbs,0.5,0.7,0.1,0.69,postprocessing,Addon/Example class
+GlitchPass,Glitch Pass,https://threejs.org/docs/#examples/en/postprocessing/GlitchPass,Addons,Postprocessing,Pass,,19,true,Orbs,0.5,0.7,0.1,0.69,postprocessing,Addon/Example class
+HalftonePass,Halftone Pass,https://threejs.org/docs/#examples/en/postprocessing/HalftonePass,Addons,Postprocessing,Pass,,2,true,Orbs,0.5,0.7,0.1,0.69,postprocessing,Addon/Example class
+LUTPass,L U T Pass,https://threejs.org/docs/#examples/en/postprocessing/LUTPass,Addons,Postprocessing,Pass,,2,true,Orbs,0.5,0.7,0.1,0.69,loading|math|postprocessing,Addon/Example class
+Pass,Pass,https://threejs.org/docs/#examples/en/postprocessing/Pass,Addons,Postprocessing,,,2,true,Orbs,0.5,0.7,0.1,0.69,postprocessing,Addon/Example class
+RenderPixelatedPass,Render Pixelated Pass,https://threejs.org/docs/#examples/en/postprocessing/RenderPixelatedPass,Addons,Postprocessing,Pass,,2,true,Orbs,0.5,0.7,0.1,0.69,postprocessing|rendering,Addon/Example class
+SSAARenderPass,S S A A Render Pass,https://threejs.org/docs/#examples/en/postprocessing/SSAARenderPass,Addons,Postprocessing,Pass,,2,true,Orbs|Ritual,0.5,0.7,0.1,0.69,postprocessing|rendering|xr,Addon/Example class
+TAARenderPass,T A A Render Pass,https://threejs.org/docs/#examples/en/postprocessing/TAARenderPass,Addons,Postprocessing,Pass,,2,true,Orbs|Ritual,0.5,0.7,0.1,0.69,postprocessing|rendering|xr,Addon/Example class
+CSS3DSprite,C S S3 D Sprite,https://threejs.org/docs/#examples/en/renderers/CSS3DSprite,Addons,Renderers,CSS3DObject,,7,true,Orbs|Wall,0.5,0.7,0.1,0.69,css3d|particles|rendering,Addon/Example class
+SVGRenderer,S V G Renderer,https://threejs.org/docs/#examples/en/renderers/SVGRenderer,Addons,Renderers,,,3,true,Wall,0.5,0.7,0.1,0.69,loading|rendering,Addon/Example class
+XREstimatedLight,X R Estimated Light,https://threejs.org/docs/#examples/en/webxr/XREstimatedLight,Addons,Webxr,,,2,true,Ritual,0.5,0.7,0.1,0.69,lighting|xr,Addon/Example class
+ShadowMapViewer,Shadow Map Viewer,https://threejs.org/docs/#examples/en/utils/ShadowMapViewer,Addons,Utils,,,2,true,Orbs,0.5,0.7,0.1,0.69,interaction|lighting|materials,Addon/Example class
+FlakesTexture,Flakes Texture,https://threejs.org/docs/#examples/en/textures/FlakesTexture,Addons,Textures,,,13,true,Orbs|Wall,0.5,0.7,0.1,0.69,textures,Addon/Example class
+TiledLighting,Tiled Lighting,https://threejs.org/docs/#examples/en/lighting/TiledLighting,Addons,Lighting,,,2,true,Orbs,0.5,0.7,0.1,0.69,lighting,Addon/Example class
+GLBufferAttribute,G L Buffer Attribute,https://threejs.org/docs/#api/en/core/GLBufferAttribute,Reference,Core,BufferAttribute,,0,false,Orbs,0.7,0.4,0.1,0.68,geometry,
+InstancedBufferAttribute,Instanced Buffer Attribute,https://threejs.org/docs/#api/en/core/InstancedBufferAttribute,Reference,Core,BufferAttribute,,0,false,Orbs,0.7,0.4,0.1,0.68,geometry,
+InterleavedBuffer,Interleaved Buffer,https://threejs.org/docs/#api/en/core/InterleavedBuffer,Reference,Core,,,0,false,Orbs,0.7,0.4,0.1,0.68,geometry,
+InterleavedBufferAttribute,Interleaved Buffer Attribute,https://threejs.org/docs/#api/en/core/InterleavedBufferAttribute,Reference,Core,BufferAttribute,,0,false,Orbs,0.7,0.4,0.1,0.68,geometry,
+RenderTarget,Render Target,https://threejs.org/docs/#api/en/core/RenderTarget,Reference,Core,,,0,false,Ritual,0.7,0.4,0.1,0.68,rendering|xr,
+ArcCurve,Arc Curve,https://threejs.org/docs/#api/en/extras/curves/ArcCurve,Reference,Extras,EllipseCurve,,0,false,Ritual,0.7,0.4,0.1,0.68,xr,
+CatmullRomCurve3,Catmull Rom Curve3,https://threejs.org/docs/#api/en/extras/curves/CatmullRomCurve3,Reference,Extras,Curve,,0,false,Orbs,0.7,0.4,0.1,0.68,rendering,
+CubicBezierCurve3,Cubic Bezier Curve3,https://threejs.org/docs/#api/en/extras/curves/CubicBezierCurve3,Reference,Extras,Curve,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Curve,Curve,https://threejs.org/docs/#api/en/extras/core/Curve,Reference,Extras,,,0,false,Orbs,0.7,0.4,0.1,0.68,rendering,
+CurvePath,Curve Path,https://threejs.org/docs/#api/en/extras/core/CurvePath,Reference,Extras,Curve,,0,false,Orbs,0.7,0.4,0.1,0.68,rendering,
+EllipseCurve,Ellipse Curve,https://threejs.org/docs/#api/en/extras/curves/EllipseCurve,Reference,Extras,Curve,,0,false,Orbs,0.7,0.4,0.1,0.68,rendering,
+LineCurve,Line Curve,https://threejs.org/docs/#api/en/extras/curves/LineCurve,Reference,Extras,Curve,,0,false,Constellation,0.7,0.4,0.1,0.68,rendering,
+LineCurve3,Line Curve3,https://threejs.org/docs/#api/en/extras/curves/LineCurve3,Reference,Extras,Curve,,0,false,Constellation,0.7,0.4,0.1,0.68,rendering,
+Path,Path,https://threejs.org/docs/#api/en/extras/core/Path,Reference,Extras,CurvePath,,0,false,Orbs,0.7,0.4,0.1,0.68,rendering,
+QuadraticBezierCurve3,Quadratic Bezier Curve3,https://threejs.org/docs/#api/en/extras/curves/QuadraticBezierCurve3,Reference,Extras,Curve,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Shape,Shape,https://threejs.org/docs/#api/en/extras/core/Shape,Reference,Extras,Path,,0,false,Orbs,0.7,0.4,0.1,0.68,geometry,
+ShapePath,Shape Path,https://threejs.org/docs/#api/en/extras/core/ShapePath,Reference,Extras,Path,,0,false,Orbs,0.7,0.4,0.1,0.68,geometry,
+SplineCurve,Spline Curve,https://threejs.org/docs/#api/en/extras/curves/SplineCurve,Reference,Extras,Curve,,0,false,Constellation,0.7,0.4,0.1,0.68,rendering,
+BezierInterpolant,Bezier Interpolant,https://threejs.org/docs/#api/en/math/interpolants/BezierInterpolant,Reference,Math,Interpolant,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Box3,Box3,https://threejs.org/docs/#api/en/math/Box3,Reference,Math,,,0,false,Constellation,0.7,0.4,0.1,0.68,math,
+CubicInterpolant,Cubic Interpolant,https://threejs.org/docs/#api/en/math/interpolants/CubicInterpolant,Reference,Math,Interpolant,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Cylindrical,Cylindrical,https://threejs.org/docs/#api/en/math/Cylindrical,Reference,Math,,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+DiscreteInterpolant,Discrete Interpolant,https://threejs.org/docs/#api/en/math/interpolants/DiscreteInterpolant,Reference,Math,Interpolant,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Euler,Euler,https://threejs.org/docs/#api/en/math/Euler,Reference,Math,,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Frustum,Frustum,https://threejs.org/docs/#api/en/math/Frustum,Reference,Math,,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Interpolant,Interpolant,https://threejs.org/docs/#api/en/math/Interpolant,Reference,Math,,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Line3,Line3,https://threejs.org/docs/#api/en/math/Line3,Reference,Math,,,0,false,Constellation,0.7,0.4,0.1,0.68,math,
+LinearInterpolant,Linear Interpolant,https://threejs.org/docs/#api/en/math/interpolants/LinearInterpolant,Reference,Math,Interpolant,,0,false,Constellation|Ritual,0.7,0.4,0.1,0.68,math|xr,
+MathUtils,Math Utils,https://threejs.org/docs/#api/en/math/MathUtils,Reference,Math,,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Matrix3,Matrix3,https://threejs.org/docs/#api/en/math/Matrix3,Reference,Math,,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Plane,Plane,https://threejs.org/docs/#api/en/math/Plane,Reference,Math,,,0,false,Constellation,0.7,0.4,0.1,0.68,math,
+QuaternionLinearInterpolant,Quaternion Linear Interpolant,https://threejs.org/docs/#api/en/math/interpolants/QuaternionLinearInterpolant,Reference,Math,Interpolant,,0,false,Constellation|Ritual,0.7,0.4,0.1,0.68,math|xr,
+Ray,Ray,https://threejs.org/docs/#api/en/math/Ray,Reference,Math,,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Sphere,Sphere,https://threejs.org/docs/#api/en/math/Sphere,Reference,Math,,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Spherical,Spherical,https://threejs.org/docs/#api/en/math/Spherical,Reference,Math,,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+SphericalHarmonics3,Spherical Harmonics3,https://threejs.org/docs/#api/en/math/SphericalHarmonics3,Reference,Math,,,0,false,Ritual,0.7,0.4,0.1,0.68,math|xr,
+Triangle,Triangle,https://threejs.org/docs/#api/en/math/Triangle,Reference,Math,,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Vector2,Vector2,https://threejs.org/docs/#api/en/math/Vector2,Reference,Math,,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+Vector4,Vector4,https://threejs.org/docs/#api/en/math/Vector4,Reference,Math,,,0,false,Orbs,0.7,0.4,0.1,0.68,math,
+ClippingGroup,Clipping Group,https://threejs.org/docs/#api/en/objects/ClippingGroup,Reference,Objects,Group,,0,false,Orbs,0.7,0.4,0.1,0.68,animation|geometry,
+Source,Source,https://threejs.org/docs/#api/en/textures/Source,Reference,Textures,,,0,false,Orbs,0.7,0.4,0.1,0.68,textures,
+CubeRenderTarget,Cube Render Target,https://threejs.org/docs/#api/en/renderers/common/CubeRenderTarget,Reference,Renderers,,,0,false,Ritual,0.7,0.4,0.1,0.68,rendering|xr,
+Renderer,Renderer,https://threejs.org/docs/#api/en/renderers/common/Renderer,Reference,Renderers,,,0,false,Orbs,0.7,0.4,0.1,0.68,rendering,
+WebGLRenderTarget,Web G L Render Target,https://threejs.org/docs/#api/en/renderers/WebGLRenderTarget,Reference,Renderers,RenderTarget,,0,false,Ritual,0.7,0.4,0.1,0.68,rendering|xr,
+WebGLCubeRenderTarget,Web G L Cube Render Target,https://threejs.org/docs/#api/en/renderers/WebGLCubeRenderTarget,Reference,Renderers,WebGLRenderTarget,,0,false,Ritual,0.7,0.4,0.1,0.68,rendering|xr,
+GroundedSkybox,Grounded Skybox,https://threejs.org/docs/#examples/en/objects/GroundedSkybox,Addons,Objects,Mesh,,0,false,Orbs,0.7,0.4,0.1,0.68,geometry,Addon/Example class
+ClearPass,ClearPass,https://threejs.org/docs/#examples/en/postprocessing/ClearPass,Addons,Postprocessing,,,0,false,Orbs,0.7,0.4,0.1,0.68,postprocessing,Clears the render target
+ClearMaskPass,ClearMaskPass,https://threejs.org/docs/#examples/en/postprocessing/ClearMaskPass,Addons,Postprocessing,,,0,false,Orbs,0.7,0.4,0.1,0.68,postprocessing,Clears the stencil mask
+SavePass,SavePass,https://threejs.org/docs/#examples/en/postprocessing/SavePass,Addons,Postprocessing,,,0,false,Orbs,0.7,0.4,0.1,0.68,postprocessing,Saves current render to a texture for later use
+TexturePass,TexturePass,https://threejs.org/docs/#examples/en/postprocessing/TexturePass,Addons,Postprocessing,,,0,false,Orbs,0.7,0.4,0.1,0.68,postprocessing,Renders a texture as a full-screen pass
+CubeTexturePass,CubeTexturePass,https://threejs.org/docs/#examples/en/postprocessing/CubeTexturePass,Addons,Postprocessing,,,0,false,Orbs,0.7,0.4,0.1,0.68,postprocessing,Renders a cube map as background
+LineBasicNodeMaterial,LineBasicNodeMaterial,https://threejs.org/docs/#api/en/materials/LineBasicNodeMaterial,Materials,Line,,,0,false,Constellation,0.6,0.5,0.1,0.67,line,Node-based line material for WebGPU renderer
+LineDashedNodeMaterial,LineDashedNodeMaterial,https://threejs.org/docs/#api/en/materials/LineDashedNodeMaterial,Materials,Line,,,0,false,Constellation,0.6,0.5,0.1,0.67,line,Node-based dashed line material for WebGPU
+MeshBasicNodeMaterial,MeshBasicNodeMaterial,https://threejs.org/docs/#api/en/materials/MeshBasicNodeMaterial,Materials,Mesh,,,0,false,Wall,0.6,0.5,0.1,0.67,mesh,Node-based unlit mesh material
+MeshLambertNodeMaterial,MeshLambertNodeMaterial,https://threejs.org/docs/#api/en/materials/MeshLambertNodeMaterial,Materials,Mesh,,,0,false,Pantheon,0.6,0.5,0.1,0.67,mesh,Node-based Lambert material for WebGPU
+MeshMatcapNodeMaterial,MeshMatcapNodeMaterial,https://threejs.org/docs/#api/en/materials/MeshMatcapNodeMaterial,Materials,Mesh,,,0,false,Pantheon,0.6,0.5,0.1,0.67,mesh,Node-based matcap material for WebGPU
+MeshNormalNodeMaterial,MeshNormalNodeMaterial,https://threejs.org/docs/#api/en/materials/MeshNormalNodeMaterial,Materials,Mesh,,,0,false,Constellation,0.6,0.5,0.1,0.67,mesh,Node-based normal material for WebGPU
+MeshPhongNodeMaterial,MeshPhongNodeMaterial,https://threejs.org/docs/#api/en/materials/MeshPhongNodeMaterial,Materials,Mesh,,,0,false,Pantheon,0.6,0.5,0.1,0.67,mesh,Node-based Phong material for WebGPU
+MeshToonNodeMaterial,MeshToonNodeMaterial,https://threejs.org/docs/#api/en/materials/MeshToonNodeMaterial,Materials,Mesh,,,0,false,Pantheon,0.6,0.5,0.1,0.67,mesh,Node-based toon material for WebGPU
+PointsNodeMaterial,PointsNodeMaterial,https://threejs.org/docs/#api/en/materials/PointsNodeMaterial,Materials,Points,,,0,false,Orbs|Constellation,0.6,0.5,0.1,0.67,points,Node-based points material for WebGPU
+SpriteNodeMaterial,SpriteNodeMaterial,https://threejs.org/docs/#api/en/materials/SpriteNodeMaterial,Materials,Special,,,0,false,Pantheon|Orbs,0.6,0.5,0.1,0.67,special,Node-based sprite material for WebGPU
+VolumeNodeMaterial,VolumeNodeMaterial,https://threejs.org/docs/#api/en/materials/VolumeNodeMaterial,Materials,Special,,,0,false,Orbs,0.6,0.5,0.1,0.67,special,Node material for volumetric rendering
+RenderPipeline,RenderPipeline,https://threejs.org/docs/#api/en/renderers/RenderPipeline,Renderers,Pipeline,,,0,false,Orbs,0.6,0.5,0.1,0.67,pipeline,Configurable rendering pipeline
+GLSLNodeBuilder,GLSLNodeBuilder,https://threejs.org/docs/#api/en/renderers/GLSLNodeBuilder,Renderers,NodeSystem,,,0,false,Orbs,0.6,0.5,0.1,0.67,nodesystem,Compiles node graph to GLSL shaders
+ParametricFunctions,ParametricFunctions,https://threejs.org/docs/#examples/en/geometries/ParametricFunctions,Addons,Geometries,,,0,false,Orbs|Constellation,0.6,0.5,0.1,0.67,geometries,Collection of parametric surface functions
+TextureHelper,TextureHelper,https://threejs.org/docs/#examples/en/helpers/TextureHelper,Addons,Helpers,,,0,false,Orbs,0.6,0.5,0.1,0.67,helpers,Visualizes a texture on a debug quad
+OctreeHelper,OctreeHelper,https://threejs.org/docs/#examples/en/helpers/OctreeHelper,Addons,Helpers,,,0,false,Ritual,0.6,0.5,0.1,0.67,helpers,Visualizes octree spatial subdivision
+HeartCurve,HeartCurve,https://threejs.org/docs/#examples/en/curves/HeartCurve,Addons,Curves,,,0,false,Constellation,0.6,0.5,0.1,0.67,curves,Heart-shaped parametric curve
+HelixCurve,HelixCurve,https://threejs.org/docs/#examples/en/curves/HelixCurve,Addons,Curves,,,0,false,Constellation|Orbs,0.6,0.5,0.1,0.67,curves,Helical spiral parametric curve
+Text2D,Text2D,https://threejs.org/docs/#examples/en/webxr/Text2D,Addons,WebXR,,,0,false,Ritual|Wall,0.6,0.5,0.1,0.67,webxr,2D text label for XR interfaces
+TubePainter,TubePainter,https://threejs.org/docs/#examples/en/misc/TubePainter,Addons,Misc,,,0,false,Ritual|Constellation,0.6,0.5,0.1,0.67,misc,Real-time tube painting in 3D (VR drawing)
+WoodNodeMaterial,WoodNodeMaterial,https://threejs.org/docs/#examples/en/materials/WoodNodeMaterial,Addons,Materials,,,0,false,Orbs|Pantheon,0.6,0.5,0.1,0.67,materials,Procedural wood grain node material
+PixelationNode,PixelationNode,https://threejs.org/docs/#examples/en/tsl/PixelationNode,Addons,TSL,,,0,false,Orbs|Wall,0.6,0.5,0.1,0.67,tsl,Node-based pixelation effect for WebGPU
+FilmNode,FilmNode,https://threejs.org/docs/#examples/en/tsl/FilmNode,Addons,TSL,,,0,false,Orbs,0.6,0.5,0.1,0.67,tsl,Node-based film grain effect for WebGPU
+DotScreenNode,DotScreenNode,https://threejs.org/docs/#examples/en/tsl/DotScreenNode,Addons,TSL,,,0,false,Orbs|Wall,0.6,0.5,0.1,0.67,tsl,Node-based dot screen halftone for WebGPU
+RGBShiftNode,RGBShiftNode,https://threejs.org/docs/#examples/en/tsl/RGBShiftNode,Addons,TSL,,,0,false,Orbs,0.6,0.5,0.1,0.67,tsl,Node-based RGB channel shift for WebGPU
+Lut3DNode,Lut3DNode,https://threejs.org/docs/#examples/en/tsl/Lut3DNode,Addons,TSL,,,0,false,Orbs,0.6,0.5,0.1,0.67,tsl,3D color lookup table for WebGPU
+TransitionNode,TransitionNode,https://threejs.org/docs/#examples/en/tsl/TransitionNode,Addons,TSL,,,0,false,Pantheon|Orbs,0.6,0.5,0.1,0.67,tsl,Scene transition effect for WebGPU
+RetroPassNode,RetroPassNode,https://threejs.org/docs/#examples/en/tsl/RetroPassNode,Addons,TSL,,,0,false,Orbs|Wall,0.6,0.5,0.1,0.67,tsl,Retro CRT/console visual effect for WebGPU
+ToonOutlinePassNode,ToonOutlinePassNode,https://threejs.org/docs/#examples/en/tsl/ToonOutlinePassNode,Addons,TSL,,,0,false,Constellation|Pantheon,0.6,0.5,0.1,0.67,tsl,Toon outline rendering pass for WebGPU
+IESSpotLight,I E S Spot Light,https://threejs.org/docs/#api/en/lights/IESSpotLight,Reference,Lights,SpotLight,,21,true,Orbs,0.4,0.7,0.1,0.65,lighting,
+ProjectorLight,Projector Light,https://threejs.org/docs/#api/en/lights/ProjectorLight,Reference,Lights,Light,,21,true,Wall,0.4,0.7,0.1,0.65,lighting,
+AnimationLoader,Animation Loader,https://threejs.org/docs/#api/en/loaders/AnimationLoader,Reference,Loaders,Loader,,1,true,Pantheon,0.4,0.7,0.1,0.65,animation|loading,
+AudioLoader,Audio Loader,https://threejs.org/docs/#api/en/loaders/AudioLoader,Reference,Loaders,Loader,,1,true,Pantheon,0.4,0.7,0.1,0.65,audio|loading,
+BufferGeometryLoader,Buffer Geometry Loader,https://threejs.org/docs/#api/en/loaders/BufferGeometryLoader,Reference,Loaders,Loader,,2,true,Orbs,0.4,0.7,0.1,0.65,geometry|loading,
+CompressedTextureLoader,Compressed Texture Loader,https://threejs.org/docs/#api/en/loaders/CompressedTextureLoader,Reference,Loaders,Loader,,1,true,Wall,0.4,0.7,0.1,0.65,loading|textures,
+CubeTextureLoader,Cube Texture Loader,https://threejs.org/docs/#api/en/loaders/CubeTextureLoader,Reference,Loaders,Loader,,1,true,Wall,0.4,0.7,0.1,0.65,loading|textures,
+DataTextureLoader,Data Texture Loader,https://threejs.org/docs/#api/en/loaders/DataTextureLoader,Reference,Loaders,Loader,,1,true,Wall,0.4,0.7,0.1,0.65,loading|textures,
+FileLoader,File Loader,https://threejs.org/docs/#api/en/loaders/FileLoader,Reference,Loaders,Loader,,1,true,Orbs,0.4,0.7,0.1,0.65,loading,
+ImageBitmapLoader,Image Bitmap Loader,https://threejs.org/docs/#api/en/loaders/ImageBitmapLoader,Reference,Loaders,Loader,,1,true,Orbs,0.4,0.7,0.1,0.65,interaction|loading,
+ImageLoader,Image Loader,https://threejs.org/docs/#api/en/loaders/ImageLoader,Reference,Loaders,Loader,,1,true,Orbs,0.4,0.7,0.1,0.65,loading,
+LoaderUtils,Loader Utils,https://threejs.org/docs/#api/en/loaders/LoaderUtils,Reference,Loaders,,,1,true,Orbs,0.4,0.7,0.1,0.65,loading,
+MaterialLoader,Material Loader,https://threejs.org/docs/#api/en/loaders/MaterialLoader,Reference,Loaders,Loader,,2,true,Orbs,0.4,0.7,0.1,0.65,loading|materials,
+NodeLoader,Node Loader,https://threejs.org/docs/#api/en/loaders/NodeLoader,Reference,Loaders,Loader,,1,true,Orbs,0.4,0.7,0.1,0.65,loading,
+NodeMaterialLoader,Node Material Loader,https://threejs.org/docs/#api/en/loaders/NodeMaterialLoader,Reference,Loaders,Loader,,2,true,Orbs,0.4,0.7,0.1,0.65,loading|materials,
+NodeObjectLoader,Node Object Loader,https://threejs.org/docs/#api/en/loaders/NodeObjectLoader,Reference,Loaders,Loader,,1,true,Orbs,0.4,0.7,0.1,0.65,loading,
+ObjectLoader,Object Loader,https://threejs.org/docs/#api/en/loaders/ObjectLoader,Reference,Loaders,Loader,,1,true,Orbs,0.4,0.7,0.1,0.65,loading,
+LineLoop,Line Loop,https://threejs.org/docs/#api/en/objects/LineLoop,Reference,Objects,Line,,8,true,Constellation,0.4,0.7,0.1,0.65,geometry,
+HDRCubeTextureLoader,HDRCubeTextureLoader,https://threejs.org/docs/#examples/en/loaders/HDRCubeTextureLoader,Addons,Loaders,,,0,false,Orbs|Pantheon,0.7,0.5,0.4,0.65,loaders,Loads HDR cube map textures for environment lighting
+XRControllerModel,XRControllerModel,https://threejs.org/docs/#examples/en/webxr/XRControllerModel,Addons,WebXR,,,0,false,Ritual,0.7,0.5,0.4,0.65,webxr,3D model representing an XR controller
+XRHandModel,XRHandModel,https://threejs.org/docs/#examples/en/webxr/XRHandModel,Addons,WebXR,,,0,false,Ritual,0.7,0.5,0.4,0.65,webxr,3D hand model from XR hand tracking data
+XRHandMeshModel,XRHandMeshModel,https://threejs.org/docs/#examples/en/webxr/XRHandMeshModel,Addons,WebXR,,,0,false,Ritual,0.7,0.5,0.4,0.65,webxr,Mesh-based hand model from tracking
+ArrowHelper,Arrow Helper,https://threejs.org/docs/#api/en/helpers/ArrowHelper,Reference,Helpers,Object3D,,0,false,Constellation|Ritual,0.6,0.4,0.1,0.64,xr,
+AxesHelper,Axes Helper,https://threejs.org/docs/#api/en/helpers/AxesHelper,Reference,Helpers,LineSegments,,0,false,Constellation,0.6,0.4,0.1,0.64,rendering,
+Box3Helper,Box3 Helper,https://threejs.org/docs/#api/en/helpers/Box3Helper,Reference,Helpers,LineSegments,,0,false,Constellation,0.6,0.4,0.1,0.64,math,
+BoxHelper,Box Helper,https://threejs.org/docs/#api/en/helpers/BoxHelper,Reference,Helpers,LineSegments,,0,false,Constellation,0.6,0.4,0.1,0.64,rendering,
+CameraHelper,Camera Helper,https://threejs.org/docs/#api/en/helpers/CameraHelper,Reference,Helpers,LineSegments,,0,false,Constellation,0.6,0.4,0.1,0.64,rendering,
+GridHelper,Grid Helper,https://threejs.org/docs/#api/en/helpers/GridHelper,Reference,Helpers,LineSegments,,0,false,Constellation,0.6,0.4,0.1,0.64,rendering,
+PlaneHelper,Plane Helper,https://threejs.org/docs/#api/en/helpers/PlaneHelper,Reference,Helpers,Line,,0,false,Constellation,0.6,0.4,0.1,0.64,math,
+PolarGridHelper,Polar Grid Helper,https://threejs.org/docs/#api/en/helpers/PolarGridHelper,Reference,Helpers,LineSegments,,0,false,Constellation|Ritual,0.6,0.4,0.1,0.64,xr,
+SkeletonHelper,Skeleton Helper,https://threejs.org/docs/#api/en/helpers/SkeletonHelper,Reference,Helpers,LineSegments,,0,false,Constellation|Pantheon,0.6,0.4,0.1,0.64,animation,
+CSMHelper,C S M Helper,https://threejs.org/docs/#examples/en/csm/CSMHelper,Addons,Csm,,,0,false,Constellation,0.6,0.4,0.1,0.64,lighting,Addon/Example class
+PositionalAudioHelper,Positional Audio Helper,https://threejs.org/docs/#examples/en/helpers/PositionalAudioHelper,Addons,Helpers,,,0,false,Constellation|Pantheon,0.6,0.4,0.1,0.64,audio,Addon/Example class
+VertexNormalsHelper,Vertex Normals Helper,https://threejs.org/docs/#examples/en/helpers/VertexNormalsHelper,Addons,Helpers,,,0,false,Constellation,0.6,0.4,0.1,0.64,materials,Addon/Example class
+VertexTangentsHelper,Vertex Tangents Helper,https://threejs.org/docs/#examples/en/helpers/VertexTangentsHelper,Addons,Helpers,,,0,false,Constellation|Wall,0.6,0.4,0.1,0.64,rendering,Addon/Example class
+ViewHelper,View Helper,https://threejs.org/docs/#examples/en/helpers/ViewHelper,Addons,Helpers,,,0,false,Constellation,0.6,0.4,0.1,0.64,rendering,Addon/Example class
+SelectionHelper,Selection Helper,https://threejs.org/docs/#examples/en/interactive/SelectionHelper,Addons,Interactive,,,0,false,Constellation|Ritual,0.6,0.4,0.1,0.64,interaction,Addon/Example class
+NodeMaterialObserver,NodeMaterialObserver,https://threejs.org/docs/#api/en/materials/NodeMaterialObserver,Materials,Node,,,0,false,Orbs,0.6,0.4,0.1,0.64,node,Observes and tracks changes in NodeMaterial properties
+ShadowNodeMaterial,ShadowNodeMaterial,https://threejs.org/docs/#api/en/materials/ShadowNodeMaterial,Materials,Special,,,0,false,Pantheon,0.6,0.4,0.1,0.64,special,Node-based shadow material for WebGPU
+GCodeLoader,GCodeLoader,https://threejs.org/docs/#examples/en/loaders/GCodeLoader,Addons,Loaders,,,0,false,Constellation,0.6,0.4,0.1,0.64,loaders,Loads G-code CNC/3D printer files as line geometry
+KTXLoader,KTXLoader,https://threejs.org/docs/#examples/en/loaders/KTXLoader,Addons,Loaders,,,0,false,Orbs,0.6,0.4,0.1,0.64,loaders,Loads KTX compressed texture format
+UltraHDRLoader,UltraHDRLoader,https://threejs.org/docs/#examples/en/loaders/UltraHDRLoader,Addons,Loaders,,,0,false,Orbs,0.6,0.4,0.1,0.64,loaders,Loads Ultra HDR gain map images
+LUT3dlLoader,LUT3dlLoader,https://threejs.org/docs/#examples/en/loaders/LUT3dlLoader,Addons,Loaders,,,0,false,Orbs,0.6,0.4,0.1,0.64,loaders,Loads 3DL color lookup table files
+LUTCubeLoader,LUTCubeLoader,https://threejs.org/docs/#examples/en/loaders/LUTCubeLoader,Addons,Loaders,,,0,false,Orbs,0.6,0.4,0.1,0.64,loaders,Loads .cube color lookup table files
+LUTImageLoader,LUTImageLoader,https://threejs.org/docs/#examples/en/loaders/LUTImageLoader,Addons,Loaders,,,0,false,Orbs,0.6,0.4,0.1,0.64,loaders,Loads color LUT from image files
+ColorEnvironment,ColorEnvironment,https://threejs.org/docs/#examples/en/environments/ColorEnvironment,Addons,Environments,,,0,false,Orbs,0.6,0.4,0.1,0.64,environments,Solid color environment map
+RapierHelper,RapierHelper,https://threejs.org/docs/#examples/en/helpers/RapierHelper,Addons,Helpers,,,0,false,Ritual,0.6,0.4,0.1,0.64,helpers,Debug visualization for Rapier physics bodies
+ColorSpaces,ColorSpaces,https://threejs.org/docs/#examples/en/math/ColorSpaces,Addons,Math,,,0,false,Orbs,0.6,0.4,0.1,0.64,math,Extended color space conversion utilities
+ReflectorForSSRPass,ReflectorForSSRPass,https://threejs.org/docs/#examples/en/objects/ReflectorForSSRPass,Addons,Objects,,,0,false,Orbs,0.6,0.4,0.1,0.64,objects,Reflector optimized for screen-space reflections pass
+GrannyKnot,GrannyKnot,https://threejs.org/docs/#examples/en/curves/GrannyKnot,Addons,Curves,,,0,false,Constellation,0.6,0.4,0.1,0.64,curves,Granny knot parametric curve
+KnotCurve,KnotCurve,https://threejs.org/docs/#examples/en/curves/KnotCurve,Addons,Curves,,,0,false,Constellation,0.6,0.4,0.1,0.64,curves,Decorative knot parametric curve
+TrefoilKnot,TrefoilKnot,https://threejs.org/docs/#examples/en/curves/TrefoilKnot,Addons,Curves,,,0,false,Constellation,0.6,0.4,0.1,0.64,curves,Trefoil knot parametric curve
+TorusKnot,TorusKnot,https://threejs.org/docs/#examples/en/curves/TorusKnot,Addons,Curves,,,0,false,Constellation|Orbs,0.6,0.4,0.1,0.64,curves,Torus knot parametric curve
+CinquefoilKnot,CinquefoilKnot,https://threejs.org/docs/#examples/en/curves/CinquefoilKnot,Addons,Curves,,,0,false,Constellation,0.6,0.4,0.1,0.64,curves,Cinquefoil knot parametric curve
+VivianiCurve,VivianiCurve,https://threejs.org/docs/#examples/en/curves/VivianiCurve,Addons,Curves,,,0,false,Constellation,0.6,0.4,0.1,0.64,curves,Viviani curve (sphere-cylinder intersection)
+XRHandPrimitiveModel,XRHandPrimitiveModel,https://threejs.org/docs/#examples/en/webxr/XRHandPrimitiveModel,Addons,WebXR,,,0,false,Ritual,0.6,0.4,0.1,0.64,webxr,Simple primitive hand model (spheres/boxes)
+OculusHandPointerModel,OculusHandPointerModel,https://threejs.org/docs/#examples/en/webxr/OculusHandPointerModel,Addons,WebXR,,,0,false,Ritual,0.6,0.4,0.1,0.64,webxr,Pointer ray model for Quest hand tracking
+Gyroscope,Gyroscope,https://threejs.org/docs/#examples/en/misc/Gyroscope,Addons,Misc,,,0,false,Ritual,0.6,0.4,0.1,0.64,misc,Object that maintains world orientation regardless of parent
+DenoiseNode,DenoiseNode,https://threejs.org/docs/#examples/en/tsl/DenoiseNode,Addons,TSL,,,0,false,Orbs,0.6,0.4,0.1,0.64,tsl,Denoising filter for ray-traced effects
+BilateralBlurNode,BilateralBlurNode,https://threejs.org/docs/#examples/en/tsl/BilateralBlurNode,Addons,TSL,,,0,false,Orbs,0.6,0.4,0.1,0.64,tsl,Edge-preserving bilateral blur for WebGPU
+SSAAPassNode,SSAAPassNode,https://threejs.org/docs/#examples/en/tsl/SSAAPassNode,Addons,TSL,,,0,false,Orbs,0.6,0.4,0.1,0.64,tsl,Super-sampling AA pass for WebGPU
+PixelationPassNode,PixelationPassNode,https://threejs.org/docs/#examples/en/tsl/PixelationPassNode,Addons,TSL,,,0,false,Orbs|Wall,0.6,0.4,0.1,0.64,tsl,Full pixelation render pass for WebGPU
+TiledLightsNode,TiledLightsNode,https://threejs.org/docs/#examples/en/tsl/TiledLightsNode,Addons,TSL,,,0,false,Pantheon|Orbs,0.6,0.4,0.1,0.64,tsl,Tiled lighting node for efficient multi-light
+GeometryCompressionUtils,GeometryCompressionUtils,https://threejs.org/docs/#examples/en/utils/GeometryCompressionUtils,Addons,Utils,,,0,false,Orbs|Constellation,0.6,0.4,0.1,0.64,utils,Compresses geometry data for reduced memory
+DecalGeometry,Decal Geometry,https://threejs.org/docs/#examples/en/geometries/DecalGeometry,Addons,Geometries,BufferGeometry,,2,true,Orbs,0.7,0.7,0.8,0.63,geometry,Addon/Example class
+OBJLoader,O B J Loader,https://threejs.org/docs/#examples/en/loaders/OBJLoader,Addons,Loaders,Loader,,12,true,Orbs,0.7,0.7,0.8,0.63,loading,Addon/Example class
+STLLoader,S T L Loader,https://threejs.org/docs/#examples/en/loaders/STLLoader,Addons,Loaders,Loader,,12,true,Orbs,0.7,0.7,0.8,0.63,loading,Addon/Example class
+PLYLoader,P L Y Loader,https://threejs.org/docs/#examples/en/loaders/PLYLoader,Addons,Loaders,Loader,,12,true,Orbs,0.7,0.7,0.8,0.63,loading,Addon/Example class
+ColladaLoader,Collada Loader,https://threejs.org/docs/#examples/en/loaders/ColladaLoader,Addons,Loaders,Loader,,12,true,Orbs,0.7,0.7,0.8,0.63,loading,Addon/Example class
+MTLLoader,MTLLoader,https://threejs.org/docs/#examples/en/loaders/MTLLoader,Addons,Loaders,,,0,false,Pantheon,0.8,0.5,0.7,0.63,loaders,Loads MTL material files for OBJ models
+IESLoader,IESLoader,https://threejs.org/docs/#examples/en/loaders/IESLoader,Addons,Loaders,,,0,false,Pantheon,0.7,0.4,0.4,0.62,loaders,Loads IES photometric light profile data
+SkeletonUtils,SkeletonUtils,https://threejs.org/docs/#examples/en/utils/SkeletonUtils,Addons,Utils,,,0,false,Pantheon,0.8,0.6,0.9,0.62,utils,Skeleton retargeting and manipulation utilities
+ParametricGeometry,Parametric Geometry,https://threejs.org/docs/#examples/en/geometries/ParametricGeometry,Addons,Geometries,BufferGeometry,,2,true,Ritual,0.5,0.7,0.5,0.61,geometry|xr,Addon/Example class
+TeapotGeometry,Teapot Geometry,https://threejs.org/docs/#examples/en/geometries/TeapotGeometry,Addons,Geometries,BufferGeometry,,2,true,Orbs,0.5,0.7,0.5,0.61,geometry,Addon/Example class
+SSSLightingModel,SSSLightingModel,https://threejs.org/docs/#api/en/materials/SSSLightingModel,Materials,Special,,,0,false,Orbs|Pantheon,0.6,0.5,0.4,0.61,special,Subsurface scattering lighting model implementation
+VOXLoader,VOXLoader,https://threejs.org/docs/#examples/en/loaders/VOXLoader,Addons,Loaders,,,0,false,Orbs|Constellation,0.6,0.5,0.4,0.61,loaders,Loads MagicaVoxel VOX voxel models
+CSMFrustum,CSMFrustum,https://threejs.org/docs/#examples/en/csm/CSMFrustum,Addons,CSM,,,0,false,Pantheon,0.6,0.3,0.1,0.61,csm,Frustum calculation for cascaded shadow splits
+TrefoilPolynomialKnot,TrefoilPolynomialKnot,https://threejs.org/docs/#examples/en/curves/TrefoilPolynomialKnot,Addons,Curves,,,0,false,Constellation,0.6,0.3,0.1,0.61,curves,Polynomial trefoil knot curve
+FigureEightPolynomialKnot,FigureEightPolynomialKnot,https://threejs.org/docs/#examples/en/curves/FigureEightPolynomialKnot,Addons,Curves,,,0,false,Constellation,0.6,0.3,0.1,0.61,curves,Figure-eight polynomial knot curve
+ProgressiveLightMap,ProgressiveLightMap,https://threejs.org/docs/#examples/en/misc/ProgressiveLightMap,Addons,Misc,,,0,false,Orbs|Pantheon,0.6,0.5,0.4,0.61,misc,Progressive lightmap baking in real-time
+ConvexObjectBreaker,ConvexObjectBreaker,https://threejs.org/docs/#examples/en/misc/ConvexObjectBreaker,Addons,Misc,,,0,false,Ritual,0.6,0.5,0.4,0.61,misc,Breaks convex objects into pieces for destruction effects
+UVsDebug,UVsDebug,https://threejs.org/docs/#examples/en/utils/UVsDebug,Addons,Utils,,,0,false,Pantheon|Orbs,0.6,0.5,0.4,0.61,utils,UV coordinate visualization for debugging
+SortUtils,SortUtils,https://threejs.org/docs/#examples/en/utils/SortUtils,Addons,Utils,,,0,false,Orbs,0.6,0.3,0.1,0.61,utils,Sorting utilities for depth ordering
+WebGLTextureUtils,WebGLTextureUtils,https://threejs.org/docs/#examples/en/utils/WebGLTextureUtils,Addons,Utils,,,0,false,Orbs,0.6,0.3,0.1,0.61,utils,WebGL-specific texture utility functions
+CSM,C S M,https://threejs.org/docs/#examples/en/csm/CSM,Addons,Csm,,,0,false,Orbs,0.5,0.4,0.1,0.6,lighting,Addon/Example class
+AnaglyphEffect,Anaglyph Effect,https://threejs.org/docs/#examples/en/effects/AnaglyphEffect,Addons,Effects,,,0,false,Orbs,0.5,0.4,0.1,0.6,rendering,Addon/Example class
+AsciiEffect,Ascii Effect,https://threejs.org/docs/#examples/en/effects/AsciiEffect,Addons,Effects,,,0,false,Wall,0.5,0.4,0.1,0.6,rendering,Addon/Example class
+OutlineEffect,Outline Effect,https://threejs.org/docs/#examples/en/effects/OutlineEffect,Addons,Effects,,,0,false,Constellation,0.5,0.4,0.1,0.6,postprocessing,Addon/Example class
+ParallaxBarrierEffect,Parallax Barrier Effect,https://threejs.org/docs/#examples/en/effects/ParallaxBarrierEffect,Addons,Effects,,,0,false,Ritual,0.5,0.4,0.1,0.6,xr,Addon/Example class
+StereoEffect,Stereo Effect,https://threejs.org/docs/#examples/en/effects/StereoEffect,Addons,Effects,,,0,false,Orbs,0.5,0.4,0.1,0.6,rendering,Addon/Example class
+DebugEnvironment,Debug Environment,https://threejs.org/docs/#examples/en/environments/DebugEnvironment,Addons,Environments,,,0,false,Orbs,0.5,0.4,0.1,0.6,rendering,Addon/Example class
+RoomEnvironment,Room Environment,https://threejs.org/docs/#examples/en/environments/RoomEnvironment,Addons,Environments,,,0,false,Orbs,0.5,0.4,0.1,0.6,rendering,Addon/Example class
+EXRExporter,E X R Exporter,https://threejs.org/docs/#examples/en/exporters/EXRExporter,Addons,Exporters,,,0,false,Ritual,0.5,0.4,0.1,0.6,loading|xr,Addon/Example class
+KTX2Exporter,K T X2 Exporter,https://threejs.org/docs/#examples/en/exporters/KTX2Exporter,Addons,Exporters,,,0,false,Orbs,0.5,0.4,0.1,0.6,loading,Addon/Example class
+HTMLMesh,H T M L Mesh,https://threejs.org/docs/#examples/en/interactive/HTMLMesh,Addons,Interactive,,,0,false,Wall,0.5,0.4,0.1,0.6,geometry|interaction,Addon/Example class
+InteractiveGroup,Interactive Group,https://threejs.org/docs/#examples/en/interactive/InteractiveGroup,Addons,Interactive,,,0,false,Ritual,0.5,0.4,0.1,0.6,interaction,Addon/Example class
+SelectionBox,Selection Box,https://threejs.org/docs/#examples/en/interactive/SelectionBox,Addons,Interactive,,,0,false,Ritual,0.5,0.4,0.1,0.6,interaction,Addon/Example class
+ConvexHull,Convex Hull,https://threejs.org/docs/#examples/en/math/ConvexHull,Addons,Math,,,0,false,Orbs,0.5,0.4,0.1,0.6,geometry|math,Addon/Example class
+Lut,Lut,https://threejs.org/docs/#examples/en/math/Lut,Addons,Math,,,0,false,Orbs,0.5,0.4,0.1,0.6,loading|math,Addon/Example class
+MeshSurfaceSampler,Mesh Surface Sampler,https://threejs.org/docs/#examples/en/math/MeshSurfaceSampler,Addons,Math,,,0,false,Pantheon,0.5,0.4,0.1,0.6,geometry|math,Addon/Example class
+OBB,O B B,https://threejs.org/docs/#examples/en/math/OBB,Addons,Math,,,0,false,Orbs,0.5,0.4,0.1,0.6,math,Addon/Example class
+Octree,Octree,https://threejs.org/docs/#examples/en/math/Octree,Addons,Math,,,0,false,Orbs,0.5,0.4,0.1,0.6,geometry|math,Addon/Example class
+SimplexNoise,Simplex Noise,https://threejs.org/docs/#examples/en/math/SimplexNoise,Addons,Math,,,0,false,Orbs,0.5,0.4,0.1,0.6,math,Addon/Example class
+EdgeSplitModifier,Edge Split Modifier,https://threejs.org/docs/#examples/en/modifiers/EdgeSplitModifier,Addons,Modifiers,,,0,false,Constellation,0.5,0.4,0.1,0.6,rendering,Addon/Example class
+Flow,Flow,https://threejs.org/docs/#examples/en/modifiers/Flow,Addons,Modifiers,,,0,false,Orbs,0.5,0.4,0.1,0.6,animation,Addon/Example class
+InstancedFlow,Instanced Flow,https://threejs.org/docs/#examples/en/modifiers/InstancedFlow,Addons,Modifiers,,,0,false,Orbs,0.5,0.4,0.1,0.6,animation,Addon/Example class
+SimplifyModifier,Simplify Modifier,https://threejs.org/docs/#examples/en/modifiers/SimplifyModifier,Addons,Modifiers,,,0,false,Orbs,0.5,0.4,0.1,0.6,rendering,Addon/Example class
+TessellateModifier,Tessellate Modifier,https://threejs.org/docs/#examples/en/modifiers/TessellateModifier,Addons,Modifiers,,,0,false,Orbs,0.5,0.4,0.1,0.6,rendering,Addon/Example class
+LensflareElement,Lensflare Element,https://threejs.org/docs/#examples/en/objects/LensflareElement,Addons,Objects,,,0,false,Ritual,0.5,0.4,0.1,0.6,geometry|lighting|xr,Addon/Example class
+XRControllerModelFactory,X R Controller Model Factory,https://threejs.org/docs/#examples/en/webxr/XRControllerModelFactory,Addons,Webxr,,,0,false,Ritual,0.5,0.4,0.1,0.6,geometry|xr,Addon/Example class
+XRHandModelFactory,X R Hand Model Factory,https://threejs.org/docs/#examples/en/webxr/XRHandModelFactory,Addons,Webxr,,,0,false,Ritual,0.5,0.4,0.1,0.6,xr,Addon/Example class
+SceneOptimizer,Scene Optimizer,https://threejs.org/docs/#examples/en/utils/SceneOptimizer,Addons,Utils,,,0,false,Orbs,0.5,0.4,0.1,0.6,rendering,Addon/Example class
+WorkerPool,Worker Pool,https://threejs.org/docs/#examples/en/utils/WorkerPool,Addons,Utils,,,0,false,Orbs,0.5,0.4,0.1,0.6,loading,Addon/Example class
+WGSLNodeBuilder,WGSLNodeBuilder,https://threejs.org/docs/#api/en/renderers/WGSLNodeBuilder,Renderers,NodeSystem,,,0,false,Orbs,0.5,0.4,0.1,0.6,nodesystem,Compiles node graph to WGSL shaders
+InspectorBase,InspectorBase,https://threejs.org/docs/#api/en/renderers/InspectorBase,Renderers,Debug,,,0,false,Orbs,0.5,0.4,0.1,0.6,debug,Base class for renderer inspection tools
+SVGObject,SVGObject,https://threejs.org/docs/#examples/en/renderers/SVGObject,Addons,Renderers,,,0,false,Wall,0.5,0.4,0.1,0.6,renderers,Object3D wrapper for SVG elements
+AnaglyphPassNode,AnaglyphPassNode,https://threejs.org/docs/#examples/en/tsl/AnaglyphPassNode,Addons,TSL,,,0,false,Ritual,0.5,0.4,0.1,0.6,tsl,Anaglyph stereoscopic pass for WebGPU
+TileShadowNode,TileShadowNode,https://threejs.org/docs/#examples/en/tsl/TileShadowNode,Addons,TSL,,,0,false,Pantheon,0.5,0.4,0.1,0.6,tsl,Tiled shadow map node for many lights
+BitonicSort,BitonicSort,https://threejs.org/docs/#examples/en/gpgpu/BitonicSort,Addons,GPGPU,,,0,false,Orbs,0.5,0.4,0.1,0.6,gpgpu,GPU-based bitonic sort algorithm
+MeshPhysicalNodeMaterial,MeshPhysicalNodeMaterial,https://threejs.org/docs/#api/en/materials/MeshPhysicalNodeMaterial,Materials,Mesh,,,0,false,Pantheon|Orbs,0.6,0.6,0.7,0.58,mesh,Node-based PBR physical material for WebGPU
+MeshSSSNodeMaterial,MeshSSSNodeMaterial,https://threejs.org/docs/#api/en/materials/MeshSSSNodeMaterial,Materials,Mesh,,,0,false,Pantheon|Orbs,0.6,0.6,0.7,0.58,mesh,Subsurface scattering material for translucent objects
+MeshStandardNodeMaterial,MeshStandardNodeMaterial,https://threejs.org/docs/#api/en/materials/MeshStandardNodeMaterial,Materials,Mesh,,,0,false,Pantheon|Orbs,0.6,0.6,0.7,0.58,mesh,Node-based standard PBR material for WebGPU
+DDSLoader,DDSLoader,https://threejs.org/docs/#examples/en/loaders/DDSLoader,Addons,Loaders,,,0,false,Orbs,0.6,0.4,0.4,0.58,loaders,Loads DDS compressed texture format
+TGALoader,TGALoader,https://threejs.org/docs/#examples/en/loaders/TGALoader,Addons,Loaders,,,0,false,Orbs,0.6,0.4,0.4,0.58,loaders,Loads TGA image format as textures
+NURBSUtils,NURBSUtils,https://threejs.org/docs/#examples/en/curves/NURBSUtils,Addons,Curves,,,0,false,Constellation,0.6,0.4,0.4,0.58,curves,Utility functions for NURBS calculations
+OculusHandModel,OculusHandModel,https://threejs.org/docs/#examples/en/webxr/OculusHandModel,Addons,WebXR,,,0,false,Ritual,0.6,0.4,0.4,0.58,webxr,Meta Quest hand tracking model
+WebGLTimestampQueryPool,WebGLTimestampQueryPool,https://threejs.org/docs/#api/en/renderers/WebGLTimestampQueryPool,Renderers,Profiling,,,0,false,Orbs,0.5,0.3,0.1,0.57,profiling,WebGL-specific timestamp query pool
+WebGPUTimestampQueryPool,WebGPUTimestampQueryPool,https://threejs.org/docs/#api/en/renderers/WebGPUTimestampQueryPool,Renderers,Profiling,,,0,false,Orbs,0.5,0.3,0.1,0.57,profiling,WebGPU-specific timestamp query pool
+WGSLNodeFunction,WGSLNodeFunction,https://threejs.org/docs/#api/en/renderers/WGSLNodeFunction,Renderers,NodeSystem,,,0,false,Orbs,0.5,0.3,0.1,0.57,nodesystem,WGSL function representation in node system
+WGSLNodeParser,WGSLNodeParser,https://threejs.org/docs/#api/en/renderers/WGSLNodeParser,Renderers,NodeSystem,,,0,false,Orbs,0.5,0.3,0.1,0.57,nodesystem,Parses WGSL code into node graph
+PVRLoader,PVRLoader,https://threejs.org/docs/#examples/en/loaders/PVRLoader,Addons,Loaders,,,0,false,Orbs,0.5,0.3,0.1,0.57,loaders,Loads PVRTC compressed texture format
+CSMShadowNode,CSMShadowNode,https://threejs.org/docs/#examples/en/csm/CSMShadowNode,Addons,CSM,,,0,false,Pantheon,0.5,0.3,0.1,0.57,csm,Node material shadow node for CSM
+CSMShader,CSMShader,https://threejs.org/docs/#examples/en/csm/CSMShader,Addons,CSM,,,0,false,Pantheon,0.5,0.3,0.1,0.57,csm,Shader code for cascaded shadow map rendering
+DecoratedTorusKnot4a,DecoratedTorusKnot4a,https://threejs.org/docs/#examples/en/curves/DecoratedTorusKnot4a,Addons,Curves,,,0,false,Constellation,0.5,0.3,0.1,0.57,curves,Decorative torus knot variant 4a
+DecoratedTorusKnot4b,DecoratedTorusKnot4b,https://threejs.org/docs/#examples/en/curves/DecoratedTorusKnot4b,Addons,Curves,,,0,false,Constellation,0.5,0.3,0.1,0.57,curves,Decorative torus knot variant 4b
+DecoratedTorusKnot5a,DecoratedTorusKnot5a,https://threejs.org/docs/#examples/en/curves/DecoratedTorusKnot5a,Addons,Curves,,,0,false,Constellation,0.5,0.3,0.1,0.57,curves,Decorative torus knot variant 5a
+DecoratedTorusKnot5c,DecoratedTorusKnot5c,https://threejs.org/docs/#examples/en/curves/DecoratedTorusKnot5c,Addons,Curves,,,0,false,Constellation,0.5,0.3,0.1,0.57,curves,Decorative torus knot variant 5c
+LDrawConditionalLineMaterial,LDrawConditionalLineMaterial,https://threejs.org/docs/#examples/en/materials/LDrawConditionalLineMaterial,Addons,Materials,,,0,false,Constellation,0.5,0.3,0.1,0.57,materials,Conditional line material for LDraw rendering
+ParallaxBarrierPassNode,ParallaxBarrierPassNode,https://threejs.org/docs/#examples/en/tsl/ParallaxBarrierPassNode,Addons,TSL,,,0,false,Ritual,0.5,0.3,0.1,0.57,tsl,Parallax barrier pass for WebGPU
+StereoCompositePassNode,StereoCompositePassNode,https://threejs.org/docs/#examples/en/tsl/StereoCompositePassNode,Addons,TSL,,,0,false,Ritual,0.5,0.3,0.1,0.57,tsl,Stereo composite pass for WebGPU VR
+StereoPassNode,StereoPassNode,https://threejs.org/docs/#examples/en/tsl/StereoPassNode,Addons,TSL,,,0,false,Ritual,0.5,0.3,0.1,0.57,tsl,Basic stereo rendering pass for WebGPU
+TileShadowNodeHelper,TileShadowNodeHelper,https://threejs.org/docs/#examples/en/tsl/TileShadowNodeHelper,Addons,TSL,,,0,false,Pantheon,0.5,0.3,0.1,0.57,tsl,Helper for tile shadow visualization
+WebGPUTextureUtils,WebGPUTextureUtils,https://threejs.org/docs/#examples/en/utils/WebGPUTextureUtils,Addons,Utils,,,0,false,Orbs,0.5,0.3,0.1,0.57,utils,WebGPU-specific texture utility functions
+Float16BufferAttribute,Float16 Buffer Attribute,https://threejs.org/docs/#api/en/core/bufferAttributeTypes/Float16BufferAttribute,Reference,Core,BufferAttribute,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry,
+Float32BufferAttribute,Float32 Buffer Attribute,https://threejs.org/docs/#api/en/core/bufferAttributeTypes/Float32BufferAttribute,Reference,Core,BufferAttribute,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry,
+InstancedInterleavedBuffer,Instanced Interleaved Buffer,https://threejs.org/docs/#api/en/core/InstancedInterleavedBuffer,Reference,Core,InterleavedBuffer,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry,
+Int16BufferAttribute,Int16 Buffer Attribute,https://threejs.org/docs/#api/en/core/bufferAttributeTypes/Int16BufferAttribute,Reference,Core,BufferAttribute,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry,
+Int32BufferAttribute,Int32 Buffer Attribute,https://threejs.org/docs/#api/en/core/bufferAttributeTypes/Int32BufferAttribute,Reference,Core,BufferAttribute,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry,
+Int8BufferAttribute,Int8 Buffer Attribute,https://threejs.org/docs/#api/en/core/bufferAttributeTypes/Int8BufferAttribute,Reference,Core,BufferAttribute,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry,
+RenderTarget3D,Render Target3 D,https://threejs.org/docs/#api/en/core/RenderTarget3D,Reference,Core,RenderTarget,,0,false,Ritual,0.4,0.4,0.1,0.56,rendering|xr,
+Uint16BufferAttribute,Uint16 Buffer Attribute,https://threejs.org/docs/#api/en/core/bufferAttributeTypes/Uint16BufferAttribute,Reference,Core,BufferAttribute,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry,
+Uint32BufferAttribute,Uint32 Buffer Attribute,https://threejs.org/docs/#api/en/core/bufferAttributeTypes/Uint32BufferAttribute,Reference,Core,BufferAttribute,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry,
+Uint8BufferAttribute,Uint8 Buffer Attribute,https://threejs.org/docs/#api/en/core/bufferAttributeTypes/Uint8BufferAttribute,Reference,Core,BufferAttribute,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry,
+Uint8ClampedBufferAttribute,Uint8 Clamped Buffer Attribute,https://threejs.org/docs/#api/en/core/bufferAttributeTypes/Uint8ClampedBufferAttribute,Reference,Core,BufferAttribute,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry,
+UniformsGroup,Uniforms Group,https://threejs.org/docs/#api/en/core/UniformsGroup,Reference,Core,,,0,false,Orbs,0.4,0.4,0.1,0.56,rendering,
+Controls,Controls,https://threejs.org/docs/#api/en/extras/Controls,Reference,Extras,,,0,false,Ritual,0.4,0.4,0.1,0.56,interaction,
+CubicBezierCurve,Cubic Bezier Curve,https://threejs.org/docs/#api/en/extras/curves/CubicBezierCurve,Reference,Extras,Curve,,0,false,Orbs,0.4,0.4,0.1,0.56,math,
+DataUtils,Data Utils,https://threejs.org/docs/#api/en/extras/DataUtils,Reference,Extras,,,0,false,Orbs,0.4,0.4,0.1,0.56,rendering,
+Earcut,Earcut,https://threejs.org/docs/#api/en/extras/Earcut,Reference,Extras,,,0,false,Ritual,0.4,0.4,0.1,0.56,math|xr,
+ImageUtils,Image Utils,https://threejs.org/docs/#api/en/extras/ImageUtils,Reference,Extras,,,0,false,Orbs,0.4,0.4,0.1,0.56,rendering,
+QuadraticBezierCurve,Quadratic Bezier Curve,https://threejs.org/docs/#api/en/extras/curves/QuadraticBezierCurve,Reference,Extras,Curve,,0,false,Orbs,0.4,0.4,0.1,0.56,math,
+ShapeUtils,Shape Utils,https://threejs.org/docs/#api/en/extras/ShapeUtils,Reference,Extras,,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry,
+TextureUtils,Texture Utils,https://threejs.org/docs/#api/en/extras/TextureUtils,Reference,Extras,,,0,false,Wall,0.4,0.4,0.1,0.56,textures,
+Cache,Cache,https://threejs.org/docs/#api/en/loaders/Cache,Reference,Loaders,,,0,false,Orbs,0.4,0.4,0.1,0.56,loading,
+Box2,Box2,https://threejs.org/docs/#api/en/math/Box2,Reference,Math,,,0,false,Orbs,0.4,0.4,0.1,0.56,math,
+FrustumArray,Frustum Array,https://threejs.org/docs/#api/en/math/FrustumArray,Reference,Math,,,0,false,Ritual,0.4,0.4,0.1,0.56,math|xr,
+Matrix2,Matrix2,https://threejs.org/docs/#api/en/math/Matrix2,Reference,Math,,,0,false,Orbs,0.4,0.4,0.1,0.56,math,
+CompressedArrayTexture,Compressed Array Texture,https://threejs.org/docs/#api/en/textures/CompressedArrayTexture,Reference,Textures,CompressedTexture,,0,false,Ritual|Wall,0.4,0.4,0.1,0.56,math|textures|xr,
+CompressedCubeTexture,Compressed Cube Texture,https://threejs.org/docs/#api/en/textures/CompressedCubeTexture,Reference,Textures,CompressedTexture,,0,false,Wall,0.4,0.4,0.1,0.56,textures,
+CubeDepthTexture,Cube Depth Texture,https://threejs.org/docs/#api/en/textures/CubeDepthTexture,Reference,Textures,Texture,,0,false,Wall,0.4,0.4,0.1,0.56,materials|textures,
+ExternalTexture,External Texture,https://threejs.org/docs/#api/en/textures/ExternalTexture,Reference,Textures,Texture,,0,false,Wall,0.4,0.4,0.1,0.56,textures,
+VideoFrameTexture,Video Frame Texture,https://threejs.org/docs/#api/en/textures/VideoFrameTexture,Reference,Textures,Texture,,0,false,Wall,0.4,0.4,0.1,0.56,textures,
+BlendMode,Blend Mode,https://threejs.org/docs/#api/en/renderers/common/BlendMode,Reference,Renderers,,,0,false,Orbs,0.4,0.4,0.1,0.56,animation|rendering,
+BundleGroup,Bundle Group,https://threejs.org/docs/#api/en/renderers/common/BundleGroup,Reference,Renderers,,,0,false,Orbs,0.4,0.4,0.1,0.56,rendering,
+CanvasTarget,Canvas Target,https://threejs.org/docs/#api/en/renderers/common/CanvasTarget,Reference,Renderers,,,0,false,Constellation|Ritual,0.4,0.4,0.1,0.56,rendering|textures|xr,
+Info,Info,https://threejs.org/docs/#api/en/renderers/common/Info,Reference,Renderers,,,0,false,Orbs,0.4,0.4,0.1,0.56,rendering,
+QuadMesh,Quad Mesh,https://threejs.org/docs/#api/en/renderers/common/QuadMesh,Reference,Renderers,,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry|rendering,
+StorageBufferAttribute,Storage Buffer Attribute,https://threejs.org/docs/#api/en/renderers/common/StorageBufferAttribute,Reference,Renderers,BufferAttribute,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry|rendering,
+StorageInstancedBufferAttribute,Storage Instanced Buffer Attribute,https://threejs.org/docs/#api/en/renderers/common/StorageInstancedBufferAttribute,Reference,Renderers,InstancedBufferAttribute,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry|rendering,
+StorageTexture,Storage Texture,https://threejs.org/docs/#api/en/renderers/common/StorageTexture,Reference,Renderers,Texture,,0,false,Wall,0.4,0.4,0.1,0.56,rendering|textures,
+StorageArrayTexture,Storage Array Texture,https://threejs.org/docs/#api/en/renderers/common/StorageArrayTexture,Reference,Renderers,Texture,,0,false,Ritual|Wall,0.4,0.4,0.1,0.56,math|rendering|textures|xr,
+Storage3DTexture,Storage3 D Texture,https://threejs.org/docs/#api/en/renderers/common/Storage3DTexture,Reference,Renderers,Texture,,0,false,Wall,0.4,0.4,0.1,0.56,rendering|textures,
+IndirectStorageBufferAttribute,Indirect Storage Buffer Attribute,https://threejs.org/docs/#api/en/renderers/common/IndirectStorageBufferAttribute,Reference,Renderers,BufferAttribute,,0,false,Orbs,0.4,0.4,0.1,0.56,geometry|rendering,
+TimestampQueryPool,Timestamp Query Pool,https://threejs.org/docs/#api/en/renderers/common/TimestampQueryPool,Reference,Renderers,,,0,false,Orbs,0.4,0.4,0.1,0.56,rendering,
+WebGLArrayRenderTarget,Web G L Array Render Target,https://threejs.org/docs/#api/en/renderers/WebGLArrayRenderTarget,Reference,Renderers,WebGLRenderTarget,,0,false,Ritual,0.4,0.4,0.1,0.56,math|rendering|xr,
+WebGL3DRenderTarget,Web G L3 D Render Target,https://threejs.org/docs/#api/en/renderers/WebGL3DRenderTarget,Reference,Renderers,WebGLRenderTarget,,0,false,Ritual,0.4,0.4,0.1,0.56,rendering|xr,
+WebXRDepthSensing,Web X R Depth Sensing,https://threejs.org/docs/#api/en/renderers/webxr/WebXRDepthSensing,Reference,Renderers,,,0,false,Ritual,0.4,0.4,0.1,0.56,materials|rendering|textures|xr,
+CCDIKHelper,C C D I K Helper,https://threejs.org/docs/#examples/en/animation/CCDIKHelper,Addons,Animation,,,0,false,Constellation|Pantheon,0.6,0.4,0.5,0.56,animation,Addon/Example class
+DRACOExporter,D R A C O Exporter,https://threejs.org/docs/#examples/en/exporters/DRACOExporter,Addons,Exporters,,,9,true,Orbs,0.5,0.7,0.8,0.55,loading,Addon/Example class
+GLTFExporter,G L T F Exporter,https://threejs.org/docs/#examples/en/exporters/GLTFExporter,Addons,Exporters,,,9,true,Pantheon,0.5,0.7,0.8,0.55,loading,Addon/Example class
+OBJExporter,O B J Exporter,https://threejs.org/docs/#examples/en/exporters/OBJExporter,Addons,Exporters,,,9,true,Orbs,0.5,0.7,0.8,0.55,loading,Addon/Example class
+PLYExporter,P L Y Exporter,https://threejs.org/docs/#examples/en/exporters/PLYExporter,Addons,Exporters,,,9,true,Orbs,0.5,0.7,0.8,0.55,loading,Addon/Example class
+STLExporter,S T L Exporter,https://threejs.org/docs/#examples/en/exporters/STLExporter,Addons,Exporters,,,9,true,Orbs,0.5,0.7,0.8,0.55,loading,Addon/Example class
+USDZExporter,U S D Z Exporter,https://threejs.org/docs/#examples/en/exporters/USDZExporter,Addons,Exporters,,,9,true,Orbs,0.5,0.7,0.8,0.55,loading,Addon/Example class
+PCDLoader,P C D Loader,https://threejs.org/docs/#examples/en/loaders/PCDLoader,Addons,Loaders,Loader,,12,true,Orbs,0.5,0.7,0.8,0.55,loading,Addon/Example class
+PDBLoader,P D B Loader,https://threejs.org/docs/#examples/en/loaders/PDBLoader,Addons,Loaders,Loader,,1,true,Orbs,0.5,0.7,0.8,0.55,loading,Addon/Example class
+USDLoader,U S D Loader,https://threejs.org/docs/#examples/en/loaders/USDLoader,Addons,Loaders,Loader,,1,true,Orbs,0.5,0.7,0.8,0.55,loading,Addon/Example class
+LDrawLoader,L Draw Loader,https://threejs.org/docs/#examples/en/loaders/LDrawLoader,Addons,Loaders,Loader,,1,true,Orbs,0.5,0.7,0.8,0.55,loading,Addon/Example class
+Rhino3dmLoader,Rhino3dm Loader,https://threejs.org/docs/#examples/en/loaders/Rhino3dmLoader,Addons,Loaders,Loader,,1,true,Orbs,0.5,0.7,0.8,0.55,loading,Addon/Example class
+BVHLoader,B V H Loader,https://threejs.org/docs/#examples/en/loaders/BVHLoader,Addons,Loaders,Loader,,1,true,Orbs,0.5,0.7,0.8,0.55,loading,Addon/Example class
+TIFFLoader,TIFFLoader,https://threejs.org/docs/#examples/en/loaders/TIFFLoader,Addons,Loaders,,,0,false,Orbs,0.6,0.3,0.4,0.55,loaders,Loads TIFF image format as textures
+MD2Loader,MD2Loader,https://threejs.org/docs/#examples/en/loaders/MD2Loader,Addons,Loaders,,,0,false,Pantheon,0.5,0.4,0.4,0.54,loaders,Loads Quake II MD2 character models
+Tab,Tab,https://threejs.org/docs/#examples/en/inspector/Tab,Addons,Inspector,,,0,false,Orbs,0.4,0.3,0.1,0.53,inspector,Inspector tab UI component
+AnimationClipCreator,Animation Clip Creator,https://threejs.org/docs/#examples/en/animation/AnimationClipCreator,Addons,Animation,,,0,false,Pantheon,0.5,0.4,0.5,0.52,animation,Addon/Example class
+CCDIKSolver,C C D I K Solver,https://threejs.org/docs/#examples/en/animation/CCDIKSolver,Addons,Animation,,,0,false,Pantheon,0.5,0.4,0.5,0.52,animation,Addon/Example class
+NURBSCurve,N U R B S Curve,https://threejs.org/docs/#examples/en/curves/NURBSCurve,Addons,Curves,,,0,false,Orbs,0.5,0.4,0.5,0.52,rendering,Addon/Example class
+NURBSSurface,N U R B S Surface,https://threejs.org/docs/#examples/en/curves/NURBSSurface,Addons,Curves,,,0,false,Pantheon,0.5,0.4,0.5,0.52,rendering,Addon/Example class
+AMFLoader,AMFLoader,https://threejs.org/docs/#examples/en/loaders/AMFLoader,Addons,Loaders,,,0,false,Pantheon,0.6,0.4,0.7,0.52,loaders,Loads Additive Manufacturing Format files
+KMZLoader,KMZLoader,https://threejs.org/docs/#examples/en/loaders/KMZLoader,Addons,Loaders,,,0,false,Pantheon,0.5,0.3,0.4,0.51,loaders,Loads Google Earth KMZ 3D model archives
+VRMLLoader,VRMLLoader,https://threejs.org/docs/#examples/en/loaders/VRMLLoader,Addons,Loaders,,,0,false,Ritual,0.5,0.3,0.4,0.51,loaders,Loads VRML virtual reality model format
+LDrawUtils,LDrawUtils,https://threejs.org/docs/#examples/en/utils/LDrawUtils,Addons,Utils,,,0,false,Pantheon,0.5,0.3,0.4,0.51,utils,Utility functions for LDraw model processing
+ThreeMFLoader,ThreeMFLoader,https://threejs.org/docs/#examples/en/loaders/ThreeMFLoader,Addons,Loaders,,,0,false,Pantheon,0.6,0.3,0.7,0.49,loaders,Loads 3MF manufacturing format
+MDDLoader,MDDLoader,https://threejs.org/docs/#examples/en/loaders/MDDLoader,Addons,Loaders,,,0,false,Pantheon,0.5,0.4,0.7,0.48,loaders,Loads point cache animation data
+NURBSVolume,NURBSVolume,https://threejs.org/docs/#examples/en/curves/NURBSVolume,Addons,Curves,,,0,false,Orbs,0.5,0.4,0.7,0.48,curves,NURBS volume for solid modeling
+LWOLoader,LWOLoader,https://threejs.org/docs/#examples/en/loaders/LWOLoader,Addons,Loaders,,,0,false,Pantheon,0.5,0.3,0.7,0.45,loaders,Loads LightWave 3D object files
+TDSLoader,TDSLoader,https://threejs.org/docs/#examples/en/loaders/TDSLoader,Addons,Loaders,,,0,false,Pantheon,0.5,0.3,0.7,0.45,loaders,Loads 3DS Max legacy format
+Projector,Projector,https://threejs.org/docs/#examples/en/renderers/Projector,Addons,Renderers,,,0,false,Wall,0.2,0.3,0.1,0.45,renderers,Projects 3D objects to 2D screen coordinates (legacy)
+ColladaComposer,ColladaComposer,https://threejs.org/docs/#examples/en/loaders/ColladaComposer,Addons,Loaders,,,0,false,Pantheon,0.5,0.3,0.7,0.45,loaders,Composes Collada scene elements
+ColladaParser,ColladaParser,https://threejs.org/docs/#examples/en/loaders/ColladaParser,Addons,Loaders,,,0,false,Pantheon,0.5,0.3,0.7,0.45,loaders,Parses Collada XML format
+USDComposer,USDComposer,https://threejs.org/docs/#examples/en/loaders/USDComposer,Addons,Loaders,,,0,false,Pantheon,0.5,0.3,0.9,0.41,loaders,Composes USD scene elements
