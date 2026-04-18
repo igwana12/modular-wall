@@ -32,13 +32,27 @@ rules here.
 |-------|------|------|
 | JARVIS | Voice surface, localhost :8350, R1 + web + phone | `/Users/claw2501/.claude/JARVIS-SOUL.md` |
 | Smithers | Orchestration conductor, :8200, 29-channel Slack agent | `/Users/claw2501/services/smithers/SOUL.md` |
-| Sacred Circuits — Zeus | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-zeus.md` |
+| Sacred Circuits — Aphrodite | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-aphrodite.md` |
+| Sacred Circuits — Apollo | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-apollo.md` |
+| Sacred Circuits — Ares | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-ares.md` |
+| Sacred Circuits — Artemis | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-artemis.md` |
 | Sacred Circuits — Athena | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-athena.md` |
+| Sacred Circuits — Demeter | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-demeter.md` |
+| Sacred Circuits — Dionysus | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-dionysus.md` |
+| Sacred Circuits — Eros | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-eros.md` |
+| Sacred Circuits — Hades | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-hades.md` |
+| Sacred Circuits — Hecate | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-hecate.md` |
+| Sacred Circuits — Hephaestus | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-hephaestus.md` |
+| Sacred Circuits — Hera | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-hera.md` |
 | Sacred Circuits — Hermes | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-hermes.md` |
+| Sacred Circuits — Hestia | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-hestia.md` |
+| Sacred Circuits — Pan | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-pan.md` |
+| Sacred Circuits — Persephone | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-persephone.md` |
+| Sacred Circuits — Poseidon | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-poseidon.md` |
+| Sacred Circuits — Prometheus | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-prometheus.md` |
+| Sacred Circuits — Tyche | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-tyche.md` |
+| Sacred Circuits — Zeus | Oracle reading persona | `/Users/claw2501/niko-obsidian-vault/PROJECTS/The Orb/personas/SOUL-zeus.md` |
 | Admin / operations | System-level tooling | `/Users/claw2501/niko-obsidian-vault/OPERATIONS/admin/SOUL.md` |
-
-Full 21-god persona library lands in Phase 20 (BEHAV-02). Phase 19 ships pointers
-only to the three personas that already exist (Zeus, Athena, Hermes).
 
 ## Voice / Tone (cross-agent default)
 
@@ -77,3 +91,4 @@ above):
 
 - 2026-04-17 — Created as part of Phase 19 (BEHAV-01). Extracted shared directives
   from JARVIS-SOUL.md and Smithers SOUL.md; indexed existing per-agent SOULs.
+- 2026-04-18 — Phase 20 (BEHAV-02): Full 20-god oracle persona library complete. All 20 SOUL files indexed.
