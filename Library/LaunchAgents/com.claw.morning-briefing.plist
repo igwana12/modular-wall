@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.claw.morning-briefing</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/curl</string>
+        <string>-s</string>
+        <string>-X</string>
+        <string>POST</string>
+        <string>http://localhost:8200/heartbeat/morning</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>7</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>DOTENV_PATH</key>
+        <string>/Users/claw2501/niko-obsidian-vault/OPERATIONS/admin/secrets/master-api-keys.env</string>
+        <key>HEARTBEAT_ENABLED</key>
+        <string>1</string>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/Users/claw2501/services/smithers/morning-briefing.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/claw2501/services/smithers/morning-briefing.log</string>
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>
