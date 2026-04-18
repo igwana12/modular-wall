@@ -33,6 +33,25 @@
 - Module discovery protocol
 - The Guide first-boot experience
 
+## Sacred Circuits / The Orb — Infrastructure Phases
+
+### Phase 19: Token Audit & Stack Hardening [DONE]
+**Goal**: Instrument JARVIS/Smithers token usage, add context trimming + prompt caching, SOUL.md behavioral spine, morning briefing vault write + launchd
+- JARVIS usage logger writing to usage.db
+- Weekly token audit CLI
+- Context trimmer + prompt caching on system prompts
+- SOUL.md behavioral index (3 personas wired)
+- Morning briefing vault write + launchd plist at 07:00
+
+### Phase 20: Pantheon Oracle Expansion [NEXT]
+**Goal**: Fully activate the Sacred Circuits oracle — fix broken RAG wiring, deploy Orphic tradition as second corpus, complete 20-god SOUL persona library
+- Fix oracle RAG path (myth-vectors / myth_notes)
+- Orphic dataset deployed: orphic.db + orphic_wisdom ChromaDB collection (376 chunks)
+- Dual-collection retrieval (Hellenic + Orphic) in rag_retriever.py
+- Orphic tabs added to Google Sheets copy
+- 20-god SOUL persona library complete (17 new files)
+- SOUL.md registry updated with all 20
+
 ## Milestone 2: Physical Prototype [FUTURE]
 
 ### Phase 5: First Physical Module
