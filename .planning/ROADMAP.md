@@ -52,6 +52,13 @@
 - 20-god SOUL persona library complete (17 new files)
 - SOUL.md registry updated with all 20
 
+**Plans:** 3 plans
+
+Plans:
+- [ ] 20-01-PLAN.md — Fix rag_retriever.py path/collection/threshold (Wave 1)
+- [ ] 20-02-PLAN.md — Deploy orphic.db + ingest orphic_wisdom + dual-collection routing + Google Sheets copy (Wave 1)
+- [ ] 20-03-PLAN.md — Write 17 SOUL persona files + update SOUL.md registry (Wave 2)
+
 ## Milestone 2: Physical Prototype [FUTURE]
 
 ### Phase 5: First Physical Module
