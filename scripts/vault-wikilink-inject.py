@@ -23,12 +23,12 @@ MIN_TITLE_LEN = 4
 
 
 def collect_md_files(vault):
-    """Return all .md paths, skipping SKIP_DIRS."""
+    """Return all .md paths, skipping SKIP_DIRS and macOS resource forks."""
     result = []
     for root, dirs, files in os.walk(vault):
         dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
         for f in files:
-            if f.endswith(".md"):
+            if f.endswith(".md") and not f.startswith("._"):
                 result.append(os.path.join(root, f))
     return result
 
@@ -60,36 +60,74 @@ def split_frontmatter_body(text):
     return "", text
 
 
-def is_in_code(text, start):
-    """Check if position `start` falls inside a fenced code block or inline code."""
-    # Check inline code `...`
-    # Count backtick pairs before start
-    before = text[:start]
-    # Fenced code blocks: count opening ``` that haven't been closed
-    fenced = re.findall(r'```[^\n]*', before)
-    # Simple heuristic: odd number of ``` fences = inside fenced block
-    fence_count = len(re.findall(r'^```', before, re.MULTILINE))
-    if fence_count % 2 == 1:
-        return True
-    # Inline code: count backticks (non-triple)
-    # Strip triple backticks first
-    stripped = re.sub(r'```[\s\S]*?```', '', before)
-    if stripped.count('`') % 2 == 1:
-        return True
-    return False
+def mask_protected_spans(body):
+    """
+    Replace all protected spans (code blocks, inline code, wikilinks, markdown links,
+    bare URLs) with placeholder tokens. Returns (masked_body, restore_map).
+    Placeholder format: \x00N\x00 where N is integer index.
+    """
+    tokens = []
+
+    def make_token(text):
+        idx = len(tokens)
+        tokens.append(text)
+        return f"\x00{idx}\x00"
+
+    # Order matters: fenced blocks first, then inline, then links
+    patterns_ordered = [
+        # Fenced code blocks (``` or ~~~)
+        (r'```[\s\S]*?```', re.DOTALL),
+        (r'~~~[\s\S]*?~~~', re.DOTALL),
+        # Inline code
+        (r'`[^`\n]+`', 0),
+        # Existing wikilinks [[...]]
+        (r'\[\[[^\]]*\]\]', 0),
+        # Markdown links [text](url) — mask the whole thing
+        (r'\[[^\]]*\]\([^)]*\)', 0),
+        # Bare URLs
+        (r'https?://\S+', 0),
+    ]
+
+    for pat, flags in patterns_ordered:
+        def replace_token(m, _tok=tokens):
+            idx = len(_tok)
+            _tok.append(m.group(0))
+            return f"\x00{idx}\x00"
+        body = re.sub(pat, replace_token, body, flags=flags)
+
+    return body, tokens
+
+
+def restore_tokens(body, tokens):
+    """Reverse mask_protected_spans."""
+    def restore(m):
+        idx = int(m.group(1))
+        return tokens[idx]
+    return re.sub(r'\x00(\d+)\x00', restore, body)
 
 
 def inject_wikilinks(body, title_index, note_stem):
     """Return modified body with first-occurrence wikilinks injected."""
-    # Track which titles we've already linked in this note
-    already_linked = set()
+    # Mask protected spans so we never touch them
+    masked, tokens = mask_protected_spans(body)
 
-    # Find all existing wikilinks in body and mark those titles as done
+    # Find titles already wikilinked (they're now tokens — scan original body)
+    already_linked = set()
     existing = re.findall(r'\[\[([^\]|]+)(?:\|[^\]]+)?\]\]', body)
     for e in existing:
         already_linked.add(e.lower())
         already_linked.add(e.lower().replace(" ", "-"))
         already_linked.add(e.lower().replace("-", " "))
+
+    # Also scan token values for wikilinks already present
+    for tok in tokens:
+        if tok.startswith("[["):
+            inner = re.match(r'\[\[([^\]|]+)', tok)
+            if inner:
+                e = inner.group(1)
+                already_linked.add(e.lower())
+                already_linked.add(e.lower().replace(" ", "-"))
+                already_linked.add(e.lower().replace("-", " "))
 
     # Build sorted list: longer titles first to avoid partial matches
     sorted_titles = sorted(title_index.keys(), key=len, reverse=True)
@@ -97,33 +135,23 @@ def inject_wikilinks(body, title_index, note_stem):
     for lower_title in sorted_titles:
         original = title_index[lower_title]
         if lower_title == note_stem.lower():
-            continue  # Don't self-link
+            continue
         if lower_title in already_linked:
-            continue  # Already wikilinked somewhere
+            continue
 
-        # Build pattern: whole-word, case-insensitive, not inside [[...]] or [text](url) or URL
-        # Escape the title for regex use
         escaped = re.escape(lower_title)
-        pattern = r'(?<!\[)(?<!\[\[)\b(' + escaped + r')\b(?!\])'
+        # Only match outside placeholder tokens (\x00...\x00)
+        pattern = r'(?<!\x00)\b(' + escaped + r')\b'
 
-        def replacer(m, orig=original, linked=already_linked, lt=lower_title):
-            # Check position not inside code
-            start = m.start()
-            if is_in_code(body_working[0], start):
-                return m.group(0)
-            linked.add(lt)
-            return f'[[{orig}]]'
-
-        # We need mutable reference for is_in_code closure
-        body_working = [body]
-
-        new_body, count = re.subn(pattern, replacer, body, count=1, flags=re.IGNORECASE | re.UNICODE)
+        new_masked, count = re.subn(
+            pattern, f'[[{original}]]', masked, count=1, flags=re.IGNORECASE | re.UNICODE
+        )
 
         if count > 0:
-            body = new_body
+            masked = new_masked
             already_linked.add(lower_title)
 
-    return body
+    return restore_tokens(masked, tokens)
 
 
 def process_note(path, title_index, dry_run):
