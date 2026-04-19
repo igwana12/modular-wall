@@ -18,6 +18,9 @@ from collections import defaultdict
 from datetime import date
 from pathlib import Path
 
+# Directories to skip entirely (plugin assets, git internals)
+EXCLUDE_DIRS = {".obsidian", ".git", "node_modules"}
+
 # Attachment extensions to track
 ATTACHMENT_EXTS = {
     ".pdf", ".png", ".jpg", ".jpeg", ".gif",
@@ -31,11 +34,17 @@ WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)")
 MD_LINK_RE = re.compile(r"\[.*?\]\(([^)]+)\)")
 
 
+def _excluded(p: Path, vault: Path) -> bool:
+    """Return True if any path component relative to vault is in EXCLUDE_DIRS."""
+    return any(part in EXCLUDE_DIRS for part in p.relative_to(vault).parts)
+
+
 def collect_notes(vault: Path) -> dict[str, list[Path]]:
     """Return {lowercased_basename: [full_paths]} for every .md file."""
     notes: dict[str, list[Path]] = defaultdict(list)
     for p in vault.rglob("*.md"):
-        notes[p.stem.lower()].append(p)
+        if not _excluded(p, vault):
+            notes[p.stem.lower()].append(p)
     return notes
 
 
@@ -43,7 +52,7 @@ def collect_attachments(vault: Path) -> list[Path]:
     """Return all non-.md files with recognized attachment extensions."""
     result = []
     for p in vault.rglob("*"):
-        if p.is_file() and p.suffix.lower() in ATTACHMENT_EXTS:
+        if p.is_file() and p.suffix.lower() in ATTACHMENT_EXTS and not _excluded(p, vault):
             result.append(p)
     return result
 
