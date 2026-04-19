@@ -127,8 +127,8 @@ def audit_vault(vault: Path):
 
         # Check wikilinks
         for link_target in extract_wikilinks(text):
-            # Strip extension if someone linked with it (e.g., [[note.md]])
-            stem = Path(link_target).stem.lower() if "." in link_target else link_target
+            # Use basename stem — handles [[note]], [[note.md]], [[path/to/note]], [[path/to/note.md]]
+            stem = Path(link_target).stem.lower()
             # Only check as note link if it doesn't look like an attachment
             if Path(link_target).suffix.lower() in ATTACHMENT_EXTS:
                 continue
