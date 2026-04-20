@@ -19,7 +19,7 @@ progress:
 **Workspace**: /Volumes/AI_WORKSPACE/modular-wall
 **Current Phase**: Phase 2 — Visual Product Development [IN PROGRESS]
 
-Last activity: 2026-04-20 - Completed quick task 260419-shd: Obsidian image integration pipeline
+Last activity: 2026-04-20 - Completed quick task 260419-tut: Add Three.js post-processing (EffectComposer, bloom, FXAA, motion blur) to Spirit particle simulation
 
 ### Current Status
 
@@ -54,3 +54,5 @@ Last activity: 2026-04-20 - Completed quick task 260419-shd: Obsidian image inte
 | 260419-nlm | Import ALL files from Google Drive WRITING folder into Obsidian vault | 2026-04-19 | f3e90d7 | [260419-nlm-import-all-files-from-google-drive-writi](.planning/quick/260419-nlm-import-all-files-from-google-drive-writi/) |
 | 260419-ous | Obsidian vault full cross-linking — wikilink injection, tag extraction, MOC generation, semantic embeddings, Dataview queries across all 1265 notes | 2026-04-19 | c9bdfdd | [260419-ous-obsidian-vault-full-cross-linking-wikili](.planning/quick/260419-ous-obsidian-vault-full-cross-linking-wikili/) |
 | 260419-shd | Obsidian image integration — backlink injection from catalog.csv into vault notes, re-run cross-linking scripts, generate image MOCs | 2026-04-20 | a530ed6 | [260419-shd-obsidian-image-integration-backlink-inje](.planning/quick/260419-shd-obsidian-image-integration-backlink-inje/) |
+| 260419-su5 | Port The Spirit GPU particle simulation as ESM into jarvis-v3-ui, wire mic audio to physics uniforms | 2026-04-20 | aa41f6b | [260419-su5-port-the-spirit-gpu-particle-simulation-](.planning/quick/260419-su5-port-the-spirit-gpu-particle-simulation-/) |
+| 260419-tut | Add Three.js post-processing (EffectComposer, bloom, FXAA, motion blur) to Spirit particle simulation | 2026-04-20 | efdcb98 | [260419-tut-add-three-js-post-processing-effectcompo](.planning/quick/260419-tut-add-three-js-post-processing-effectcompo/) |
