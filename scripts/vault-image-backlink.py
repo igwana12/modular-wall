@@ -48,13 +48,17 @@ def set_yaml_images(yaml_text: Optional[str], images: list[str]) -> str:
     if yaml_text is None:
         return images_block.rstrip()
 
-    # Remove existing images block (key + list lines following it)
+    # Remove existing images block (key + list lines following it).
+    # Also strip any orphaned bare list items at the very start of YAML that
+    # resulted from a previous broken write (images key lost, items became root-level).
     lines = yaml_text.split("\n")
     new_lines = []
     skip = False
+    preamble_done = False  # once we see a real key, stop stripping leading bare items
     for line in lines:
         if re.match(r"^images\s*:", line):
             skip = True
+            preamble_done = True
             continue
         if skip:
             # list item belonging to images key
@@ -62,6 +66,12 @@ def set_yaml_images(yaml_text: Optional[str], images: list[str]) -> str:
                 continue
             else:
                 skip = False
+        # Strip leading bare list items before any YAML key (orphaned from broken run)
+        if not preamble_done and re.match(r"^-\s+\S", line) and not re.match(r"^\w", line):
+            # bare list item with no preceding key — skip it
+            continue
+        if re.match(r"^\w", line):
+            preamble_done = True
         new_lines.append(line)
 
     base = "\n".join(new_lines).strip()
