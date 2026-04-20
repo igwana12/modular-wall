@@ -70,10 +70,10 @@ Plans:
 - Error handling: returns 422 if theme gate fails without `force=true`
 - Integration test: POST with Dionysus theme → 4-beat JSON response
 
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
-- [ ] 21-01-PLAN.md — Build POST /api/oracle/orphic end-to-end: test stubs (Wave 0) + oracle/orphic_reading.py helper module + server.py route wiring + integration/security tests (Wave 1)
+- [x] 21-01-PLAN.md — Build POST /api/oracle/orphic end-to-end: test stubs (Wave 0) + oracle/orphic_reading.py helper module + server.py route wiring + integration/security tests (Wave 1)
 
 ## Milestone 2: Physical Prototype [FUTURE]
 
