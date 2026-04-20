@@ -1,0 +1,372 @@
+#!/usr/bin/env python3
+"""
+vault-dataview-index.py — Step 5/5: Generate vault INDEX.md (Dataview or static).
+
+Usage: python3 vault-dataview-index.py [--vault PATH] [--dry-run]
+Default vault: /Volumes/Extreme Pro/MIGRATION/2501-DEPLOYMENT/obsidian-vault
+Exit 0 on success, non-zero on error.
+Prints: "mode: <dataview|static> / index_updated: <bool> / writing_index_updated: <bool>"
+"""
+
+import argparse
+import hashlib
+import os
+import re
+import sys
+from datetime import date, datetime, timezone
+
+import frontmatter
+
+VAULT_DEFAULT = "/Volumes/Extreme Pro/MIGRATION/2501-DEPLOYMENT/obsidian-vault"
+SKIP_DIRS = {".obsidian", ".trash", ".git"}
+
+TAXONOMY_THEMES = [
+    "mythology", "travel", "consciousness", "psychedelics", "sacred-circuits",
+    "mosaic", "jarvis", "oracle", "family", "finance", "health", "writing",
+    "philosophy", "identity",
+]
+
+
+def detect_dataview(vault):
+    """Return True if Dataview plugin main.js is present."""
+    dv_path = os.path.join(vault, ".obsidian", "plugins", "dataview", "main.js")
+    return os.path.isfile(dv_path)
+
+
+def stable_hash(content):
+    """Hash content with timestamp line stripped for stable comparison."""
+    stripped = re.sub(r'^> Auto-generated.*on \d{4}-\d{2}-\d{2}.*$', '> Auto-generated STABLE', content, flags=re.MULTILINE)
+    return hashlib.sha256(stripped.encode("utf-8")).hexdigest()
+
+
+def write_if_changed(path, content, dry_run):
+    """Write content to path if it differs (ignoring timestamp). Returns True if changed."""
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
+            existing = f.read()
+        if stable_hash(existing) == stable_hash(content):
+            return False
+
+    if not dry_run:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(content)
+    return True
+
+
+# ─── Static helpers ────────────────────────────────────────────────────────────
+
+def collect_md_files(vault, skip_dirs=None):
+    if skip_dirs is None:
+        skip_dirs = SKIP_DIRS
+    result = []
+    for root, dirs, files in os.walk(vault):
+        dirs[:] = [d for d in dirs if d not in skip_dirs]
+        for f in files:
+            if f.endswith(".md") and not f.startswith("._"):
+                result.append(os.path.join(root, f))
+    return result
+
+
+def get_note_tags(path):
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            post = frontmatter.loads(f.read())
+        tags = post.get("tags", [])
+        if isinstance(tags, str):
+            tags = [t.strip() for t in tags.split(",") if t.strip()]
+        elif isinstance(tags, list):
+            tags = [str(t) for t in tags]
+        else:
+            tags = []
+        return tags
+    except Exception:
+        return []
+
+
+def get_mtime(path):
+    try:
+        return os.path.getmtime(path)
+    except Exception:
+        return 0
+
+
+def static_by_tag(vault, theme):
+    """Return sorted list of note stems tagged with theme."""
+    md_files = collect_md_files(vault)
+    stems = []
+    for path in md_files:
+        tags = get_note_tags(path)
+        if theme in tags:
+            stems.append(os.path.splitext(os.path.basename(path))[0])
+    return sorted(stems)
+
+
+def static_recent(vault, days=30):
+    """Return note stems modified in last N days, sorted desc by mtime."""
+    cutoff = datetime.now(tz=timezone.utc).timestamp() - days * 86400
+    md_files = collect_md_files(vault)
+    recent = []
+    for path in md_files:
+        mtime = get_mtime(path)
+        if mtime >= cutoff:
+            recent.append((mtime, os.path.splitext(os.path.basename(path))[0]))
+    recent.sort(reverse=True)
+    return [stem for _, stem in recent]
+
+
+def static_by_folder(vault):
+    """Return {folder_name: note_count} for top-level folders."""
+    result = {}
+    try:
+        for entry in os.scandir(vault):
+            if entry.is_dir() and not entry.name.startswith(".") and entry.name not in {"MOC"}:
+                count = 0
+                for root, dirs, files in os.walk(entry.path):
+                    dirs[:] = [d for d in dirs if not d.startswith(".")]
+                    count += sum(1 for f in files if f.endswith(".md") and not f.startswith("._"))
+                if count > 0:
+                    result[entry.name] = count
+    except Exception:
+        pass
+    return dict(sorted(result.items()))
+
+
+def static_moc_list(vault):
+    """Return list of MOC stems."""
+    moc_dir = os.path.join(vault, "MOC")
+    if not os.path.isdir(moc_dir):
+        return []
+    stems = []
+    for f in os.listdir(moc_dir):
+        if f.endswith(".md") and not f.startswith("._") and f != "README.md":
+            stems.append(os.path.splitext(f)[0])
+    return sorted(stems)
+
+
+# ─── Index generators ──────────────────────────────────────────────────────────
+
+def generate_vault_index_dataview(vault, iso_date):
+    lines = [
+        f"> Auto-generated by `~/scripts/vault-dataview-index.py` on {iso_date}. Mode: dataview.",
+        "",
+        "# Vault Index",
+        "",
+        "## By Tag",
+        "",
+    ]
+    for theme in TAXONOMY_THEMES:
+        lines += [
+            f"### {theme.replace('-', ' ').title()}",
+            "",
+            "```dataview",
+            "TABLE file.ctime AS \"Created\", file.mtime AS \"Modified\"",
+            f"FROM #{theme}",
+            "SORT file.mtime DESC",
+            "```",
+            "",
+        ]
+
+    lines += [
+        "## Recent (30 days)",
+        "",
+        "```dataview",
+        "TABLE file.mtime AS \"Modified\"",
+        "WHERE date(now) - file.mtime <= dur(30 days)",
+        "SORT file.mtime DESC",
+        "```",
+        "",
+        "## By Folder",
+        "",
+        "```dataview",
+        "TABLE length(rows) AS \"Notes\"",
+        "FROM \"\"",
+        "GROUP BY file.folder",
+        "SORT length(rows) DESC",
+        "```",
+        "",
+        "## MOCs",
+        "",
+        "```dataview",
+        "LIST",
+        "FROM \"MOC\"",
+        "WHERE moc = true",
+        "SORT file.name ASC",
+        "```",
+        "",
+        "## Orphans (no backlinks)",
+        "",
+        "```dataview",
+        "LIST",
+        "WHERE length(file.inlinks) = 0 AND !contains(file.path, \"MOC/\")",
+        "SORT file.name ASC",
+        "```",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def generate_vault_index_static(vault, iso_date):
+    lines = [
+        f"> Auto-generated by `~/scripts/vault-dataview-index.py` on {iso_date}. Mode: static.",
+        "",
+        "# Vault Index",
+        "",
+        "## By Tag",
+        "",
+    ]
+    for theme in TAXONOMY_THEMES:
+        stems = static_by_tag(vault, theme)
+        lines.append(f"### {theme.replace('-', ' ').title()} ({len(stems)})")
+        lines.append("")
+        for stem in stems[:50]:  # cap at 50 per theme for readability
+            lines.append(f"- [[{stem}]]")
+        if len(stems) > 50:
+            lines.append(f"- *(and {len(stems) - 50} more — see [[MOC/{theme}]])*")
+        lines.append("")
+
+    recent = static_recent(vault, days=30)
+    lines += [
+        f"## Recent (30 days) — {len(recent)} notes",
+        "",
+    ]
+    for stem in recent[:50]:
+        lines.append(f"- [[{stem}]]")
+    lines.append("")
+
+    folders = static_by_folder(vault)
+    lines += [
+        "## By Folder",
+        "",
+    ]
+    for folder, count in folders.items():
+        lines.append(f"- **{folder}** — {count} notes")
+    lines.append("")
+
+    mocs = static_moc_list(vault)
+    lines += [
+        f"## MOCs ({len(mocs)})",
+        "",
+    ]
+    for stem in mocs:
+        lines.append(f"- [[MOC/{stem}]]")
+    lines.append("")
+
+    return "\n".join(lines)
+
+
+def generate_writing_index_dataview(vault, iso_date):
+    lines = [
+        f"> Auto-generated by `~/scripts/vault-dataview-index.py` on {iso_date}. Mode: dataview.",
+        "",
+        "# Writing Index",
+        "",
+        "## All Writing Notes",
+        "",
+        "```dataview",
+        "TABLE file.ctime AS \"Created\", file.mtime AS \"Modified\"",
+        "FROM #writing OR \"WRITING\"",
+        "SORT file.mtime DESC",
+        "```",
+        "",
+        "## By Subfolder",
+        "",
+        "```dataview",
+        "TABLE length(rows) AS \"Notes\"",
+        "FROM \"WRITING\"",
+        "GROUP BY file.folder",
+        "SORT length(rows) DESC",
+        "```",
+        "",
+        "## Drafts",
+        "",
+        "```dataview",
+        "LIST",
+        "FROM #writing",
+        "WHERE contains(tags, \"draft\")",
+        "SORT file.mtime DESC",
+        "```",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def generate_writing_index_static(vault, iso_date):
+    writing_dir = os.path.join(vault, "WRITING")
+    lines = [
+        f"> Auto-generated by `~/scripts/vault-dataview-index.py` on {iso_date}. Mode: static.",
+        "",
+        "# Writing Index",
+        "",
+    ]
+
+    if os.path.isdir(writing_dir):
+        # Walk WRITING subfolder
+        subfolders = {}
+        for root, dirs, files in os.walk(writing_dir):
+            dirs[:] = [d for d in dirs if not d.startswith(".")]
+            rel = os.path.relpath(root, writing_dir)
+            md_files = [f for f in files if f.endswith(".md") and not f.startswith("._")]
+            if md_files:
+                subfolders[rel] = sorted(
+                    os.path.splitext(f)[0] for f in md_files
+                )
+
+        for folder, stems in sorted(subfolders.items()):
+            header = "Root" if folder == "." else folder
+            lines.append(f"## {header} ({len(stems)})")
+            lines.append("")
+            for stem in stems[:30]:
+                lines.append(f"- [[{stem}]]")
+            if len(stems) > 30:
+                lines.append(f"- *(and {len(stems) - 30} more)*")
+            lines.append("")
+    else:
+        lines.append("*WRITING folder not found.*")
+        lines.append("")
+
+    return "\n".join(lines)
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Generate vault INDEX.md")
+    parser.add_argument("--vault", default=VAULT_DEFAULT)
+    parser.add_argument("--dry-run", action="store_true")
+    args = parser.parse_args()
+
+    vault = args.vault
+    if not os.path.isdir(vault):
+        print(f"ERROR: vault not found at {vault}", file=sys.stderr)
+        sys.exit(1)
+
+    iso_date = date.today().isoformat()
+    dataview = detect_dataview(vault)
+    mode = "dataview" if dataview else "static"
+
+    # Generate vault INDEX.md
+    if dataview:
+        vault_content = generate_vault_index_dataview(vault, iso_date)
+    else:
+        vault_content = generate_vault_index_static(vault, iso_date)
+
+    index_path = os.path.join(vault, "INDEX.md")
+    index_updated = write_if_changed(index_path, vault_content, args.dry_run)
+
+    # Generate WRITING/INDEX.md
+    writing_dir = os.path.join(vault, "WRITING")
+    if dataview:
+        writing_content = generate_writing_index_dataview(vault, iso_date)
+    else:
+        writing_content = generate_writing_index_static(vault, iso_date)
+
+    writing_index_path = os.path.join(writing_dir, "INDEX.md")
+    if not os.path.isdir(writing_dir) and not args.dry_run:
+        os.makedirs(writing_dir, exist_ok=True)
+    writing_index_updated = write_if_changed(writing_index_path, writing_content, args.dry_run)
+
+    mode_str = " [DRY-RUN]" if args.dry_run else ""
+    print(f"mode: {mode} / index_updated: {index_updated} / writing_index_updated: {writing_index_updated}{mode_str}")
+
+
+if __name__ == "__main__":
+    main()
